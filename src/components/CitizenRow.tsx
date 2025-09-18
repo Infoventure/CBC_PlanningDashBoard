@@ -1,0 +1,68 @@
+import React, { Fragment } from 'react';
+import { Citizen } from '../data/mockData';
+import { ChevronDownIcon, ChevronRightIcon, UserIcon } from 'lucide-react';
+interface CitizenRowProps {
+  citizen: Citizen;
+  expanded: boolean;
+  onClick: () => void;
+  isSelected: boolean;
+}
+export const CitizenRow: React.FC<CitizenRowProps> = ({
+  citizen,
+  expanded,
+  onClick,
+  isSelected
+}) => {
+  const getBalanceColor = (balance: number) => {
+    if (balance < 0) return 'bg-red-100';
+    return 'bg-green-100';
+  };
+  const getPercentageColor = (percentage: number) => {
+    if (percentage > 120) return 'bg-red-100 text-red-700';
+    if (percentage > 100) return 'bg-yellow-100 text-yellow-700';
+    if (percentage < 60) return 'bg-green-100 text-green-700';
+    return 'bg-yellow-50 text-yellow-600';
+  };
+  return <>
+      <tr className={`hover:bg-gray-50 cursor-pointer ${isSelected ? 'bg-blue-50' : ''}`} onClick={onClick}>
+        <td className="px-4 py-3 whitespace-nowrap border-r border-gray-300">
+          <div className="flex items-center">
+            {expanded ? <ChevronDownIcon className="h-4 w-4 text-[#1d3557] mr-2" /> : <ChevronRightIcon className="h-4 w-4 text-[#1d3557] mr-2" />}
+            <div className="flex items-center">
+              <UserIcon className="h-4 w-4 text-[#1d3557] mr-2" />
+              <span className="font-medium text-sm">{citizen.name}</span>
+              {citizen.alert && <span className="ml-2 px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 text-red-800">
+                  3 uger
+                </span>}
+            </div>
+          </div>
+        </td>
+        {citizen.pathways.map((pathway, pathwayIndex) => <Fragment key={pathway.id}>
+            <td className="px-2 py-3 text-sm text-center border-r border-gray-200">
+              {pathway.visiteret || '-'}
+            </td>
+            <td className="px-2 py-3 text-sm text-center border-r border-gray-200">
+              {pathway.disponeret || '-'}
+            </td>
+            <td className={`px-2 py-3 text-sm text-center border-r border-gray-200 ${pathway.balance < 0 ? 'text-red-500' : ''}`}>
+              {pathway.balance || '-'}
+            </td>
+            <td className={`px-2 py-3 text-sm text-center ${pathwayIndex < citizen.pathways.length - 1 ? 'border-r border-gray-300' : ''}`}>
+              {pathway.visiteret > 0 ? <span className={`px-2 py-1 rounded-full text-xs ${getPercentageColor(pathway.andelDisponeret)}`}>
+                  {pathway.andelDisponeret}%
+                </span> : '-'}
+            </td>
+          </Fragment>)}
+      </tr>
+      {expanded && citizen.services && <tr>
+          <td colSpan={1 + citizen.pathways.length * 4} className="px-4 py-2 bg-gray-50">
+            <div className="pl-6 border-l-2 border-[#1d3557]">
+              {citizen.services.map((service, index) => <div key={index} className="grid grid-cols-2 py-2">
+                  <div className="text-sm font-medium">{service.name}</div>
+                  <div className="text-sm">{service.hours} timer</div>
+                </div>)}
+            </div>
+          </td>
+        </tr>}
+    </>;
+};

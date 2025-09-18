@@ -1,0 +1,317 @@
+export interface MonthlyData {
+  month: string;
+  value: number;
+}
+export interface VisitedPlannedData {
+  month: string;
+  visiteret: number;
+  planlagt: number;
+}
+export interface PlanningPercentageData {
+  month: string;
+  team1: number;
+  team2: number;
+  team3: number;
+  team4: number;
+}
+export interface TeamData {
+  id: number;
+  name: string;
+  citizenCountData: MonthlyData[];
+  visitedPlannedData: VisitedPlannedData[];
+}
+export const months = ['Januar', 'Februar', 'Marts', 'April', 'Maj', 'Juni', 'Juli', 'August'];
+export const teamData: TeamData[] = [{
+  id: 1,
+  name: 'Team 1',
+  citizenCountData: [{
+    month: 'Januar',
+    value: 400
+  }, {
+    month: 'Februar',
+    value: 400
+  }, {
+    month: 'Marts',
+    value: 420
+  }, {
+    month: 'April',
+    value: 440
+  }, {
+    month: 'Maj',
+    value: 500
+  }, {
+    month: 'Juni',
+    value: 480
+  }, {
+    month: 'Juli',
+    value: 460
+  }, {
+    month: 'August',
+    value: 440
+  }],
+  visitedPlannedData: [{
+    month: 'Januar',
+    visiteret: 105000,
+    planlagt: 110000
+  }, {
+    month: 'Februar',
+    visiteret: 104000,
+    planlagt: 108000
+  }, {
+    month: 'Marts',
+    visiteret: 115000,
+    planlagt: 115000
+  }, {
+    month: 'April',
+    visiteret: 110000,
+    planlagt: 115000
+  }, {
+    month: 'Maj',
+    visiteret: 140000,
+    planlagt: 150000
+  }, {
+    month: 'Juni',
+    visiteret: 130000,
+    planlagt: 140000
+  }, {
+    month: 'Juli',
+    visiteret: 120000,
+    planlagt: 130000
+  }, {
+    month: 'August',
+    visiteret: 115000,
+    planlagt: 120000
+  }]
+}, {
+  id: 2,
+  name: 'Team 2',
+  citizenCountData: [{
+    month: 'Januar',
+    value: 380
+  }, {
+    month: 'Februar',
+    value: 390
+  }, {
+    month: 'Marts',
+    value: 410
+  }, {
+    month: 'April',
+    value: 430
+  }, {
+    month: 'Maj',
+    value: 470
+  }, {
+    month: 'Juni',
+    value: 460
+  }, {
+    month: 'Juli',
+    value: 450
+  }, {
+    month: 'August',
+    value: 430
+  }],
+  visitedPlannedData: [{
+    month: 'Januar',
+    visiteret: 100000,
+    planlagt: 95000
+  }, {
+    month: 'Februar',
+    visiteret: 98000,
+    planlagt: 95000
+  }, {
+    month: 'Marts',
+    visiteret: 105000,
+    planlagt: 110000
+  }, {
+    month: 'April',
+    visiteret: 108000,
+    planlagt: 115000
+  }, {
+    month: 'Maj',
+    visiteret: 130000,
+    planlagt: 135000
+  }, {
+    month: 'Juni',
+    visiteret: 125000,
+    planlagt: 130000
+  }, {
+    month: 'Juli',
+    visiteret: 118000,
+    planlagt: 125000
+  }, {
+    month: 'August',
+    visiteret: 110000,
+    planlagt: 115000
+  }]
+}, {
+  id: 3,
+  name: 'Team 3',
+  citizenCountData: [{
+    month: 'Januar',
+    value: 390
+  }, {
+    month: 'Februar',
+    value: 380
+  }, {
+    month: 'Marts',
+    value: 400
+  }, {
+    month: 'April',
+    value: 420
+  }, {
+    month: 'Maj',
+    value: 480
+  }, {
+    month: 'Juni',
+    value: 470
+  }, {
+    month: 'Juli',
+    value: 450
+  }, {
+    month: 'August',
+    value: 430
+  }],
+  visitedPlannedData: [{
+    month: 'Januar',
+    visiteret: 102000,
+    planlagt: 100000
+  }, {
+    month: 'Februar',
+    visiteret: 100000,
+    planlagt: 90000
+  }, {
+    month: 'Marts',
+    visiteret: 110000,
+    planlagt: 120000
+  }, {
+    month: 'April',
+    visiteret: 105000,
+    planlagt: 100000
+  }, {
+    month: 'Maj',
+    visiteret: 135000,
+    planlagt: 130000
+  }, {
+    month: 'Juni',
+    visiteret: 128000,
+    planlagt: 135000
+  }, {
+    month: 'Juli',
+    visiteret: 120000,
+    planlagt: 125000
+  }, {
+    month: 'August',
+    visiteret: 112000,
+    planlagt: 118000
+  }]
+}, {
+  id: 4,
+  name: 'Team 4',
+  citizenCountData: [{
+    month: 'Januar',
+    value: 385
+  }, {
+    month: 'Februar',
+    value: 395
+  }, {
+    month: 'Marts',
+    value: 405
+  }, {
+    month: 'April',
+    value: 425
+  }, {
+    month: 'Maj',
+    value: 475
+  }, {
+    month: 'Juni',
+    value: 465
+  }, {
+    month: 'Juli',
+    value: 455
+  }, {
+    month: 'August',
+    value: 435
+  }],
+  visitedPlannedData: [{
+    month: 'Januar',
+    visiteret: 103000,
+    planlagt: 95000
+  }, {
+    month: 'Februar',
+    visiteret: 101000,
+    planlagt: 98000
+  }, {
+    month: 'Marts',
+    visiteret: 108000,
+    planlagt: 105000
+  }, {
+    month: 'April',
+    visiteret: 107000,
+    planlagt: 100000
+  }, {
+    month: 'Maj',
+    visiteret: 133000,
+    planlagt: 140000
+  }, {
+    month: 'Juni',
+    visiteret: 127000,
+    planlagt: 130000
+  }, {
+    month: 'Juli',
+    visiteret: 119000,
+    planlagt: 130000
+  }, {
+    month: 'August',
+    visiteret: 113000,
+    planlagt: 112000
+  }]
+}];
+export const planningPercentageData: PlanningPercentageData[] = [{
+  month: 'Januar',
+  team1: 102,
+  team2: 95,
+  team3: 98,
+  team4: 92
+}, {
+  month: 'Februar',
+  team1: 97,
+  team2: 97,
+  team3: 90,
+  team4: 97
+}, {
+  month: 'Marts',
+  team1: 100,
+  team2: 105,
+  team3: 110,
+  team4: 97
+}, {
+  month: 'April',
+  team1: 105,
+  team2: 110,
+  team3: 95,
+  team4: 93
+}, {
+  month: 'Maj',
+  team1: 133,
+  team2: 104,
+  team3: 96,
+  team4: 105
+}, {
+  month: 'Juni',
+  team1: 115,
+  team2: 104,
+  team3: 105,
+  team4: 102
+}, {
+  month: 'Juli',
+  team1: 117,
+  team2: 106,
+  team3: 104,
+  team4: 110
+}, {
+  month: 'August',
+  team1: 119,
+  team2: 105,
+  team3: 105,
+  team4: 99
+}];
