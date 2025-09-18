@@ -1,6 +1,7 @@
 name: Deploy to GitHub Pages
 on:
-  push: { branches: [ main ] }
+  push:
+    branches: [ main ]   # change to your default branch if different
   workflow_dispatch:
 
 permissions:
@@ -23,14 +24,11 @@ jobs:
           cache: npm
       - run: npm ci
       - run: npm run build
-      - name: Detect output folder
-        run: |
-          if [ -d dist ]; then echo "out=dist" >> $GITHUB_ENV; fi
-          if [ -d build ]; then echo "out=build" >> $GITHUB_ENV; fi
-      - name: SPA fallback
-        run: cp "${{ env.out }}/index.html" "${{ env.out }}/404.html" || true
+      - name: SPA fallback (copy index.html -> 404.html)
+        run: cp dist/index.html dist/404.html || true
       - uses: actions/upload-pages-artifact@v3
-        with: { path: ${{ env.out }} }
+        with:
+          path: ./dist
 
   deploy:
     needs: build
@@ -41,3 +39,4 @@ jobs:
     steps:
       - id: deployment
         uses: actions/deploy-pages@v4
+
