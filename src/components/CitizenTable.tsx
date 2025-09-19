@@ -1,6 +1,7 @@
 import React, { useState, Fragment } from 'react';
 import { mockData } from '../data/mockData';
 import { CitizenRow } from './CitizenRow';
+import { RefreshCwIcon } from 'lucide-react';
 interface CitizenTableProps {
   onSelectCitizen: (id: number | null) => void;
   selectedCitizen: number | null;
@@ -12,6 +13,7 @@ export const CitizenTable: React.FC<CitizenTableProps> = ({
   teamId
 }) => {
   const [expandedCitizen, setExpandedCitizen] = useState<number | null>(null);
+  const [showAlerts, setShowAlerts] = useState<boolean>(true);
   const handleCitizenClick = (citizenId: number) => {
     if (expandedCitizen === citizenId) {
       setExpandedCitizen(null);
@@ -23,8 +25,11 @@ export const CitizenTable: React.FC<CitizenTableProps> = ({
   // Filter citizens by team ID
   const filteredCitizens = mockData.citizens.filter(citizen => citizen.teamId === teamId);
   return <div className="bg-white rounded-lg shadow-lg overflow-hidden">
-      <div className="p-4 border-b border-gray-200">
+      <div className="p-4 border-b border-gray-200 flex justify-between items-center">
         <h2 className="text-lg font-semibold text-[#1d3557]">Borgeroversigt</h2>
+        <button onClick={() => setShowAlerts(!showAlerts)} className="p-2 rounded-md hover:bg-gray-100 text-[#1d3557] transition-colors" title={showAlerts ? 'Skjul advarsler' : 'Vis advarsler'}>
+          <RefreshCwIcon className="h-5 w-5" />
+        </button>
       </div>
       <div className="w-full">
         <table className="min-w-full divide-y divide-gray-200 table-fixed">
@@ -58,7 +63,7 @@ export const CitizenTable: React.FC<CitizenTableProps> = ({
             </tr>
           </thead>
           <tbody className="bg-white divide-y divide-gray-200">
-            {filteredCitizens.map(citizen => <CitizenRow key={citizen.id} citizen={citizen} expanded={expandedCitizen === citizen.id} onClick={() => handleCitizenClick(citizen.id)} isSelected={selectedCitizen === citizen.id} />)}
+            {filteredCitizens.map(citizen => <CitizenRow key={citizen.id} citizen={citizen} expanded={expandedCitizen === citizen.id} onClick={() => handleCitizenClick(citizen.id)} isSelected={selectedCitizen === citizen.id} showAlert={showAlerts} />)}
           </tbody>
         </table>
       </div>

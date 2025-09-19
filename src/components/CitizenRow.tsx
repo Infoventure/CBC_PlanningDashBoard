@@ -6,12 +6,14 @@ interface CitizenRowProps {
   expanded: boolean;
   onClick: () => void;
   isSelected: boolean;
+  showAlert?: boolean;
 }
 export const CitizenRow: React.FC<CitizenRowProps> = ({
   citizen,
   expanded,
   onClick,
-  isSelected
+  isSelected,
+  showAlert = true
 }) => {
   const getBalanceColor = (balance: number) => {
     if (balance < 0) return 'bg-red-100';
@@ -23,6 +25,40 @@ export const CitizenRow: React.FC<CitizenRowProps> = ({
     if (percentage < 60) return 'bg-green-100 text-green-700';
     return 'bg-yellow-50 text-yellow-600';
   };
+  // Modify the data for Borger 3 when alerts are hidden
+  const getModifiedPathways = () => {
+    if (citizen.id === 3 && !showAlert) {
+      return citizen.pathways.map(pathway => ({
+        ...pathway,
+        disponeret: pathway.id === 1 ? 60 : pathway.disponeret,
+        balance: pathway.id === 1 ? pathway.visiteret - 60 : pathway.balance,
+        andelDisponeret: pathway.id === 1 ? Math.round(60 / pathway.visiteret * 100) : pathway.andelDisponeret
+      }));
+    }
+    return citizen.pathways;
+  };
+  // Modify the services for Borger 3 when alerts are hidden
+  const getModifiedServices = () => {
+    if (citizen.id === 3 && !showAlert && citizen.services) {
+      return citizen.services.map(service => {
+        if (service.name === 'Personlig pleje') {
+          return {
+            ...service,
+            hours: 20
+          };
+        } else if (service.name === 'Praktisk hjælp') {
+          return {
+            ...service,
+            hours: 10
+          };
+        }
+        return service;
+      });
+    }
+    return citizen.services;
+  };
+  const pathways = getModifiedPathways();
+  const services = getModifiedServices();
   return <>
       <tr className={`hover:bg-gray-50 cursor-pointer ${isSelected ? 'bg-blue-50' : ''}`} onClick={onClick}>
         <td className="px-4 py-3 whitespace-nowrap border-r border-gray-300">
@@ -31,13 +67,13 @@ export const CitizenRow: React.FC<CitizenRowProps> = ({
             <div className="flex items-center">
               <UserIcon className="h-4 w-4 text-[#1d3557] mr-2" />
               <span className="font-medium text-sm">{citizen.name}</span>
-              {citizen.alert && <span className="ml-2 px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 text-red-800">
+              {citizen.alert && showAlert && <span className="ml-2 px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 text-red-800">
                   4 uger
                 </span>}
             </div>
           </div>
         </td>
-        {citizen.pathways.map((pathway, pathwayIndex) => <Fragment key={pathway.id}>
+        {pathways.map((pathway, pathwayIndex) => <Fragment key={pathway.id}>
             <td className="px-2 py-3 text-sm text-center border-r border-gray-200">
               {pathway.visiteret || '-'}
             </td>
@@ -47,14 +83,14 @@ export const CitizenRow: React.FC<CitizenRowProps> = ({
             <td className={`px-2 py-3 text-sm text-center border-r border-gray-200 ${pathway.balance < 0 ? 'text-red-500' : ''}`}>
               {pathway.balance || '-'}
             </td>
-            <td className={`px-2 py-3 text-sm text-center ${pathwayIndex < citizen.pathways.length - 1 ? 'border-r border-gray-300' : ''}`}>
+            <td className={`px-2 py-3 text-sm text-center ${pathwayIndex < pathways.length - 1 ? 'border-r border-gray-300' : ''}`}>
               {pathway.visiteret > 0 ? <span className={`px-2 py-1 rounded-full text-xs ${getPercentageColor(pathway.andelDisponeret)}`}>
                   {pathway.andelDisponeret}%
                 </span> : '-'}
             </td>
           </Fragment>)}
       </tr>
-      {expanded && citizen.services && citizen.services.map((service, serviceIndex) => <tr key={`service-${serviceIndex}`} className="bg-gray-50">
+      {expanded && services && services.map((service, serviceIndex) => <tr key={`service-${serviceIndex}`} className="bg-gray-50">
             <td className="px-4 py-2 text-sm font-medium border-r border-gray-300">
               <div className="pl-6 border-l-2 border-[#1d3557]">
                 {service.name}
