@@ -18,17 +18,17 @@ export const DetailedDataTable: React.FC<DetailedDataTableProps> = ({
     id: 'economy',
     name: 'Økonomi'
   }];
-  return <div className="bg-cbc-ps-grey rounded-lg border border-gray-200 shadow-sm">
+  return <div className="bg-white rounded-lg border border-gray-200 shadow-sm">
       <div className="border-b border-gray-200">
         <nav className="flex -mb-px">
-          {tabs.map(tab => <button key={tab.id} onClick={() => setActiveTab(tab.id)} className={`py-4 px-6 text-sm font-medium ${activeTab === tab.id ? 'border-b-2 border-cbc-dark-blue text-cbc-dark-blue' : 'text-gray-500 hover:text-gray-700 hover:border-gray-300'}`}>
+          {tabs.map(tab => <button key={tab.id} onClick={() => setActiveTab(tab.id)} className={`py-4 px-6 text-sm font-medium ${activeTab === tab.id ? 'border-b-2 border-[#1d3557] text-[#1d3557]' : 'text-gray-500 hover:text-gray-700 hover:border-gray-300'}`}>
               {tab.name}
             </button>)}
         </nav>
       </div>
       <div className="p-4 overflow-x-auto">
         {activeTab === 'citizens' && <table className="min-w-full divide-y divide-gray-200">
-            <thead className="bg-cbc-beige bg-opacity-50">
+            <thead className="bg-gray-50">
               <tr>
                 <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                   Forløb
@@ -47,7 +47,7 @@ export const DetailedDataTable: React.FC<DetailedDataTableProps> = ({
                 </th>
               </tr>
             </thead>
-            <tbody className="bg-cbc-ps-grey divide-y divide-gray-200">
+            <tbody className="bg-white divide-y divide-gray-200">
               {team.pathways.map(pathway => <tr key={pathway.id}>
                   <td className="px-6 py-4 whitespace-nowrap">
                     <div className="font-medium text-gray-900">
@@ -78,7 +78,7 @@ export const DetailedDataTable: React.FC<DetailedDataTableProps> = ({
             </tbody>
           </table>}
         {activeTab === 'time' && <table className="min-w-full divide-y divide-gray-200">
-            <thead className="bg-cbc-beige bg-opacity-50">
+            <thead className="bg-gray-50">
               <tr>
                 <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                   Forløb
@@ -103,7 +103,7 @@ export const DetailedDataTable: React.FC<DetailedDataTableProps> = ({
                 </th>
               </tr>
             </thead>
-            <tbody className="bg-cbc-ps-grey divide-y divide-gray-200">
+            <tbody className="bg-white divide-y divide-gray-200">
               {team.pathways.map(pathway => <tr key={pathway.id}>
                   <td className="px-6 py-4 whitespace-nowrap">
                     <div className="font-medium text-gray-900">
@@ -144,7 +144,7 @@ export const DetailedDataTable: React.FC<DetailedDataTableProps> = ({
             </tbody>
           </table>}
         {activeTab === 'economy' && <table className="min-w-full divide-y divide-gray-200">
-            <thead className="bg-cbc-beige bg-opacity-50">
+            <thead className="bg-gray-50">
               <tr>
                 <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                   Forløb
@@ -163,7 +163,7 @@ export const DetailedDataTable: React.FC<DetailedDataTableProps> = ({
                 </th>
               </tr>
             </thead>
-            <tbody className="bg-cbc-ps-grey divide-y divide-gray-200">
+            <tbody className="bg-white divide-y divide-gray-200">
               {team.pathways.map(pathway => <tr key={pathway.id}>
                   <td className="px-6 py-4 whitespace-nowrap">
                     <div className="font-medium text-gray-900">

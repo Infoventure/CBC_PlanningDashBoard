@@ -18,38 +18,38 @@ export const TeamSummary: React.FC<TeamSummaryProps> = ({
     if (percentage < 90) return 'text-red-600';
     return 'text-green-600';
   };
-  return <div className="bg-cbc-ps-grey rounded-lg border border-gray-200 shadow-sm">
+  return <div className="bg-white rounded-lg border border-gray-200 shadow-sm">
       <div className="p-4 border-b border-gray-200">
-        <h2 className="text-lg font-semibold text-cbc-dark-blue">
+        <h2 className="text-lg font-semibold text-[#1d3557]">
           {team.name} - Nøgletal
         </h2>
       </div>
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4 p-4">
-        <div className="bg-cbc-beige bg-opacity-50 p-4 rounded-lg">
+        <div className="bg-gray-50 p-4 rounded-lg">
           <h3 className="text-sm font-medium text-gray-500 mb-1">
             Antal borgere
           </h3>
-          <p className="text-2xl font-semibold text-cbc-dark-blue">
+          <p className="text-2xl font-semibold text-[#1d3557]">
             {totalCitizens}
           </p>
         </div>
-        <div className="bg-cbc-beige bg-opacity-50 p-4 rounded-lg">
+        <div className="bg-gray-50 p-4 rounded-lg">
           <h3 className="text-sm font-medium text-gray-500 mb-1">
             Visiteret tid (timer)
           </h3>
-          <p className="text-2xl font-semibold text-cbc-dark-blue">
+          <p className="text-2xl font-semibold text-[#1d3557]">
             {totalVisitedTime.toLocaleString()}
           </p>
         </div>
-        <div className="bg-cbc-beige bg-opacity-50 p-4 rounded-lg">
+        <div className="bg-gray-50 p-4 rounded-lg">
           <h3 className="text-sm font-medium text-gray-500 mb-1">
             Planlagt tid (timer)
           </h3>
-          <p className="text-2xl font-semibold text-cbc-dark-blue">
+          <p className="text-2xl font-semibold text-[#1d3557]">
             {totalPlannedTime.toLocaleString()}
           </p>
         </div>
-        <div className="bg-cbc-beige bg-opacity-50 p-4 rounded-lg">
+        <div className="bg-gray-50 p-4 rounded-lg">
           <h3 className="text-sm font-medium text-gray-500 mb-1">
             Planlægningsprocent
           </h3>
@@ -58,28 +58,28 @@ export const TeamSummary: React.FC<TeamSummaryProps> = ({
           </p>
         </div>
       </div>
-      <div className="p-4 bg-cbc-beige bg-opacity-50 border-t border-gray-200 rounded-b-lg">
+      <div className="p-4 bg-gray-50 border-t border-gray-200 rounded-b-lg">
         <h3 className="text-sm font-medium text-gray-500 mb-3">
           Fordeling af borgere efter forløb
         </h3>
         <div className="relative pt-1">
           <div className="flex mb-2 items-center justify-between">
             <div className="flex">
-              <span className="inline-block w-3 h-3 mr-1 bg-cbc-dark-blue rounded-sm"></span>
+              <span className="inline-block w-3 h-3 mr-1 bg-[#1d3557] rounded-sm"></span>
               <span className="text-xs font-semibold text-gray-700">
                 Forløb 1: {team.pathways[0].citizenCount} borgere (
                 {team.pathways[0].citizenPercentage}%)
               </span>
             </div>
             <div className="flex">
-              <span className="inline-block w-3 h-3 mr-1 bg-cbc-blue rounded-sm"></span>
+              <span className="inline-block w-3 h-3 mr-1 bg-[#457b9d] rounded-sm"></span>
               <span className="text-xs font-semibold text-gray-700">
                 Forløb 2: {team.pathways[1].citizenCount} borgere (
                 {team.pathways[1].citizenPercentage}%)
               </span>
             </div>
             <div className="flex">
-              <span className="inline-block w-3 h-3 mr-1 bg-cbc-light-blue rounded-sm"></span>
+              <span className="inline-block w-3 h-3 mr-1 bg-[#a8dadc] rounded-sm"></span>
               <span className="text-xs font-semibold text-gray-700">
                 Forløb 3: {team.pathways[2].citizenCount} borgere (
                 {team.pathways[2].citizenPercentage}%)
@@ -89,13 +89,13 @@ export const TeamSummary: React.FC<TeamSummaryProps> = ({
           <div className="overflow-hidden h-2 text-xs flex rounded bg-gray-200">
             <div style={{
             width: `${team.pathways[0].citizenPercentage}%`
-          }} className="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-cbc-dark-blue"></div>
+          }} className="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-[#1d3557]"></div>
             <div style={{
             width: `${team.pathways[1].citizenPercentage}%`
-          }} className="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-cbc-blue"></div>
+          }} className="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-[#457b9d]"></div>
             <div style={{
             width: `${team.pathways[2].citizenPercentage}%`
-          }} className="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-cbc-light-blue"></div>
+          }} className="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-[#a8dadc]"></div>
           </div>
         </div>
       </div>

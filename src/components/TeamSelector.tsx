@@ -21,11 +21,9 @@ export const TeamSelector: React.FC<TeamSelectorProps> = ({
     name: 'Team 4'
   }];
   return <div>
-      <h2 className="text-lg font-semibold mb-3 text-cbc-dark-blue">
-        Vælg team
-      </h2>
+      <h2 className="text-lg font-semibold mb-3 text-[#1d3557]">Vælg team</h2>
       <div className="flex flex-wrap gap-2">
-        {teams.map(team => <button key={team.id} className={`px-4 py-2 rounded-md text-sm font-medium transition-colors ${selectedTeam === team.id ? 'bg-cbc-dark-blue text-white' : 'bg-cbc-gray text-gray-700 hover:bg-cbc-gray hover:bg-opacity-70'}`} onClick={() => onSelectTeam(team.id)}>
+        {teams.map(team => <button key={team.id} className={`px-4 py-2 rounded-md text-sm font-medium transition-colors ${selectedTeam === team.id ? 'bg-[#1d3557] text-white' : 'bg-gray-100 text-gray-700 hover:bg-gray-200'}`} onClick={() => onSelectTeam(team.id)}>
             {team.name}
           </button>)}
       </div>

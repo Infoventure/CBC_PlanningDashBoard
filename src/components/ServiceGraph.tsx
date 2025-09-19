@@ -47,10 +47,10 @@ export const ServiceGraph: React.FC<ServiceGraphProps> = ({
           <YAxis />
           <Tooltip />
           <Legend />
-          <Line type="monotone" dataKey="visiteret" stroke="#0A1837" activeDot={{
+          <Line type="monotone" dataKey="visiteret" stroke="#1d3557" activeDot={{
           r: 8
         }} name="Visiteret" />
-          <Line type="monotone" dataKey="disponeret" stroke="#c7003a" name="Disponeret" />
+          <Line type="monotone" dataKey="disponeret" stroke="#e63946" name="Disponeret" />
         </LineChart>
       </ResponsiveContainer>
     </div>;
