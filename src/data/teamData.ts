@@ -24,7 +24,7 @@ export const teamData: Team[] = [{
   name: 'Team 1',
   pathways: [{
     id: 1,
-    citizenCount: 134,
+    citizenCount: 135,
     citizenPercentage: 30,
     visitedTime: 7906,
     plannedTime: 8538,
