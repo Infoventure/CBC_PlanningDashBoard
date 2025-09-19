@@ -32,7 +32,7 @@ export const CitizenRow: React.FC<CitizenRowProps> = ({
               <UserIcon className="h-4 w-4 text-[#1d3557] mr-2" />
               <span className="font-medium text-sm">{citizen.name}</span>
               {citizen.alert && <span className="ml-2 px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 text-red-800">
-                  3 uger
+                  4 uger
                 </span>}
             </div>
           </div>
@@ -54,15 +54,48 @@ export const CitizenRow: React.FC<CitizenRowProps> = ({
             </td>
           </Fragment>)}
       </tr>
-      {expanded && citizen.services && <tr>
-          <td colSpan={1 + citizen.pathways.length * 4} className="px-4 py-2 bg-gray-50">
-            <div className="pl-6 border-l-2 border-[#1d3557]">
-              {citizen.services.map((service, index) => <div key={index} className="grid grid-cols-2 py-2">
-                  <div className="text-sm font-medium">{service.name}</div>
-                  <div className="text-sm">{service.hours} timer</div>
-                </div>)}
-            </div>
-          </td>
-        </tr>}
+      {expanded && citizen.services && citizen.services.map((service, serviceIndex) => <tr key={`service-${serviceIndex}`} className="bg-gray-50">
+            <td className="px-4 py-2 text-sm font-medium border-r border-gray-300">
+              <div className="pl-6 border-l-2 border-[#1d3557]">
+                {service.name}
+              </div>
+            </td>
+            <td className="px-2 py-2 text-sm text-center border-r border-gray-200">
+              {/* Empty Vis column */}
+            </td>
+            <td className="px-2 py-2 text-sm text-center border-r border-gray-200">
+              {service.hours}
+            </td>
+            <td className="px-2 py-2 text-sm text-center border-r border-gray-200">
+              {/* Empty Bal column */}
+            </td>
+            <td className="px-2 py-2 text-sm text-center border-r border-gray-300">
+              {/* Empty % column */}
+            </td>
+            <td className="px-2 py-2 text-sm text-center border-r border-gray-200">
+              {/* Empty Vis column */}
+            </td>
+            <td className="px-2 py-2 text-sm text-center border-r border-gray-200">
+              {/* Empty Disp column */}
+            </td>
+            <td className="px-2 py-2 text-sm text-center border-r border-gray-200">
+              {/* Empty Bal column */}
+            </td>
+            <td className="px-2 py-2 text-sm text-center border-r border-gray-300">
+              {/* Empty % column */}
+            </td>
+            <td className="px-2 py-2 text-sm text-center border-r border-gray-200">
+              {/* Empty Vis column */}
+            </td>
+            <td className="px-2 py-2 text-sm text-center border-r border-gray-200">
+              {/* Empty Disp column */}
+            </td>
+            <td className="px-2 py-2 text-sm text-center border-r border-gray-200">
+              {/* Empty Bal column */}
+            </td>
+            <td className="px-2 py-2 text-sm text-center">
+              {/* Empty % column */}
+            </td>
+          </tr>)}
     </>;
 };
