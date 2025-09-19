@@ -60,12 +60,12 @@ export const CitizenRow: React.FC<CitizenRowProps> = ({
   const pathways = getModifiedPathways();
   const services = getModifiedServices();
   return <>
-      <tr className={`hover:bg-gray-50 cursor-pointer ${isSelected ? 'bg-blue-50' : ''}`} onClick={onClick}>
+      <tr className={`hover:bg-cbc-beige cursor-pointer ${isSelected ? 'bg-cbc-light-blue bg-opacity-20' : ''}`} onClick={onClick}>
         <td className="px-4 py-3 whitespace-nowrap border-r border-gray-300">
           <div className="flex items-center">
-            {expanded ? <ChevronDownIcon className="h-4 w-4 text-[#1d3557] mr-2" /> : <ChevronRightIcon className="h-4 w-4 text-[#1d3557] mr-2" />}
+            {expanded ? <ChevronDownIcon className="h-4 w-4 text-cbc-dark-blue mr-2" /> : <ChevronRightIcon className="h-4 w-4 text-cbc-dark-blue mr-2" />}
             <div className="flex items-center">
-              <UserIcon className="h-4 w-4 text-[#1d3557] mr-2" />
+              <UserIcon className="h-4 w-4 text-cbc-dark-blue mr-2" />
               <span className="font-medium text-sm">{citizen.name}</span>
               {citizen.alert && showAlert && <span className="ml-2 px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 text-red-800">
                   4 uger
@@ -90,9 +90,9 @@ export const CitizenRow: React.FC<CitizenRowProps> = ({
             </td>
           </Fragment>)}
       </tr>
-      {expanded && services && services.map((service, serviceIndex) => <tr key={`service-${serviceIndex}`} className="bg-gray-50">
+      {expanded && services && services.map((service, serviceIndex) => <tr key={`service-${serviceIndex}`} className="bg-cbc-beige bg-opacity-50">
             <td className="px-4 py-2 text-sm font-medium border-r border-gray-300">
-              <div className="pl-6 border-l-2 border-[#1d3557]">
+              <div className="pl-6 border-l-2 border-cbc-dark-blue">
                 {service.name}
               </div>
             </td>

@@ -90,9 +90,9 @@ export const TeamComparison: React.FC = () => {
     }
     return value;
   };
-  return <div className="bg-white rounded-lg border border-gray-200 shadow-sm">
+  return <div className="bg-cbc-ps-grey rounded-lg border border-gray-200 shadow-sm">
       <div className="p-4 border-b border-gray-200">
-        <h2 className="text-lg font-semibold text-[#1d3557] mb-4">
+        <h2 className="text-lg font-semibold text-cbc-dark-blue mb-4">
           Team sammenligning
         </h2>
         <div className="flex flex-wrap gap-4">
@@ -100,7 +100,7 @@ export const TeamComparison: React.FC = () => {
             <label htmlFor="metric" className="block text-sm font-medium text-gray-700 mb-1">
               Metrik
             </label>
-            <select id="metric" value={metric} onChange={e => setMetric(e.target.value)} className="block w-full rounded-md border-gray-300 shadow-sm focus:border-[#1d3557] focus:ring-[#1d3557] sm:text-sm">
+            <select id="metric" value={metric} onChange={e => setMetric(e.target.value)} className="block w-full rounded-md border-gray-300 shadow-sm focus:border-cbc-dark-blue focus:ring-cbc-dark-blue sm:text-sm">
               {metrics.map(m => <option key={m.id} value={m.id}>
                   {m.name}
                 </option>)}
@@ -110,7 +110,7 @@ export const TeamComparison: React.FC = () => {
             <label htmlFor="pathway" className="block text-sm font-medium text-gray-700 mb-1">
               Forløb
             </label>
-            <select id="pathway" value={pathway} onChange={e => setPathway(parseInt(e.target.value))} className="block w-full rounded-md border-gray-300 shadow-sm focus:border-[#1d3557] focus:ring-[#1d3557] sm:text-sm">
+            <select id="pathway" value={pathway} onChange={e => setPathway(parseInt(e.target.value))} className="block w-full rounded-md border-gray-300 shadow-sm focus:border-cbc-dark-blue focus:ring-cbc-dark-blue sm:text-sm">
               {pathwayOptions.map(p => <option key={p.id} value={p.id}>
                   {p.name}
                 </option>)}
@@ -131,7 +131,7 @@ export const TeamComparison: React.FC = () => {
               <XAxis dataKey="name" />
               <YAxis domain={getYAxisDomain()} tickFormatter={formatYAxis} />
               <Tooltip formatter={value => metric === 'planningPercentage' ? `${value}%` : value.toLocaleString()} />
-              <Bar dataKey={metric} name={metrics.find(m => m.id === metric)?.name || 'Værdi'} fill="#1d3557" />
+              <Bar dataKey={metric} name={metrics.find(m => m.id === metric)?.name || 'Værdi'} fill="#0070AA" />
             </BarChart>
           </ResponsiveContainer>
         </div>

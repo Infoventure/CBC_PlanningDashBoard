@@ -33,36 +33,36 @@ export const TeamSummaryCard: React.FC<TeamSummaryCardProps> = ({
     if (percentage < 90) return 'text-red-600';
     return 'text-green-600';
   };
-  return <div className="bg-white rounded-lg shadow-lg mb-6">
+  return <div className="bg-cbc-ps-grey rounded-lg shadow-lg mb-6">
       <div className="p-4 border-b border-gray-200">
-        <h2 className="text-lg font-semibold text-[#1d3557]">
+        <h2 className="text-lg font-semibold text-cbc-dark-blue">
           Team {teamId} - Oversigt
         </h2>
       </div>
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4 p-4">
-        <div className="bg-gray-50 p-4 rounded-lg">
+        <div className="bg-cbc-beige bg-opacity-50 p-4 rounded-lg">
           <h3 className="text-sm font-medium text-gray-500 mb-1">
             Visiteret (timer)
           </h3>
-          <p className="text-2xl font-semibold text-[#1d3557]">
+          <p className="text-2xl font-semibold text-cbc-dark-blue">
             {totals.visiteret.toLocaleString()}
           </p>
         </div>
-        <div className="bg-gray-50 p-4 rounded-lg">
+        <div className="bg-cbc-beige bg-opacity-50 p-4 rounded-lg">
           <h3 className="text-sm font-medium text-gray-500 mb-1">
             Disponeret (timer)
           </h3>
-          <p className="text-2xl font-semibold text-[#1d3557]">
+          <p className="text-2xl font-semibold text-cbc-dark-blue">
             {totals.disponeret.toLocaleString()}
           </p>
         </div>
-        <div className="bg-gray-50 p-4 rounded-lg">
+        <div className="bg-cbc-beige bg-opacity-50 p-4 rounded-lg">
           <h3 className="text-sm font-medium text-gray-500 mb-1">Afvigelse</h3>
           <p className={`text-2xl font-semibold ${getBalanceColor(totals.balance)}`}>
             {totals.balance.toLocaleString()}
           </p>
         </div>
-        <div className="bg-gray-50 p-4 rounded-lg">
+        <div className="bg-cbc-beige bg-opacity-50 p-4 rounded-lg">
           <h3 className="text-sm font-medium text-gray-500 mb-1">
             Andel disponeret
           </h3>

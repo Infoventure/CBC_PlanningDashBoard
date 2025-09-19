@@ -3,9 +3,11 @@ import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, Responsi
 import { mockData } from '../data/mockData';
 interface ServiceGraphProps {
   citizenId: number | null;
+  showAlert?: boolean;
 }
 export const ServiceGraph: React.FC<ServiceGraphProps> = ({
-  citizenId
+  citizenId,
+  showAlert = true
 }) => {
   // Find the selected citizen or use the first one as default
   const citizen = citizenId ? mockData.citizens.find(c => c.id === citizenId) : mockData.citizens[0];
@@ -15,9 +17,26 @@ export const ServiceGraph: React.FC<ServiceGraphProps> = ({
         Vælg en borger for at se grafen
       </div>;
   }
+  // Modify the data for Borger 3 when alerts are hidden
+  const getModifiedWeeklyData = () => {
+    if (citizen.id === 3 && !showAlert) {
+      return citizen.weeklyData.map((week, index, array) => {
+        // Only modify the last data point (week 4)
+        if (index === array.length - 1) {
+          return {
+            ...week,
+            disponeret: 60
+          };
+        }
+        return week;
+      });
+    }
+    return citizen.weeklyData;
+  };
+  const weeklyData = getModifiedWeeklyData();
   return <div className="h-64">
       <ResponsiveContainer width="100%" height="100%">
-        <LineChart data={citizen.weeklyData} margin={{
+        <LineChart data={weeklyData} margin={{
         top: 5,
         right: 30,
         left: 20,
@@ -28,10 +47,10 @@ export const ServiceGraph: React.FC<ServiceGraphProps> = ({
           <YAxis />
           <Tooltip />
           <Legend />
-          <Line type="monotone" dataKey="visiteret" stroke="#1d3557" activeDot={{
+          <Line type="monotone" dataKey="visiteret" stroke="#0A1837" activeDot={{
           r: 8
         }} name="Visiteret" />
-          <Line type="monotone" dataKey="disponeret" stroke="#e63946" name="Disponeret" />
+          <Line type="monotone" dataKey="disponeret" stroke="#c7003a" name="Disponeret" />
         </LineChart>
       </ResponsiveContainer>
     </div>;
