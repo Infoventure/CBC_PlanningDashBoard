@@ -26,9 +26,9 @@ export const CitizenRow: React.FC<CitizenRowProps> = ({
     return 'bg-green-100';
   };
   const getPercentageColor = (percentage: number) => {
-    if (percentage > 120) return 'bg-red-100 text-red-700';
-    if (percentage > 100) return 'bg-yellow-100 text-yellow-700';
-    if (percentage < 60) return 'bg-green-100 text-green-700';
+    if (percentage > 75) return 'bg-red-100 text-red-700';
+    if (percentage > 50) return 'bg-yellow-100 text-yellow-700';
+    if (percentage < 20) return 'bg-green-100 text-green-700';
     return 'bg-yellow-50 text-yellow-600';
   };
 
@@ -76,7 +76,22 @@ export const CitizenRow: React.FC<CitizenRowProps> = ({
             <td className={`px-2 py-3 text-sm text-center border-r border-gray-200 ${pathway.balancePathwayMedian < 0 ? 'text-red-500' : ''}`}>
               {typeof pathway.balancePathwayMedian === 'number' ? (pathway.balancePathwayMedian > 0 ? `+${pathway.balancePathwayMedian}` : pathway.balancePathwayMedian) : '-'}
             </td>
-            <td className="px-2 py-3 text-sm text-center border-r border-gray-300">{pathway.visiteret > 0 ? <span className={`px-2 py-1 rounded-full text-xs ${getPercentageColor(pathway.andelDisponeret)}`}>{pathway.andelDisponeret}%</span> : '-'}</td>
+            <td className="px-2 py-3 text-sm text-center border-r border-gray-300">
+              {pathway.visiteret > 0 ? (
+                (() => {
+                  const diff = pathway.disponeret - pathway.visiteret;
+                  const percent = Math.round(Math.abs(diff) / pathway.visiteret * 100);
+                    const display = percent === 0 ? `${percent}%` : (diff > 0 ? `-${percent}%` : `+${percent}%`);
+                  return (
+                    <span className={`px-2 py-1 rounded-full text-xs ${getPercentageColor(percent)}`}>
+                      {display}
+                    </span>
+                  );
+                })()
+              ) : (
+                '-'
+              )}
+            </td>
           </>
         ) : (
           <>

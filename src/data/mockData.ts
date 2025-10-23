@@ -68,10 +68,10 @@ export const mockData: MockData = {
       balancePathwayMedian: 0,
     }, {
       id: 3,
-      visiteret: 0,
-      disponeret: 0,
-      balance: 0,
-      balancePathwayMedian: 0,
+      visiteret: 100,
+      disponeret: 195,
+      balance: -95,
+      balancePathwayMedian: -75,
     }],
     services: [{
       name: 'Personlig pleje',
@@ -119,10 +119,10 @@ export const mockData: MockData = {
       balancePathwayMedian: 0,
     }, {
       id: 3,
-      visiteret: 0,
-      disponeret: 0,
-      balance: 0,
-      balancePathwayMedian: 0,
+      visiteret: 90,
+      disponeret: 30,
+      balance: 60,
+      balancePathwayMedian: 90,
     }],
     weeklyData: [{
       week: 'Uge 1',
