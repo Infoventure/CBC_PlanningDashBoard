@@ -1,4 +1,5 @@
 import React, { useState, Fragment } from 'react';
+import fuzzysort from 'fuzzysort';
 import { mockData } from '../data/mockData';
 import { CitizenRow } from './CitizenRow';
 import { RefreshCwIcon, RotateCcwIcon } from 'lucide-react';
@@ -15,6 +16,7 @@ export const CitizenTable: React.FC<CitizenTableProps> = ({
   const [expandedCitizen, setExpandedCitizen] = useState<number | null>(null);
   const [selectedPathwayId, setSelectedPathwayId] = useState<number>(mockData.pathways[0]?.id || 1);
   const [searchTerm, setSearchTerm] = useState<string>("");
+  const [isRotating, setIsRotating] = useState(false);
   const handleCitizenClick = (citizenId: number) => {
     if (expandedCitizen === citizenId) {
       setExpandedCitizen(null);
@@ -32,10 +34,9 @@ export const CitizenTable: React.FC<CitizenTableProps> = ({
     )
     .filter(citizen => {
       if (!searchTerm.trim()) return true;
-      return (
-        citizen.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        citizen.cpr.toLowerCase().includes(searchTerm.toLowerCase())
-      );
+      const nameResult = fuzzysort.single(searchTerm, citizen.name);
+      const cprResult = fuzzysort.single(searchTerm, citizen.cpr);
+      return nameResult !== null || cprResult !== null;
     });
   const selectedPathway = mockData.pathways.find(p => p.id === selectedPathwayId);
 
@@ -62,9 +63,16 @@ export const CitizenTable: React.FC<CitizenTableProps> = ({
               onChange={e => setSearchTerm(e.target.value)}
               style={{ minWidth: "160px" }}
             />
-            <button className="p-2 rounded-md hover:bg-gray-100 text-[#1d3557] transition-colors" title="Opdater tabeldata">
-              <RefreshCwIcon className="h-5 w-5" />
-            </button>
+              <button
+                className="p-2 rounded-md hover:bg-gray-100 text-[#1d3557] transition-colors"
+                title="Opdater tabeldata"
+                onClick={() => {
+                  setIsRotating(true);
+                  setTimeout(() => setIsRotating(false), 600); // 600ms for 1 rotation
+                }}
+              >
+                <RefreshCwIcon className={`h-5 w-5 ${isRotating ? 'animate-spin-once' : ''}`} />
+              </button>
           </div>
         </div>
         <div className="w-full">
@@ -146,6 +154,15 @@ export const CitizenTable: React.FC<CitizenTableProps> = ({
           </table>
           )}
         </div>
+          <style>{`
+            @keyframes spin-once {
+              0% { transform: rotate(0deg); }
+              100% { transform: rotate(360deg); }
+            }
+            .animate-spin-once {
+              animation: spin-once 0.6s linear;
+            }
+          `}</style>
       </div>
     );
 };
