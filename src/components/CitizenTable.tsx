@@ -32,9 +32,10 @@ export const CitizenTable: React.FC<CitizenTableProps> = ({
       onToggleAlerts(newValue);
     }
   };
-  // Filter citizens by team ID
-  const filteredCitizens = mockData.citizens.filter(citizen => citizen.teamId === teamId);
+    // Filter citizens by team ID
+    const filteredCitizens = mockData.citizens.filter(citizen => citizen.teamId === teamId);
     const selectedPathway = mockData.pathways.find(p => p.id === selectedPathwayId);
+
     return (
       <div className="bg-white rounded-lg shadow-lg overflow-hidden">
         <div className="p-4 border-b border-gray-200 flex justify-between items-center">
@@ -64,7 +65,7 @@ export const CitizenTable: React.FC<CitizenTableProps> = ({
                 </th>
                 {selectedPathway && (
                   <Fragment>
-                    <th scope="col" colSpan={4} className="px-2 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider border-r border-gray-300">
+                    <th scope="col" colSpan={6} className="px-2 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider border-r border-gray-300">
                       {selectedPathway.name}
                     </th>
                   </Fragment>
@@ -74,16 +75,22 @@ export const CitizenTable: React.FC<CitizenTableProps> = ({
                 <th className="border-r border-gray-300"></th>
                 {selectedPathway && (
                   <Fragment>
-                    <th className="px-2 py-2 text-xs text-center border-r border-gray-200">
+                    <th className="px-2 py-2 text-xs text-center border-r border-gray-200" title="Forløbets median tid">
+                      Forl
+                    </th>
+                    <th className="px-2 py-2 text-xs text-center border-r border-gray-200" title="Visiteret tid">
                       Vis
                     </th>
-                    <th className="px-2 py-2 text-xs text-center border-r border-gray-200">
+                    <th className="px-2 py-2 text-xs text-center border-r border-gray-200" title="Disponeret tid">
                       Disp
                     </th>
-                    <th className="px-2 py-2 text-xs text-center border-r border-gray-200">
-                      Bal
+                    <th className="px-2 py-2 text-xs text-center border-r border-gray-200" title="Balance (Forskel mellem visiteret- og den disponerede tid)">
+                      Bal Vis
                     </th>
-                    <th className="px-2 py-2 text-xs text-center border-r border-gray-300">
+                    <th className="px-2 py-2 text-xs text-center border-r border-gray-200" title="Balance (Forskel mellem forløbets median og den disponerede tid)">
+                      Bal Forl
+                    </th>
+                    <th className="px-2 py-2 text-xs text-center border-r border-gray-300" title="Balance beregnet som procent">
                       %
                     </th>
                   </Fragment>
@@ -100,6 +107,7 @@ export const CitizenTable: React.FC<CitizenTableProps> = ({
                   isSelected={selectedCitizen === citizen.id}
                   showAlert={showAlerts}
                   pathwayId={selectedPathwayId}
+                  pathwayTime={selectedPathway?.mediantime}
                 />
               ))}
             </tbody>

@@ -8,15 +8,23 @@ export const TeamSummaryCard: React.FC<TeamSummaryCardProps> = ({
 }) => {
   // Filter citizens by team ID
   const teamCitizens = mockData.citizens.filter(citizen => citizen.teamId === teamId);
+
+  const pathwaysMedianTimes = mockData.pathways.reduce((acc, pathway) => { // object of { [pathwayId]: mediantime }
+    acc[pathway.id] = pathway.mediantime;
+    return acc;
+  }, {} as { [key: number]: number });
+
   // Calculate totals from filtered citizens
   const totals = teamCitizens.reduce((acc, citizen) => {
     citizen.pathways.forEach(pathway => {
+      acc.totalPathwayMedians += pathwaysMedianTimes[pathway.id] || 0;
       acc.visiteret += pathway.visiteret;
       acc.disponeret += pathway.disponeret;
       acc.balance += pathway.balance;
     });
     return acc;
   }, {
+    totalPathwayMedians: 0,
     visiteret: 0,
     disponeret: 0,
     balance: 0
@@ -39,7 +47,15 @@ export const TeamSummaryCard: React.FC<TeamSummaryCardProps> = ({
           Team {teamId} - Oversigt
         </h2>
       </div>
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-4 p-4">
+      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 p-4">
+        <div className="bg-gray-50 p-4 rounded-lg">
+          <h3 className="text-sm font-medium text-gray-500 mb-1">
+            Total forløbstid (timer)
+          </h3>
+          <p className="text-2xl font-semibold text-[#1d3557]">
+            {totals.totalPathwayMedians.toLocaleString()}
+          </p>
+        </div>
         <div className="bg-gray-50 p-4 rounded-lg">
           <h3 className="text-sm font-medium text-gray-500 mb-1">
             Visiteret (timer)
