@@ -1,7 +1,7 @@
 import React, { useState, Fragment } from 'react';
 import { mockData } from '../data/mockData';
 import { CitizenRow } from './CitizenRow';
-import { RefreshCwIcon } from 'lucide-react';
+import { RefreshCwIcon, RotateCcwIcon } from 'lucide-react';
 interface CitizenTableProps {
   onSelectCitizen: (id: number | null) => void;
   selectedCitizen: number | null;
@@ -16,7 +16,8 @@ export const CitizenTable: React.FC<CitizenTableProps> = ({
 }) => {
   const [expandedCitizen, setExpandedCitizen] = useState<number | null>(null);
   const [showAlerts, setShowAlerts] = useState<boolean>(true);
-    const [selectedPathwayId, setSelectedPathwayId] = useState<number>(mockData.pathways[0]?.id || 1);
+  const [selectedPathwayId, setSelectedPathwayId] = useState<number>(mockData.pathways[0]?.id || 1);
+  const [searchTerm, setSearchTerm] = useState<string>("");
   const handleCitizenClick = (citizenId: number) => {
     if (expandedCitizen === citizenId) {
       setExpandedCitizen(null);
@@ -32,9 +33,20 @@ export const CitizenTable: React.FC<CitizenTableProps> = ({
       onToggleAlerts(newValue);
     }
   };
-    // Filter citizens by team ID
-    const filteredCitizens = mockData.citizens.filter(citizen => citizen.teamId === teamId);
-    const selectedPathway = mockData.pathways.find(p => p.id === selectedPathwayId);
+  // Filter citizens by team ID, pathway, and search term
+  const filteredCitizens = mockData.citizens
+    .filter(citizen =>
+      citizen.teamId === teamId &&
+      citizen.pathways.some(p => p.id === selectedPathwayId)
+    )
+    .filter(citizen => {
+      if (!searchTerm.trim()) return true;
+      return (
+        citizen.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        citizen.cpr.toLowerCase().includes(searchTerm.toLowerCase())
+      );
+    });
+  const selectedPathway = mockData.pathways.find(p => p.id === selectedPathwayId);
 
     return (
       <div className="bg-white rounded-lg shadow-lg overflow-hidden">
@@ -51,13 +63,43 @@ export const CitizenTable: React.FC<CitizenTableProps> = ({
                 <option key={pathway.id} value={pathway.id}>{pathway.name}</option>
               ))}
             </select>
+            <input
+              type="text"
+              className="border border-gray-300 rounded px-2 py-1 text-sm"
+              placeholder="Søg navn eller CPR"
+              value={searchTerm}
+              onChange={e => setSearchTerm(e.target.value)}
+              style={{ minWidth: "160px" }}
+            />
             <button onClick={toggleAlerts} className="p-2 rounded-md hover:bg-gray-100 text-[#1d3557] transition-colors" title={showAlerts ? 'Skjul advarsler' : 'Vis advarsler'}>
               <RefreshCwIcon className="h-5 w-5" />
             </button>
           </div>
         </div>
         <div className="w-full">
-          <table className="min-w-full divide-y divide-gray-200 table-fixed">
+          {filteredCitizens.length === 0 ? (
+            <div className="p-4 py-8 text-center text-gray-500 flex flex-col items-center gap-4">
+              
+              {!searchTerm ? (
+                <div>Ingen borgere fundet</div> 
+                ): (
+                <>
+                  <span>Ingen borgere matcher søgningen.</span>
+                  <button
+                    type="button"
+                    className="inline-flex items-center gap-2 px-3 py-1 border border-gray-300 rounded text-sm text-[#1d3557] hover:bg-gray-100 transition-colors"
+                    onClick={() => setSearchTerm("")}
+                    title="Nulstil søgning"
+                  >
+                    <RotateCcwIcon className="w-4 h-4" />
+                    Nulstil søgning
+                  </button>
+                </>
+              )}
+              
+            </div>
+          ) : (
+            <table className="min-w-full divide-y divide-gray-200 table-fixed">
             <thead className="bg-gray-50">
               <tr>
                 <th scope="col" className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider border-r border-gray-300 w-1/5">
@@ -112,6 +154,7 @@ export const CitizenTable: React.FC<CitizenTableProps> = ({
               ))}
             </tbody>
           </table>
+          )}
         </div>
       </div>
     );
