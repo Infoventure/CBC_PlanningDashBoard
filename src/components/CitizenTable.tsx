@@ -2,7 +2,7 @@ import React, { useState, Fragment } from 'react';
 import fuzzysort from 'fuzzysort';
 import { mockData } from '../data/mockData';
 import { CitizenRow } from './CitizenRow';
-import { RefreshCwIcon, RotateCcwIcon } from 'lucide-react';
+import { RefreshCwIcon, RotateCcwIcon, SearchXIcon } from 'lucide-react';
 interface CitizenTableProps {
   onSelectCitizen: (id: number | null) => void;
   selectedCitizen: number | null;
@@ -44,7 +44,7 @@ export const CitizenTable: React.FC<CitizenTableProps> = ({
       <div className="bg-white rounded-lg shadow-lg overflow-hidden">
         <div className="p-4 border-b border-gray-200 flex justify-between items-center">
           <h2 className="text-lg font-semibold text-[#1d3557]">Borgeroversigt</h2>
-          <div className="flex items-center gap-4">
+          <div className="flex items-center gap-2">
             <label className="text-sm font-medium text-[#1d3557]">Forløb:</label>
             <select
               className="border border-gray-300 rounded px-2 py-1 text-sm"
@@ -55,14 +55,24 @@ export const CitizenTable: React.FC<CitizenTableProps> = ({
                 <option key={pathway.id} value={pathway.id}>{pathway.name}</option>
               ))}
             </select>
-            <input
-              type="text"
-              className="border border-gray-300 rounded px-2 py-1 text-sm"
-              placeholder="Søg navn eller CPR"
-              value={searchTerm}
-              onChange={e => setSearchTerm(e.target.value)}
-              style={{ minWidth: "160px" }}
-            />
+            <div className="flex items-center relative">
+              <input
+                type="text"
+                className="border border-gray-300 rounded px-2 ml-4 py-1 text-sm"
+                placeholder="Søg navn eller CPR"
+                value={searchTerm}
+                onChange={e => setSearchTerm(e.target.value)}
+                style={{ minWidth: "160px" }}
+              />
+              <button
+                type="button"
+                className="p-1 rounded-md hover:bg-red-600/10 text-[#1d3557] transition-colors absolute right-1"
+                title="Ryd søgning"
+                onClick={() => setSearchTerm("")}
+              >
+                <SearchXIcon className="h-4 w-4" />
+              </button>
+            </div>
               <button
                 className="p-2 rounded-md hover:bg-gray-100 text-[#1d3557] transition-colors"
                 title="Opdater tabeldata"
@@ -71,7 +81,7 @@ export const CitizenTable: React.FC<CitizenTableProps> = ({
                   setTimeout(() => setIsRotating(false), 600); // 600ms for 1 rotation
                 }}
               >
-                <RefreshCwIcon className={`h-5 w-5 ${isRotating ? 'animate-spin-once' : ''}`} />
+                <RefreshCwIcon className={`h-4 w-4 ${isRotating ? 'animate-spin-once' : ''}`} />
               </button>
           </div>
         </div>
@@ -86,11 +96,11 @@ export const CitizenTable: React.FC<CitizenTableProps> = ({
                   <span>Ingen borgere matcher søgningen.</span>
                   <button
                     type="button"
-                    className="inline-flex items-center gap-2 px-3 py-1 border border-gray-300 rounded text-sm text-[#1d3557] hover:bg-gray-100 transition-colors"
+                    className="inline-flex items-center gap-2 px-3 py-1 border border-gray-300 rounded text-sm text-[#1d3557] hover:bg-red-600/10 transition-colors"
                     onClick={() => setSearchTerm("")}
                     title="Nulstil søgning"
                   >
-                    <RotateCcwIcon className="w-4 h-4" />
+                    <SearchXIcon className="w-4 h-4" />
                     Nulstil søgning
                   </button>
                 </>
