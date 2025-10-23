@@ -7,13 +7,15 @@ interface CitizenRowProps {
   onClick: () => void;
   isSelected: boolean;
   showAlert?: boolean;
+  pathwayId: number;
 }
 export const CitizenRow: React.FC<CitizenRowProps> = ({
   citizen,
   expanded,
   onClick,
   isSelected,
-  showAlert = true
+  showAlert = true,
+  pathwayId
 }) => {
   const getBalanceColor = (balance: number) => {
     if (balance < 0) return 'bg-red-100';
@@ -59,7 +61,9 @@ export const CitizenRow: React.FC<CitizenRowProps> = ({
   };
   const pathways = getModifiedPathways();
   const services = getModifiedServices();
-  return <>
+  const pathway = pathways.find(p => p.id === pathwayId);
+  return (
+    <>
       <tr className={`hover:bg-gray-50 cursor-pointer ${isSelected ? 'bg-blue-50' : ''}`} onClick={onClick}>
         <td className="px-4 py-3 whitespace-nowrap border-r border-gray-300">
           <div className="flex items-center">
@@ -67,71 +71,45 @@ export const CitizenRow: React.FC<CitizenRowProps> = ({
             <div className="flex items-center">
               <UserIcon className="h-4 w-4 text-[#1d3557] mr-2" />
               <span className="font-medium text-sm">{citizen.name}</span>
-              {citizen.alert && showAlert && <span className="ml-2 px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 text-red-800">
-                  4 uger
-                </span>}
+              {citizen.alert && showAlert && <span className="ml-2 px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 text-red-800">4 uger</span>}
             </div>
           </div>
         </td>
-        {pathways.map((pathway, pathwayIndex) => <Fragment key={pathway.id}>
-            <td className="px-2 py-3 text-sm text-center border-r border-gray-200">
-              {pathway.visiteret || '-'}
-            </td>
-            <td className="px-2 py-3 text-sm text-center border-r border-gray-200">
-              {pathway.disponeret || '-'}
-            </td>
-            <td className={`px-2 py-3 text-sm text-center border-r border-gray-200 ${pathway.balance < 0 ? 'text-red-500' : ''}`}>
-              {pathway.balance || '-'}
-            </td>
-            <td className={`px-2 py-3 text-sm text-center ${pathwayIndex < pathways.length - 1 ? 'border-r border-gray-300' : ''}`}>
-              {pathway.visiteret > 0 ? <span className={`px-2 py-1 rounded-full text-xs ${getPercentageColor(pathway.andelDisponeret)}`}>
-                  {pathway.andelDisponeret}%
-                </span> : '-'}
-            </td>
-          </Fragment>)}
+        {pathway ? (
+          <>
+            <td className="px-2 py-3 text-sm text-center border-r border-gray-200">{pathway.visiteret || '-'}</td>
+            <td className="px-2 py-3 text-sm text-center border-r border-gray-200">{pathway.disponeret || '-'}</td>
+            <td className={`px-2 py-3 text-sm text-center border-r border-gray-200 ${pathway.balance < 0 ? 'text-red-500' : ''}`}>{pathway.balance || '-'}</td>
+            <td className="px-2 py-3 text-sm text-center border-r border-gray-300">{pathway.visiteret > 0 ? <span className={`px-2 py-1 rounded-full text-xs ${getPercentageColor(pathway.andelDisponeret)}`}>{pathway.andelDisponeret}%</span> : '-'}</td>
+          </>
+        ) : (
+          <>
+            <td className="px-2 py-3 text-sm text-center border-r border-gray-200">-</td>
+            <td className="px-2 py-3 text-sm text-center border-r border-gray-200">-</td>
+            <td className="px-2 py-3 text-sm text-center border-r border-gray-200">-</td>
+            <td className="px-2 py-3 text-sm text-center border-r border-gray-300">-</td>
+          </>
+        )}
       </tr>
-      {expanded && services && services.map((service, serviceIndex) => <tr key={`service-${serviceIndex}`} className="bg-gray-50">
-            <td className="px-4 py-2 text-sm font-medium border-r border-gray-300">
-              <div className="pl-6 border-l-2 border-[#1d3557]">
-                {service.name}
-              </div>
-            </td>
-            <td className="px-2 py-2 text-sm text-center border-r border-gray-200">
-              {/* Empty Vis column */}
-            </td>
-            <td className="px-2 py-2 text-sm text-center border-r border-gray-200">
-              {service.hours}
-            </td>
-            <td className="px-2 py-2 text-sm text-center border-r border-gray-200">
-              {/* Empty Bal column */}
-            </td>
-            <td className="px-2 py-2 text-sm text-center border-r border-gray-300">
-              {/* Empty % column */}
-            </td>
-            <td className="px-2 py-2 text-sm text-center border-r border-gray-200">
-              {/* Empty Vis column */}
-            </td>
-            <td className="px-2 py-2 text-sm text-center border-r border-gray-200">
-              {/* Empty Disp column */}
-            </td>
-            <td className="px-2 py-2 text-sm text-center border-r border-gray-200">
-              {/* Empty Bal column */}
-            </td>
-            <td className="px-2 py-2 text-sm text-center border-r border-gray-300">
-              {/* Empty % column */}
-            </td>
-            <td className="px-2 py-2 text-sm text-center border-r border-gray-200">
-              {/* Empty Vis column */}
-            </td>
-            <td className="px-2 py-2 text-sm text-center border-r border-gray-200">
-              {/* Empty Disp column */}
-            </td>
-            <td className="px-2 py-2 text-sm text-center border-r border-gray-200">
-              {/* Empty Bal column */}
-            </td>
-            <td className="px-2 py-2 text-sm text-center">
-              {/* Empty % column */}
-            </td>
-          </tr>)}
-    </>;
+      {expanded && services && services.map((service, serviceIndex) => (
+        <tr key={`service-${serviceIndex}`} className="bg-gray-50">
+          <td className="px-4 py-2 text-sm font-medium border-r border-gray-300">
+            <div className="pl-6 border-l-2 border-[#1d3557]">{service.name}</div>
+          </td>
+          <td className="px-2 py-2 text-sm text-center border-r border-gray-200">{/* Empty Vis column */}</td>
+          <td className="px-2 py-2 text-sm text-center border-r border-gray-200">{service.hours}</td>
+          <td className="px-2 py-2 text-sm text-center border-r border-gray-200">{/* Empty Bal column */}</td>
+          <td className="px-2 py-2 text-sm text-center border-r border-gray-300">{/* Empty % column */}</td>
+          <td className="px-2 py-2 text-sm text-center border-r border-gray-200">{/* Empty Vis column */}</td>
+          <td className="px-2 py-2 text-sm text-center border-r border-gray-200">{/* Empty Disp column */}</td>
+          <td className="px-2 py-2 text-sm text-center border-r border-gray-200">{/* Empty Bal column */}</td>
+          <td className="px-2 py-2 text-sm text-center border-r border-gray-300">{/* Empty % column */}</td>
+          <td className="px-2 py-2 text-sm text-center border-r border-gray-200">{/* Empty Vis column */}</td>
+          <td className="px-2 py-2 text-sm text-center border-r border-gray-200">{/* Empty Disp column */}</td>
+          <td className="px-2 py-2 text-sm text-center border-r border-gray-200">{/* Empty Bal column */}</td>
+          <td className="px-2 py-2 text-sm text-center">{/* Empty % column */}</td>
+        </tr>
+      ))}
+    </>
+  );
 };
