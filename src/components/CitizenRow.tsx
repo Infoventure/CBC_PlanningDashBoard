@@ -7,7 +7,6 @@ interface CitizenRowProps {
   expanded: boolean;
   onClick: () => void;
   isSelected: boolean;
-  showAlert?: boolean;
   pathwayId: number;
   pathwayTime?: number;
 }
@@ -16,7 +15,6 @@ export const CitizenRow: React.FC<CitizenRowProps> = ({
   expanded,
   onClick,
   isSelected,
-  showAlert = true,
   pathwayId,
   pathwayTime
 }) => {
@@ -33,40 +31,9 @@ export const CitizenRow: React.FC<CitizenRowProps> = ({
     if (percentage < 60) return 'bg-green-100 text-green-700';
     return 'bg-yellow-50 text-yellow-600';
   };
-  // Modify the data for Borger 3 when alerts are hidden
-  const getModifiedPathways = () => {
-    if (citizen.id === 3 && !showAlert) {
-      return citizen.pathways.map(pathway => ({
-        ...pathway,
-        disponeret: pathway.id === 1 ? 60 : pathway.disponeret,
-        balance: pathway.id === 1 ? pathway.visiteret - 60 : pathway.balance,
-        andelDisponeret: pathway.id === 1 ? Math.round(60 / pathway.visiteret * 100) : pathway.andelDisponeret
-      }));
-    }
-    return citizen.pathways;
-  };
-  // Modify the services for Borger 3 when alerts are hidden
-  const getModifiedServices = () => {
-    if (citizen.id === 3 && !showAlert && citizen.services) {
-      return citizen.services.map(service => {
-        if (service.name === 'Personlig pleje') {
-          return {
-            ...service,
-            hours: 20
-          };
-        } else if (service.name === 'Praktisk hjælp') {
-          return {
-            ...service,
-            hours: 10
-          };
-        }
-        return service;
-      });
-    }
-    return citizen.services;
-  };
-  const pathways = getModifiedPathways();
-  const services = getModifiedServices();
+
+  const pathways = citizen.pathways;
+  const services = citizen.services;
   const pathway = pathways.find(p => p.id === pathwayId);
 
   return (
@@ -94,7 +61,7 @@ export const CitizenRow: React.FC<CitizenRowProps> = ({
                   </button>
                 </span>
               </div>
-              {citizen.alert && showAlert && <span className="ml-2 px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 text-red-800">4 uger</span>}
+              {<span className="ml-2 px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">0 uger</span>}
             </div>
           </div>
         </td>
@@ -127,18 +94,11 @@ export const CitizenRow: React.FC<CitizenRowProps> = ({
           <td className="px-4 py-2 text-sm font-medium border-r border-gray-300">
             <div className="pl-6 border-l-2 border-[#1d3557]">{service.name}</div>
           </td>
-          <td className="px-2 py-2 text-sm text-center border-r border-gray-200">{/* Empty Vis column */}</td>
+          <td className="px-2 py-2 text-sm text-center border-r border-gray-200"></td>
           <td className="px-2 py-2 text-sm text-center border-r border-gray-200">{service.hours}</td>
-          <td className="px-2 py-2 text-sm text-center border-r border-gray-200">{/* Empty Bal column */}</td>
-          <td className="px-2 py-2 text-sm text-center border-r border-gray-300">{/* Empty % column */}</td>
-          <td className="px-2 py-2 text-sm text-center border-r border-gray-200">{/* Empty Vis column */}</td>
-          <td className="px-2 py-2 text-sm text-center border-r border-gray-200">{/* Empty Disp column */}</td>
-          <td className="px-2 py-2 text-sm text-center border-r border-gray-200">{/* Empty Bal column */}</td>
-          <td className="px-2 py-2 text-sm text-center border-r border-gray-300">{/* Empty % column */}</td>
-          <td className="px-2 py-2 text-sm text-center border-r border-gray-200">{/* Empty Vis column */}</td>
-          <td className="px-2 py-2 text-sm text-center border-r border-gray-200">{/* Empty Disp column */}</td>
-          <td className="px-2 py-2 text-sm text-center border-r border-gray-200">{/* Empty Bal column */}</td>
-          <td className="px-2 py-2 text-sm text-center">{/* Empty % column */}</td>
+          <td className="px-2 py-2 text-sm text-center border-r border-gray-200"></td>
+          <td className="px-2 py-2 text-sm text-center border-r border-gray-300"></td>
+          <td className="px-2 py-2 text-sm text-center border-r border-gray-200"></td>
         </tr>
       ))}
     </>

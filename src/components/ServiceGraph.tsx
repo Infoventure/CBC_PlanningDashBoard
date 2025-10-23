@@ -7,7 +7,6 @@ interface ServiceGraphProps {
 }
 export const ServiceGraph: React.FC<ServiceGraphProps> = ({
   citizenId,
-  showAlert = true
 }) => {
   // Find the selected citizen or use the first one as default
   const citizen = citizenId ? mockData.citizens.find(c => c.id === citizenId) : mockData.citizens[0];
@@ -18,22 +17,8 @@ export const ServiceGraph: React.FC<ServiceGraphProps> = ({
       </div>;
   }
   // Modify the data for Borger 3 when alerts are hidden
-  const getModifiedWeeklyData = () => {
-    if (citizen.id === 3 && !showAlert) {
-      return citizen.weeklyData.map((week, index, array) => {
-        // Only modify the last data point (week 4)
-        if (index === array.length - 1) {
-          return {
-            ...week,
-            disponeret: 60
-          };
-        }
-        return week;
-      });
-    }
-    return citizen.weeklyData;
-  };
-  const weeklyData = getModifiedWeeklyData();
+  
+  const weeklyData = citizen.weeklyData;
   return <div className="h-64">
       <ResponsiveContainer width="100%" height="100%">
         <LineChart data={weeklyData} margin={{

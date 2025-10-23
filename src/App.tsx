@@ -8,10 +8,7 @@ import { BarChartIcon, ArrowLeftIcon } from 'lucide-react';
 export function App() {
   const [selectedCitizen, setSelectedCitizen] = useState(null);
   const [selectedTeam, setSelectedTeam] = useState<number>(1);
-  const [showAlerts, setShowAlerts] = useState<boolean>(true);
-  const handleToggleAlerts = (value: boolean) => {
-    setShowAlerts(value);
-  };
+
   return <div className="min-h-screen bg-gray-50">
       <header className="bg-white border-b border-gray-200 shadow-sm">
         <div className="container mx-auto px-4 py-4 flex justify-between items-center">
@@ -31,14 +28,17 @@ export function App() {
         <TeamSummaryCard teamId={selectedTeam} />
         <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
           <div className="lg:col-span-3">
-            <CitizenTable onSelectCitizen={setSelectedCitizen} selectedCitizen={selectedCitizen} teamId={selectedTeam} onToggleAlerts={handleToggleAlerts} />
+            <CitizenTable onSelectCitizen={setSelectedCitizen} selectedCitizen={selectedCitizen} teamId={selectedTeam} />
           </div>
-          {selectedCitizen === 3 ? <div className="bg-white p-4 rounded-lg shadow-lg">
+          {selectedCitizen ? (
+            <div className="bg-white p-4 rounded-lg shadow-lg">
               <h2 className="text-lg font-semibold mb-4 text-[#1d3557]">
                 Borgerens udvikling
               </h2>
-              <ServiceGraph citizenId={selectedCitizen} showAlert={showAlerts} />
-            </div> : <div className="hidden lg:block">
+              <ServiceGraph citizenId={selectedCitizen} />
+            </div>
+          ) : (
+            <div className="hidden lg:block">
               <div className="bg-white p-4 rounded-lg shadow-lg">
                 <h2 className="text-lg font-semibold mb-4 text-[#1d3557]">
                   Vælg en borger
@@ -48,7 +48,8 @@ export function App() {
                   udvikling.
                 </p>
               </div>
-            </div>}
+            </div>
+          )}
         </div>
       </main>
     </div>;

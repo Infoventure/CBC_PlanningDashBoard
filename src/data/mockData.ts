@@ -73,6 +73,16 @@ export const mockData: MockData = {
       balance: 0,
       balancePathwayMedian: 0,
     }],
+    services: [{
+      name: 'Personlig pleje',
+      hours: 20
+    }, {
+      name: 'Praktisk hjælp',
+      hours: 5
+    }, {
+      name: 'Genoptræning',
+      hours: 15
+    }],
     weeklyData: [{
       week: 'Uge 1',
       visiteret: 59,
@@ -158,13 +168,13 @@ export const mockData: MockData = {
     }],
     services: [{
       name: 'Personlig pleje',
-      hours: 10
+      hours: 8
     }, {
       name: 'Praktisk hjælp',
-      hours: 20
+      hours: 12
     }, {
       name: 'Genoptræning',
-      hours: 20
+      hours: 30
     }],
     weeklyData: [{
       week: 'Uge 1',

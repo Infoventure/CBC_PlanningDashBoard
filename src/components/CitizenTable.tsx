@@ -6,16 +6,13 @@ interface CitizenTableProps {
   onSelectCitizen: (id: number | null) => void;
   selectedCitizen: number | null;
   teamId: number;
-  onToggleAlerts?: (showAlerts: boolean) => void;
 }
 export const CitizenTable: React.FC<CitizenTableProps> = ({
   onSelectCitizen,
   selectedCitizen,
   teamId,
-  onToggleAlerts
 }) => {
   const [expandedCitizen, setExpandedCitizen] = useState<number | null>(null);
-  const [showAlerts, setShowAlerts] = useState<boolean>(true);
   const [selectedPathwayId, setSelectedPathwayId] = useState<number>(mockData.pathways[0]?.id || 1);
   const [searchTerm, setSearchTerm] = useState<string>("");
   const handleCitizenClick = (citizenId: number) => {
@@ -26,13 +23,7 @@ export const CitizenTable: React.FC<CitizenTableProps> = ({
     }
     onSelectCitizen(citizenId);
   };
-  const toggleAlerts = () => {
-    const newValue = !showAlerts;
-    setShowAlerts(newValue);
-    if (onToggleAlerts) {
-      onToggleAlerts(newValue);
-    }
-  };
+
   // Filter citizens by team ID, pathway, and search term
   const filteredCitizens = mockData.citizens
     .filter(citizen =>
@@ -71,7 +62,7 @@ export const CitizenTable: React.FC<CitizenTableProps> = ({
               onChange={e => setSearchTerm(e.target.value)}
               style={{ minWidth: "160px" }}
             />
-            <button onClick={toggleAlerts} className="p-2 rounded-md hover:bg-gray-100 text-[#1d3557] transition-colors" title={showAlerts ? 'Skjul advarsler' : 'Vis advarsler'}>
+            <button className="p-2 rounded-md hover:bg-gray-100 text-[#1d3557] transition-colors" title="Opdater tabeldata">
               <RefreshCwIcon className="h-5 w-5" />
             </button>
           </div>
@@ -147,7 +138,6 @@ export const CitizenTable: React.FC<CitizenTableProps> = ({
                   expanded={expandedCitizen === citizen.id}
                   onClick={() => handleCitizenClick(citizen.id)}
                   isSelected={selectedCitizen === citizen.id}
-                  showAlert={showAlerts}
                   pathwayId={selectedPathwayId}
                   pathwayTime={selectedPathway?.mediantime}
                 />
