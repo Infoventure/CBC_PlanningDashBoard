@@ -1,21 +1,23 @@
-import React from 'react';
-import { mockData } from '../data/mockData';
+import React, { useContext } from 'react';
+import { DataContext } from '../App';
 interface TeamSummaryCardProps {
   teamId: number;
 }
 export const TeamSummaryCard: React.FC<TeamSummaryCardProps> = ({
   teamId
 }) => {
+  const data = useContext(DataContext);
+  
   // Filter citizens by team ID
-  const teamCitizens = mockData.citizens.filter(citizen => citizen.teamId === teamId);
+  const teamCitizens = data?.citizens.filter(citizen => citizen.teamId === teamId);
 
-  const pathwaysMedianTimes = mockData.pathways.reduce((acc, pathway) => { // object of { [pathwayId]: mediantime }
-    acc[pathway.id] = pathway.mediantime;
+  const pathwaysMedianTimes = data?.pathways.reduce((acc, pathway) => { // object of { [pathwayId]: mediantime }
+    acc[Number(pathway.id)] = pathway.mediantime;
     return acc;
   }, {} as { [key: number]: number });
 
   // Calculate totals from filtered citizens
-  const totals = teamCitizens.reduce((acc, citizen) => {
+  const totals = teamCitizens?.reduce((acc, citizen) => {
     Object.entries(citizen.pathwayData).forEach(([pathwayId, weeks]) => {
       Object.entries(weeks).forEach(([week, data]) => {
         acc.totalPathwayMedians += pathwaysMedianTimes[Number(pathwayId)] || 0;
@@ -32,7 +34,7 @@ export const TeamSummaryCard: React.FC<TeamSummaryCardProps> = ({
     balance: 0
   });
   // Calculate percentage of disponeret to visiteret
-  const andelDisponeret = totals.visiteret > 0 ? Math.round(totals.disponeret / totals.visiteret * 100) : 0;
+  const andelDisponeret = totals?.visiteret > 0 ? Math.round(totals?.disponeret / totals?.visiteret * 100) : 0;
   const getBalanceColor = (balance: number) => {
     if (balance > 0) return 'text-red-600';
     return 'text-green-600';
@@ -55,7 +57,7 @@ export const TeamSummaryCard: React.FC<TeamSummaryCardProps> = ({
             Total forløbstid (timer)
           </h3>
           <p className="text-2xl font-semibold text-[#1d3557]">
-            {totals.totalPathwayMedians.toLocaleString()}
+            {totals?.totalPathwayMedians.toLocaleString()}
           </p>
         </div>
         <div className="bg-gray-50 p-4 rounded-lg">
@@ -63,7 +65,7 @@ export const TeamSummaryCard: React.FC<TeamSummaryCardProps> = ({
             Visiteret (timer)
           </h3>
           <p className="text-2xl font-semibold text-[#1d3557]">
-            {totals.visiteret.toLocaleString()}
+            {totals?.visiteret.toLocaleString()}
           </p>
         </div>
         <div className="bg-gray-50 p-4 rounded-lg">
@@ -71,13 +73,13 @@ export const TeamSummaryCard: React.FC<TeamSummaryCardProps> = ({
             Disponeret (timer)
           </h3>
           <p className="text-2xl font-semibold text-[#1d3557]">
-            {totals.disponeret.toLocaleString()}
+            {totals?.disponeret.toLocaleString()}
           </p>
         </div>
         <div className="bg-gray-50 p-4 rounded-lg" title='Hvor mange flere timer er disponeret end den samlede forløbstid'>
           <h3 className="text-sm font-medium text-gray-500 mb-1">Afvigelse</h3>
-          <p className={`text-2xl font-semibold ${getBalanceColor(totals.balance)}`}>
-            {totals.balance.toLocaleString()}
+          <p className={`text-2xl font-semibold ${getBalanceColor(totals?.balance)}`}>
+            {totals?.balance.toLocaleString()}
           </p>
         </div>
         <div className="bg-gray-50 p-4 rounded-lg">

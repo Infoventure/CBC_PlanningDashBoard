@@ -8,7 +8,7 @@ interface CitizenRowProps {
   expanded: boolean;
   onClick: () => void;
   isSelected: boolean;
-  pathwayId: number;
+  pathwayId: string;
   pathwayTime?: number;
 }
 export const CitizenRow: React.FC<CitizenRowProps> = ({

@@ -1,15 +1,17 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
-import { mockData } from '../data/mockData';
+import { DataContext } from '../App';
 interface ServiceGraphProps {
-  citizenId: number | null;
+  citizenId: string | null;
   showAlert?: boolean;
 }
 export const ServiceGraph: React.FC<ServiceGraphProps> = ({
   citizenId,
 }) => {
+  const data = useContext(DataContext);
+
   // Find the selected citizen or use the first one as default
-  const citizen = citizenId ? mockData.citizens.find(c => c.id === citizenId) : mockData.citizens[0];
+  const citizen = citizenId ? data?.citizens.find(c => c.id === citizenId) : data?.citizens[0];
   // If no citizen is found, show a placeholder
   if (!citizen) {
     return <div className="h-64 flex items-center justify-center text-gray-500">
@@ -51,8 +53,8 @@ export const ServiceGraph: React.FC<ServiceGraphProps> = ({
   });
 
   // Get pathway names for legend
-  const pathwayNames: Record<number, string> = {};
-  mockData.pathways.forEach(p => { pathwayNames[p.id] = p.name; });
+  const pathwayNames: Record<string, string> = {};
+  data?.pathways.forEach(p => { pathwayNames[p.id] = p.name; });
 
   return <div className="h-64">
     <ResponsiveContainer width="100%" height="100%">

@@ -1,11 +1,12 @@
-import React, { useState, Fragment } from 'react';
+import React, { useState, Fragment, useContext } from 'react';
 import fuzzysort from 'fuzzysort';
-import { mockData } from '../data/mockData';
 import { CitizenRow } from './CitizenRow';
-import { RefreshCwIcon, RotateCcwIcon, SearchXIcon } from 'lucide-react';
+import { RefreshCwIcon, SearchXIcon } from 'lucide-react';
+import { DataContext } from '../App'; // adjust path as needed
+
 interface CitizenTableProps {
-  onSelectCitizen: (id: number | null) => void;
-  selectedCitizen: number | null;
+  onSelectCitizen: (id: string | null) => void;
+  selectedCitizen: string | null;
   teamId: number;
 }
 export const CitizenTable: React.FC<CitizenTableProps> = ({
@@ -13,11 +14,14 @@ export const CitizenTable: React.FC<CitizenTableProps> = ({
   selectedCitizen,
   teamId,
 }) => {
-  const [expandedCitizen, setExpandedCitizen] = useState<number | null>(null);
-  const [selectedPathwayId, setSelectedPathwayId] = useState<number>(mockData.pathways[0]?.id || 1);
+
+  const data = useContext(DataContext); // Removed unused DataContext reference
+
+  const [expandedCitizen, setExpandedCitizen] = useState<string | null>(null);
+  const [selectedPathwayId, setSelectedPathwayId] = useState<string>(data?.pathways[0]?.id || "Forløb 1");
   const [searchTerm, setSearchTerm] = useState<string>("");
   const [isRotating, setIsRotating] = useState(false);
-  const handleCitizenClick = (citizenId: number) => {
+  const handleCitizenClick = (citizenId: string) => {
     if (expandedCitizen === citizenId) {
       setExpandedCitizen(null);
     } else {
@@ -27,7 +31,7 @@ export const CitizenTable: React.FC<CitizenTableProps> = ({
   };
 
   // Filter citizens by team ID, pathway, and search term
-  const filteredCitizens = mockData.citizens
+  const filteredCitizens = data?.citizens
     .filter(citizen =>
       citizen.teamId === teamId &&
       citizen.pathwayData && citizen.pathwayData[selectedPathwayId]
@@ -38,7 +42,7 @@ export const CitizenTable: React.FC<CitizenTableProps> = ({
       const cprResult = fuzzysort.single(searchTerm, citizen.cpr);
       return nameResult !== null || cprResult !== null;
     });
-  const selectedPathway = mockData.pathways.find(p => p.id === selectedPathwayId);
+  const selectedPathway = data?.pathways.find(p => p.id === selectedPathwayId);
 
 
   const now = new Date();
@@ -51,6 +55,10 @@ export const CitizenTable: React.FC<CitizenTableProps> = ({
   const weeks = Array.from({ length: 4 }, (_, i) => `${currentWeek - 3 + i}-${currentYear}`);
 
   const [selectedWeek, setSelectedWeek] = useState(weeks[3]); // default to current week
+
+  if (!data) {
+    return <div>Loading data...</div>;
+  }
 
   return (
       <div className="bg-white rounded-lg shadow-lg overflow-hidden">
@@ -73,9 +81,9 @@ export const CitizenTable: React.FC<CitizenTableProps> = ({
             <select
               className="border border-gray-300 rounded px-2 py-1 text-sm"
               value={selectedPathwayId}
-              onChange={e => setSelectedPathwayId(Number(e.target.value))}
+              onChange={e => setSelectedPathwayId(e.target.value)}
             >
-              {mockData.pathways.map(pathway => (
+              {data.pathways.map(pathway => (
                 <option key={pathway.id} value={pathway.id}>{pathway.name}</option>
               ))}
             </select>
