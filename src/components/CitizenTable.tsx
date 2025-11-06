@@ -30,7 +30,7 @@ export const CitizenTable: React.FC<CitizenTableProps> = ({
   const filteredCitizens = mockData.citizens
     .filter(citizen =>
       citizen.teamId === teamId &&
-      citizen.pathways.some(p => p.id === selectedPathwayId)
+      citizen.pathwayData && citizen.pathwayData[selectedPathwayId]
     )
     .filter(citizen => {
       if (!searchTerm.trim()) return true;
@@ -40,11 +40,35 @@ export const CitizenTable: React.FC<CitizenTableProps> = ({
     });
   const selectedPathway = mockData.pathways.find(p => p.id === selectedPathwayId);
 
-    return (
+
+  const now = new Date();
+  const currentWeek = Math.ceil(
+    ((now.getTime() - new Date(now.getFullYear(), 0, 1).getTime()) / 86400000 + 1) / 7
+  );
+  const currentYear = now.getFullYear();
+
+  // last 3 weeks + current
+  const weeks = Array.from({ length: 4 }, (_, i) => `${currentWeek - 3 + i}-${currentYear}`);
+
+  const [selectedWeek, setSelectedWeek] = useState(weeks[3]); // default to current week
+
+  return (
       <div className="bg-white rounded-lg shadow-lg overflow-hidden">
         <div className="p-4 border-b border-gray-200 flex justify-between items-center">
           <h2 className="text-lg font-semibold text-[#1d3557]">Borgeroversigt</h2>
           <div className="flex items-center gap-2">
+            <label className="text-sm font-medium text-[#1d3557] mr-2">Uge:</label>
+            <select
+              className="border border-gray-300 rounded px-2 py-1 text-sm mr-2"
+              value={selectedWeek}
+              onChange={(e) => setSelectedWeek(e.target.value)}
+            >
+              {weeks.map((w) => (
+                <option key={w} value={w}>
+                  {w}
+                </option>
+              ))}
+            </select>
             <label className="text-sm font-medium text-[#1d3557]">Forløb:</label>
             <select
               className="border border-gray-300 rounded px-2 py-1 text-sm"
@@ -135,11 +159,8 @@ export const CitizenTable: React.FC<CitizenTableProps> = ({
                     <th className="px-2 py-2 text-xs text-center border-r border-gray-200" title="Disponeret tid">
                       Disp
                     </th>
-                    <th className="px-2 py-2 text-xs text-center border-r border-gray-200" title="Balance (Forskel mellem visiteret- og den disponerede tid)">
+                    <th className="px-2 py-2 text-xs text-center border-r border-gray-200" title="Balance (Hvor mange flere timer er disponeret end visiteret)">
                       Bal Vis
-                    </th>
-                    <th className="px-2 py-2 text-xs text-center border-r border-gray-200" title="Balance (Forskel mellem forløbets median og den disponerede tid)">
-                      Bal Forl
                     </th>
                     <th className="px-2 py-2 text-xs text-center border-r border-gray-300" title="Balance beregnet som procent">
                       %
@@ -153,6 +174,7 @@ export const CitizenTable: React.FC<CitizenTableProps> = ({
                 <CitizenRow
                   key={citizen.id}
                   citizen={citizen}
+                  week={selectedWeek}
                   expanded={expandedCitizen === citizen.id}
                   onClick={() => handleCitizenClick(citizen.id)}
                   isSelected={selectedCitizen === citizen.id}

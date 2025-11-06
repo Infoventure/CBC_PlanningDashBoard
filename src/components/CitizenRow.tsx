@@ -4,6 +4,7 @@ import { ChevronDownIcon, ChevronRightIcon, UserIcon } from 'lucide-react';
 import { CopyIcon } from 'lucide-react';
 interface CitizenRowProps {
   citizen: Citizen;
+  week: string;
   expanded: boolean;
   onClick: () => void;
   isSelected: boolean;
@@ -12,6 +13,7 @@ interface CitizenRowProps {
 }
 export const CitizenRow: React.FC<CitizenRowProps> = ({
   citizen,
+  week,
   expanded,
   onClick,
   isSelected,
@@ -22,7 +24,7 @@ export const CitizenRow: React.FC<CitizenRowProps> = ({
     navigator.clipboard.writeText(cpr);
   };
   const getBalanceColor = (balance: number) => {
-    if (balance < 0) return 'bg-red-100';
+    if (balance > 0) return 'bg-red-100';
     return 'bg-green-100';
   };
   const getPercentageColor = (percentage: number) => {
@@ -31,10 +33,13 @@ export const CitizenRow: React.FC<CitizenRowProps> = ({
     if (percentage < 20) return 'bg-green-100 text-green-700';
     return 'bg-yellow-50 text-yellow-600';
   };
+  console.log(week)
+  const pathways = citizen.pathwayData;
+  const procedures = citizen.pathwayData[pathwayId][week]?.procedures;
+  const pathway = pathways[pathwayId][week]?.total;
 
-  const pathways = citizen.pathways;
-  const services = citizen.services;
-  const pathway = pathways.find(p => p.id === pathwayId);
+  // Compute balance dynamically
+  const balance = pathway?.disponeret - pathway?.visiteret;
 
   return (
     <>
@@ -70,11 +75,8 @@ export const CitizenRow: React.FC<CitizenRowProps> = ({
             <td className="px-2 py-3 text-sm text-center border-r border-gray-200">{pathwayTime || '-'}</td>
             <td className="px-2 py-3 text-sm text-center border-r border-gray-200">{pathway.visiteret || '-'}</td>
             <td className="px-2 py-3 text-sm text-center border-r border-gray-200">{pathway.disponeret || '-'}</td>
-            <td className={`px-2 py-3 text-sm text-center border-r border-gray-200 ${pathway.balance < 0 ? 'text-red-500' : ''}`}>
-              {typeof pathway.balance === 'number' ? (pathway.balance > 0 ? `+${pathway.balance}` : pathway.balance) : '-'}
-            </td>
-            <td className={`px-2 py-3 text-sm text-center border-r border-gray-200 ${pathway.balancePathwayMedian < 0 ? 'text-red-500' : ''}`}>
-              {typeof pathway.balancePathwayMedian === 'number' ? (pathway.balancePathwayMedian > 0 ? `+${pathway.balancePathwayMedian}` : pathway.balancePathwayMedian) : '-'}
+            <td className={`px-2 py-3 text-sm text-center border-r border-gray-200 ${balance > 0 ? 'text-red-500' : 'text-yellow-600'}`}> 
+              {balance > 0 ? `+${balance}` : balance < 0 ? `${balance}` : balance === 0 ? '0' : '-'}
             </td>
             <td className="px-2 py-3 text-sm text-center border-r border-gray-300">
               {pathway.visiteret > 0 ? (
@@ -104,16 +106,24 @@ export const CitizenRow: React.FC<CitizenRowProps> = ({
           </>
         )}
       </tr>
-      {expanded && services && services.map((service, serviceIndex) => (
+      {expanded && procedures && procedures.map((procedure, serviceIndex) => (
         <tr key={`service-${serviceIndex}`} className="bg-gray-50">
           <td className="px-4 py-2 text-sm font-medium border-r border-gray-300">
-            <div className="pl-6 border-l-2 border-[#1d3557]">{service.name}</div>
+            <div className="pl-6 border-l-2 border-[#1d3557]">{procedure.name}</div>
           </td>
-          <td className="px-2 py-2 text-sm text-center border-r border-gray-200"></td>
-          <td className="px-2 py-2 text-sm text-center border-r border-gray-200">{service.hours}</td>
-          <td className="px-2 py-2 text-sm text-center border-r border-gray-200"></td>
-          <td className="px-2 py-2 text-sm text-center border-r border-gray-300"></td>
-          <td className="px-2 py-2 text-sm text-center border-r border-gray-200"></td>
+          <td className="px-2 py-2 text-sm text-center border-r border-gray-200">-</td>
+          <td className="px-2 py-2 text-sm text-center border-r border-gray-200">{procedure.visiteret}</td>
+          <td className="px-2 py-2 text-sm text-center border-r border-gray-200">{procedure.disponeret}</td>
+          <td className={`px-2 py-2 text-sm text-center border-r border-gray-300 ${(procedure.disponeret- procedure.visiteret) > 0 ? 'text-red-500' : 'text-yellow-600'}`}>
+            {(procedure.disponeret - procedure.visiteret) > 0
+              ? `+${procedure.disponeret - procedure.visiteret}`
+              : (procedure.disponeret - procedure.visiteret) < 0
+                ? `${procedure.disponeret - procedure.visiteret}`
+                : (procedure.disponeret - procedure.visiteret) === 0
+                  ? '0'
+                  : '-'}
+          </td>
+          <td className="px-2 py-2 text-sm text-center border-r border-gray-200">-</td>
         </tr>
       ))}
     </>

@@ -16,12 +16,14 @@ export const TeamSummaryCard: React.FC<TeamSummaryCardProps> = ({
 
   // Calculate totals from filtered citizens
   const totals = teamCitizens.reduce((acc, citizen) => {
-    citizen.pathways.forEach(pathway => {
-      acc.totalPathwayMedians += pathwaysMedianTimes[pathway.id] || 0;
-      acc.visiteret += pathway.visiteret;
-      acc.disponeret += pathway.disponeret;
-      acc.balance += pathway.balance;
+    Object.entries(citizen.pathwayData).forEach(([pathwayId, weeks]) => {
+      Object.entries(weeks).forEach(([week, data]) => {
+        acc.totalPathwayMedians += pathwaysMedianTimes[Number(pathwayId)] || 0;
+        acc.visiteret += data.total.visiteret;
+        acc.disponeret += data.total.disponeret;
+      });
     });
+    acc.balance = acc.disponeret - acc.totalPathwayMedians
     return acc;
   }, {
     totalPathwayMedians: 0,
@@ -32,7 +34,7 @@ export const TeamSummaryCard: React.FC<TeamSummaryCardProps> = ({
   // Calculate percentage of disponeret to visiteret
   const andelDisponeret = totals.visiteret > 0 ? Math.round(totals.disponeret / totals.visiteret * 100) : 0;
   const getBalanceColor = (balance: number) => {
-    if (balance < 0) return 'text-red-600';
+    if (balance > 0) return 'text-red-600';
     return 'text-green-600';
   };
   const getPercentageColor = (percentage: number) => {
@@ -72,7 +74,7 @@ export const TeamSummaryCard: React.FC<TeamSummaryCardProps> = ({
             {totals.disponeret.toLocaleString()}
           </p>
         </div>
-        <div className="bg-gray-50 p-4 rounded-lg">
+        <div className="bg-gray-50 p-4 rounded-lg" title='Hvor mange flere timer er disponeret end den samlede forløbstid'>
           <h3 className="text-sm font-medium text-gray-500 mb-1">Afvigelse</h3>
           <p className={`text-2xl font-semibold ${getBalanceColor(totals.balance)}`}>
             {totals.balance.toLocaleString()}
