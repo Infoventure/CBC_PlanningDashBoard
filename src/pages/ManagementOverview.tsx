@@ -15,7 +15,7 @@ export const ManagementOverview: React.FC = () => {
           <h1 className="text-xl font-semibold text-[#1d3557]">
             Taktisk ledelseskompas
           </h1>
-          <Link to="/citizens" className="flex items-center text-[#1d3557] hover:text-[#152843] font-medium">
+          <Link to="/" className="flex items-center text-[#1d3557] hover:text-[#152843] font-medium">
             <UsersIcon className="h-4 w-4 mr-1" />
             Planlægningskompas
           </Link>

@@ -36,7 +36,7 @@ export function App() {
               Planlægningskompas
             </h1>
             <Link
-              to="/"
+              to="/management"
               className="flex items-center text-[#1d3557] hover:text-[#152843] font-medium"
             >
               <ArrowLeftIcon className="h-4 w-4 mr-1" />
