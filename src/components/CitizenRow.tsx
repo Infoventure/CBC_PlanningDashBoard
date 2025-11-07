@@ -33,7 +33,7 @@ export const CitizenRow: React.FC<CitizenRowProps> = ({
     if (percentage < 20) return 'bg-green-100 text-green-700';
     return 'bg-yellow-50 text-yellow-600';
   };
-  console.log(week)
+
   const pathways = citizen.pathwayData;
   const procedures = citizen.pathwayData[pathwayId][week]?.procedures;
   const pathway = pathways[pathwayId][week]?.total;
@@ -97,16 +97,15 @@ export const CitizenRow: React.FC<CitizenRowProps> = ({
           </>
         ) : (
           <>
+            <td className="px-2 py-3 text-sm text-center border-r border-gray-200">{pathwayTime || '-'}</td>
             <td className="px-2 py-3 text-sm text-center border-r border-gray-200">-</td>
             <td className="px-2 py-3 text-sm text-center border-r border-gray-200">-</td>
-            <td className="px-2 py-3 text-sm text-center border-r border-gray-200">-</td>
-            <td className="px-2 py-3 text-sm text-center border-r border-gray-300">-</td>
             <td className="px-2 py-3 text-sm text-center border-r border-gray-300">-</td>
             <td className="px-2 py-3 text-sm text-center border-r border-gray-300">-</td>
           </>
         )}
       </tr>
-      {expanded && procedures && procedures.map((procedure, serviceIndex) => (
+      {expanded && procedures && Object.values(procedures).map((procedure, serviceIndex) => (
         <tr key={`service-${serviceIndex}`} className="bg-gray-50">
           <td className="px-4 py-2 text-sm font-medium border-r border-gray-300">
             <div className="pl-6 border-l-2 border-[#1d3557]">{procedure.name}</div>
