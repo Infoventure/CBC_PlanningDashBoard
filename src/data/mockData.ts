@@ -176,65 +176,34 @@ export async function fetchKompasData(): Promise<MockData> {
     }
   }
 
-  // const citizensMap: Record<string, Citizen> = {};
 
-  // // Process appointments
-  // for (const appt of data.appointments || []) {
-  //   console.log(appt);
-  //   const patientId = appt.curaPatientId;
-  //   if (!citizensMap[patientId]) {
-  //     citizensMap[patientId] = {
-  //       id: patientId,
-  //       cpr: "000000-0000" as any,  // Replace with real CPR if available
-  //       name: "Test",               // Replace with real name if available
-  //       teamId: 1,                  // Replace with real teamId if available
-  //       pathwayData: {},
-  //     };
-  //   }
-
-  //   const citizen = citizensMap[patientId];
-  //   const pathwayId = appt.curaSimplePathwayId; // Assuming simplePathwayId links to pathway
-  //   if (!citizen.pathwayData[pathwayId]) {
-  //     citizen.pathwayData[pathwayId] = {};
-  //   }
-
-  //   const week = appt.week;
-  //   if (!citizen.pathwayData[pathwayId][week]) {
-  //     citizen.pathwayData[pathwayId][week] = {
-  //       total: { visiteret: 0, disponeret: 0 },
-  //       procedures: [],
-  //     };
-  //   }
-
-  //   citizen.pathwayData[pathwayId][week].procedures.push({
-  //     name: appt.curaProcedureTitle,
-  //     id: appt.curaGrantedProcedureId,
-  //     visiteret: 0,       // You may need logic to fill this
-  //     disponeret: appt.duration,
-  //   });
-
-  //   citizen.pathwayData[pathwayId][week].total.disponeret += appt.duration;
-  // }
-
-  // // Process visitation
-  // for (const visit of data.visitation || []) {
-  //   const patientId = visit.patientId;
-  //   if (!citizensMap[patientId]) continue;
-
-  //   const citizen = citizensMap[patientId];
-  //   const pathwayId = visit.simplePathwayId;
-  //   if (!citizen.pathwayData[pathwayId]) citizen.pathwayData[pathwayId] = {};
-
-  //   const week = "unknown-week"; // Replace with logic if week is available
-  //   if (!citizen.pathwayData[pathwayId][week]) {
-  //     citizen.pathwayData[pathwayId][week] = {
-  //       total: { visiteret: 0, disponeret: 0 },
-  //       procedures: [],
-  //     };
-  //   }
-
-  //   citizen.pathwayData[pathwayId][week].total.visiteret += visit.day + visit.eve;
-  // }
+    // Example POST request to fetch CPR for citizens
+    try {
+        const postRes = await fetch("http://10.30.8.72:5000/cpr-for-citizens", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                password: "mbntest2770!",
+                ids: Object.keys(processedCitizens)
+            })
+        });
+        const cprResult = await postRes.json();
+        // cprResult is a list of { cpr, curaId, fullName }
+        if (Array.isArray(cprResult)) {
+            for (const entry of cprResult) {
+                const { curaId, cpr, fullName } = entry;
+                if (processedCitizens[curaId]) {
+                    processedCitizens[curaId].cpr = cpr;
+                    processedCitizens[curaId].name = fullName;
+                }
+            }
+        }
+        console.log(cprResult);
+    } catch (err) {
+        console.error('Failed to fetch CPR for citizens:', err);
+    }
 
   console.log(
     {
