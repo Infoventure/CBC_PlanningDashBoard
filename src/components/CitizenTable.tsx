@@ -149,7 +149,7 @@ export const CitizenTable: React.FC<CitizenTableProps> = ({
                 {selectedPathway && (
                   <Fragment>
                     <th scope="col" colSpan={6} className="px-2 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider border-r border-gray-300">
-                      {selectedPathway.name}
+                      {selectedPathway.name} - <span className='ml-2 text-xs lowercase'>(minutter)</span>
                     </th>
                   </Fragment>
                 )}
@@ -158,20 +158,20 @@ export const CitizenTable: React.FC<CitizenTableProps> = ({
                 <th className="border-r border-gray-300"></th>
                 {selectedPathway && (
                   <Fragment>
-                    <th className="px-2 py-2 text-xs text-center border-r border-gray-200" title="Forløbets median tid">
-                      Forl
+                    <th className="px-2 py-2 text-xs text-center border-r border-gray-200" title="Forløbets median tid i minutter">
+                      Forløb
                     </th>
-                    <th className="px-2 py-2 text-xs text-center border-r border-gray-200" title="Visiteret tid">
-                      Vis
+                    <th className="px-2 py-2 text-xs text-center border-r border-gray-200" title="Visiteret tid i minutter">
+                      Visiteret
                     </th>
-                    <th className="px-2 py-2 text-xs text-center border-r border-gray-200" title="Disponeret tid">
-                      Disp
+                    <th className="px-2 py-2 text-xs text-center border-r border-gray-200" title="Disponeret tid i minutter">
+                      Disponeret
                     </th>
                     <th className="px-2 py-2 text-xs text-center border-r border-gray-200" title="Balance (Hvor mange flere timer er disponeret end visiteret)">
-                      Bal Vis
+                      Balance
                     </th>
-                    <th className="px-2 py-2 text-xs text-center border-r border-gray-300" title="Balance beregnet som procent">
-                      %
+                    <th className="px-2 py-2 text-xs text-center border-r border-gray-300" title="Afstand til næste forløb i minutter">
+                      Forløbsmargen
                     </th>
                   </Fragment>
                 )}
@@ -188,6 +188,7 @@ export const CitizenTable: React.FC<CitizenTableProps> = ({
                   isSelected={selectedCitizen === citizen.id}
                   pathwayId={selectedPathwayId}
                   pathwayTime={selectedPathway?.mediantime}
+                  allPathways={data.pathways}
                 />
               ))}
             </tbody>

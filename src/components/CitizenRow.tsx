@@ -1,6 +1,6 @@
 import React, { Fragment } from 'react';
-import { Citizen } from '../data/mockData';
-import { ChevronDownIcon, ChevronRightIcon, UserIcon } from 'lucide-react';
+import { Citizen, Pathway } from '../data/mockData';
+import { ChevronDownIcon, ChevronRightIcon, UserIcon, ArrowLeftIcon, ArrowRightIcon } from 'lucide-react';
 import { CopyIcon } from 'lucide-react';
 interface CitizenRowProps {
   citizen: Citizen;
@@ -10,6 +10,7 @@ interface CitizenRowProps {
   isSelected: boolean;
   pathwayId: string;
   pathwayTime?: number;
+  allPathways?: Pathway[];
 }
 export const CitizenRow: React.FC<CitizenRowProps> = ({
   citizen,
@@ -18,7 +19,8 @@ export const CitizenRow: React.FC<CitizenRowProps> = ({
   onClick,
   isSelected,
   pathwayId,
-  pathwayTime
+  pathwayTime,
+  allPathways,
 }) => {
   const handleCopyCpr = (cpr: string) => {
     navigator.clipboard.writeText(cpr);
@@ -40,6 +42,49 @@ export const CitizenRow: React.FC<CitizenRowProps> = ({
 
   // Compute balance dynamically
   const balance = pathway?.disponeret - pathway?.visiteret;
+
+  const pathwayMargin = (() => {
+    if (!pathway || !allPathways) return '-';
+    const pathwayDef = allPathways.find(p => p.id === pathwayId);
+    if (!pathwayDef) return '-';
+    const minTime = pathwayDef.minTime;
+    const maxTime = pathwayDef.maxTime;
+
+    const toMin = pathway.disponeret - minTime;
+    const toMax = maxTime ? maxTime - pathway.disponeret : undefined;
+    
+    // Helper to get color classes based on value
+    const getColor = (val: number | undefined) => {
+      if (val !== undefined && val <= 0) return { bg: 'bg-red-100', text: 'text-red-700' };
+      if (val !== undefined && val <= 30) return { bg: 'bg-yellow-100', text: 'text-yellow-700' };
+      return { bg: 'bg-green-100', text: 'text-green-700' };
+    };
+    const minColor = getColor(toMin);
+    const maxColor = getColor(toMax);
+
+    let minColorTitle = '';
+    let maxColorTitle = '';
+
+    if (toMin < 0) {
+      minColorTitle = 'Borgeren har fået disponeret mindre tid end forløbets minimum. Enten mangler de planlagte ydelser, ellers skal de flyttes til lavere et forløb';
+    }
+    if (toMax !== undefined && toMax < 0) {
+      maxColorTitle = 'Borgeren har fået disponeret mere tid end forløbets maksimum. Dette kan medføre økonomiske tab for kommunen. Enten har de fået disponeret for meget, ellers skal de flyttes til et højere forløb';
+    }
+
+    return (
+      <div className='flex justify-center items-center'>
+        <span className={`ml-2 px-2 inline-flex items-center text-sm leading-5 font-semibold rounded-full ${minColor.bg} ${minColor.text}`} title={minColorTitle || undefined}> 
+          <ArrowLeftIcon className={`h-4 w-4 mr-1 ${minColor.text}`} />
+          {toMin}
+        </span>
+        <span className={`ml-2 px-2 inline-flex items-center text-sm leading-5 font-semibold rounded-full ${maxColor.bg} ${maxColor.text}`} title={maxColorTitle || undefined}>
+          {toMax}
+          <ArrowRightIcon className={`h-4 w-4 ml-1 ${maxColor.text}`} />
+        </span>
+      </div>
+    );
+  })();
 
   return (
     <>
@@ -78,21 +123,8 @@ export const CitizenRow: React.FC<CitizenRowProps> = ({
             <td className={`px-2 py-3 text-sm text-center border-r border-gray-200 ${balance > 0 ? 'text-red-500' : 'text-yellow-600'}`}> 
               {balance > 0 ? `+${balance}` : balance < 0 ? `${balance}` : balance === 0 ? '0' : '-'}
             </td>
-            <td className="px-2 py-3 text-sm text-center border-r border-gray-300">
-              {pathway.visiteret > 0 ? (
-                (() => {
-                  const diff = pathway.disponeret - pathway.visiteret;
-                  const percent = Math.round(Math.abs(diff) / pathway.visiteret * 100);
-                    const display = percent === 0 ? `${percent}%` : (diff > 0 ? `-${percent}%` : `+${percent}%`);
-                  return (
-                    <span className={`px-2 py-1 rounded-full text-xs ${getPercentageColor(percent)}`}>
-                      {display}
-                    </span>
-                  );
-                })()
-              ) : (
-                '-'
-              )}
+            <td>
+               {pathwayMargin}
             </td>
           </>
         ) : (
