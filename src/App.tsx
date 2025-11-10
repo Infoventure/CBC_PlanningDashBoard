@@ -5,7 +5,7 @@ import { TeamSummaryCard } from './components/TeamSummaryCard';
 import { TeamSelector } from './components/TeamSelector';
 import { Link } from 'react-router-dom';
 import { ArrowLeftIcon, MaximizeIcon, MinimizeIcon } from 'lucide-react';
-import { fetchKompasData, mockData, MockData } from './data/mockData';
+import { currentWeek, currentYear, fetchKompasData, mockData, MockData } from './data/mockData';
 
 export const DataContext = createContext<MockData>(mockData) // Default to using mockData
 
@@ -26,26 +26,6 @@ export function App() {
   useEffect(() => {
     console.log(actualData)
   }, [actualData]);
-
-
-    const now = new Date();
-    function getISOWeek(date: Date) {
-      const tmp = new Date(date.getTime());
-      tmp.setHours(0, 0, 0, 0);
-      // Thursday in current week decides the year.
-      tmp.setDate(tmp.getDate() + 3 - ((tmp.getDay() + 6) % 7));
-      // January 4 is always in week 1.
-      const week1 = new Date(tmp.getFullYear(), 0, 4);
-      // Adjust to Thursday in week 1 and count number of weeks from date to week1.
-      return (
-        1 +
-        Math.round(
-          ((tmp.getTime() - week1.getTime()) / 86400000 - 3 + ((week1.getDay() + 6) % 7)) / 7
-        )
-      );
-    }
-    const currentWeek = getISOWeek(now);
-    const currentYear = now.getFullYear();
 
   return (
     <DataContext.Provider value={actualData}>

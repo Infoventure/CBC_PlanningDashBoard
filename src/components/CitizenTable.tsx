@@ -25,6 +25,7 @@ export const CitizenTable: React.FC<CitizenTableProps> = ({
   const [selectedPathwayId, setSelectedPathwayId] = useState<string>(data?.pathways[0]?.id || "Forløb 1");
   const [searchTerm, setSearchTerm] = useState<string>("");
   const [isRotating, setIsRotating] = useState(false);
+  const [selectedColors, setSelectedColors] = useState<string[]>([]); // For 'Farve' filter
   const handleCitizenClick = (citizenId: string) => {
     if (expandedCitizen === citizenId) {
       setExpandedCitizen(null);
@@ -34,7 +35,10 @@ export const CitizenTable: React.FC<CitizenTableProps> = ({
     onSelectCitizen(citizenId);
   };
 
-  // Filter citizens by team ID, pathway, and search term
+  // last 3 weeks + current
+  const weeks = Array.from({ length: 4 }, (_, i) => `${currentWeek - 3 + i}-${currentYear}`);
+
+  // Filter citizens by team ID, pathway, search term, and color (Farve)
   const filteredCitizens = data?.citizens
     .filter(citizen =>
       citizen.teamId === teamId &&
@@ -45,12 +49,25 @@ export const CitizenTable: React.FC<CitizenTableProps> = ({
       const nameResult = fuzzysort.single(searchTerm, citizen.name);
       const cprResult = fuzzysort.single(searchTerm, citizen.cpr);
       return nameResult !== null || cprResult !== null;
+    })
+    .filter(citizen => {
+      if (!selectedColors.length) return true;
+      // Check if any of the weeks for this citizen in the selected pathway matches a selected color
+      const pathwayWeeks = citizen.pathwayData[selectedPathwayId];
+      return weeks.some(weekKey => {
+        console.log(pathwayWeeks);
+        console.log(weekKey);
+        const weekData = pathwayWeeks ? pathwayWeeks[weekKey] : undefined;
+        console.log(weekData);
+        if (weekData && typeof weekData === 'object' && 'status' in weekData && typeof weekData.status === 'string') {
+          // Normalize status to match filter (capitalize first letter)
+          const normalizedStatus = weekData.status.charAt(0).toUpperCase() + weekData.status.slice(1).toLowerCase();
+          return selectedColors.includes(normalizedStatus);
+        }
+        return false;
+      });
     });
   const selectedPathway = data?.pathways.find(p => p.id === selectedPathwayId);
-
-
-  // last 3 weeks + current
-  const weeks = Array.from({ length: 4 }, (_, i) => `${currentWeek - 3 + i}-${currentYear}`);
 
   const [selectedWeek, setSelectedWeek] = useState(weeks[3]); // default to current week
 
@@ -63,6 +80,36 @@ export const CitizenTable: React.FC<CitizenTableProps> = ({
         <div className="p-4 border-b border-gray-200 flex justify-between items-center">
           <h2 className="text-lg font-semibold text-[#1d3557]">Borgeroversigt</h2>
           <div className="flex items-center gap-2">
+            {/* Farve (Color) Multi-select Filter */}
+            <div className='flex align-middle justify-center' title='Klik på en farve for kun at vise borgere som har denne farve i en af sine seneste 4 uger. - Vælg flere for at vise borgere som enten har "farve et" eller "farve to"'>
+              <label className="text-sm font-medium text-[#1d3557] mr-2 flex items-center justify-center">Status farve:</label>
+              <div className="flex mr-2 flex-col">
+                {['Green', 'Yellow', 'Red'].map(color => {
+                  let label = color;
+                  if (color === 'Green') label = 'Grøn';
+                  else if (color === 'Yellow') label = 'Gul';
+                  else if (color === 'Red') label = 'Rød';
+                  return (
+                    <label key={color} className="flex items-center gap-1 text-xs font-medium cursor-pointer" style={{ color: color === 'Green' ? '#2ecc40' : color === 'Yellow' ? '#f1c40f' : '#e74c3c' }}>
+                      <input
+                        type="checkbox"
+                        value={color}
+                        checked={selectedColors.includes(color)}
+                        onChange={e => {
+                          if (e.target.checked) {
+                            setSelectedColors(prev => [...prev, color]);
+                          } else {
+                            setSelectedColors(prev => prev.filter(c => c !== color));
+                          }
+                        }}
+                        className="accent-current"
+                      />
+                      {label}
+                    </label>
+                  );
+                })}
+              </div>
+            </div>
             <label className="text-sm font-medium text-[#1d3557] mr-2">Uge:</label>
             <select
               className="border border-gray-300 rounded px-2 py-1 text-sm mr-2"
@@ -186,7 +233,7 @@ export const CitizenTable: React.FC<CitizenTableProps> = ({
                   isSelected={selectedCitizen === citizen.id}
                   pathwayId={selectedPathwayId}
                   pathwayMaxTime={selectedPathway?.maxTime}
-                  pathwayMedTime={selectedPathway?.mediantime}
+                  pathwayMedTime={selectedPathway?.mediantime ?? null}
                   allPathways={data.pathways}
                 />
               ))}
@@ -201,6 +248,10 @@ export const CitizenTable: React.FC<CitizenTableProps> = ({
             }
             .animate-spin-once {
               animation: spin-once 0.6s linear;
+            }
+            /* Custom accent color for checkboxes (for color filter) */
+            input[type="checkbox"].accent-current:checked {
+              accent-color: currentColor;
             }
           `}</style>
       </div>

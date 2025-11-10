@@ -40,6 +40,19 @@ export const CitizenRow: React.FC<CitizenRowProps> = ({
 
   const pathways = citizen.pathwayData;
   const procedures = citizen.pathwayData[pathwayId][week]?.procedures;
+  // Gather all weeks' statuses for the given pathwayId, including the week key, sorted by week-year
+  const statusies = Object.entries(citizen.pathwayData[pathwayId] || {})
+    .sort(([a], [b]) => {
+      // a and b are week keys in the format 'weekNumber-Year'
+      const [aWeek, aYear] = a.split('-').map(Number);
+      const [bWeek, bYear] = b.split('-').map(Number);
+      if (aYear !== bYear) return aYear - bYear;
+      return aWeek - bWeek;
+    })
+    .map(([week, weekData]: [string, any]) => ({
+      week,
+      status: weekData?.status
+    }));
   const pathway = pathways[pathwayId][week]?.total;
 
   // Compute balance dynamically
@@ -101,14 +114,14 @@ export const CitizenRow: React.FC<CitizenRowProps> = ({
     }
 
     return (
-      <div className="w-full flex flex-col items-center mt-2 relative px-1">
+      <div className="w-full flex flex-col items-center relative px-1 my-1">
         {/* Time labels above the line */}
         <div className="absolute top-0 left-0 w-full flex justify-between text-xs text-gray-600">
           {sorted.map((p, i) => (
             i !== totalCount - 1 && (
               <div
                 key={p.id}
-                className="absolute transform -translate-x-1/2 text-center"
+                className="absolute transform -translate-x-1/2 text-center text-[11px] -top-1"
                 style={{ left: `${((i + 1) / totalCount) * 100}%` }}
                 title={"Forløb " + (i + 1) + " - max tid: " + p.maxTime?.toString()}
               >
@@ -119,7 +132,7 @@ export const CitizenRow: React.FC<CitizenRowProps> = ({
         </div>
 
         {/* The visual line */}
-        <div className="relative w-full h-2 bg-gray-200 mt-6 rounded-full">
+        <div className="relative w-full h-2 bg-gray-200 mt-4 rounded-full">
           {/* Highlight selected pathway */}
           {selectedPathwayIndex !== -1 && (
             <div
@@ -199,7 +212,25 @@ export const CitizenRow: React.FC<CitizenRowProps> = ({
                   </button>
                 </span>
               </div>
-              {<span className="ml-2 px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">0 uger</span>}
+              <div className='ml-2 flex'>
+              {statusies.slice(-4).map((week, index) => (
+                <span
+                  key={index}
+                  className={`ml-1 px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${week.status === 'green' ? 'bg-green-200 text-green-400' : week.status === 'yellow' ? 'bg-yellow-300 text-yellow-500' : week.status === 'red' ? 'bg-red-200 text-red-400' : 'bg-gray-200 text-gray-400'}`}
+                  title={
+                    week.status === 'green'
+                      ? `Korrekt forløb i uge ${week.week}`
+                      : week.status === 'yellow'
+                        ? `Blandt de ydelige 20% for forløbet i uge ${week.week}`
+                        : week.status === 'red'
+                          ? `Udenfor forløbet i uge ${week.week}`
+                          : `Ingen data for uge ${week.week}`
+                  }
+                >
+                  -
+                </span>
+              ))}
+              </div>
             </div>
           </div>
         </td>
@@ -208,7 +239,7 @@ export const CitizenRow: React.FC<CitizenRowProps> = ({
             <td className="relative px-2 py-3 text-sm text-center border-r border-gray-200">
               <div className="flex flex-col items-center">
                 <span>{pathwayMaxTime || '-'}</span>
-                <span title='Forløbets gennemsnitstid' className="text-xs text-gray-400 flex items-center mt-0.5 absolute bottom-1">gns. {pathwayMedTime || '-'}</span>
+                <span title='Forløbets gennemsnitstid' className="text-xs text-gray-400 flex items-center mt-0.5 absolute bottom-1">Gns. {pathwayMedTime || '-'}</span>
               </div>
             </td>
             <td className="px-2 py-3 text-sm text-center border-r border-gray-200">{pathway.visiteret || '-'}</td>
@@ -225,7 +256,7 @@ export const CitizenRow: React.FC<CitizenRowProps> = ({
             <td className="relative px-2 py-3 text-sm text-center border-r border-gray-200">
               <div className="flex flex-col items-center">
                 <span>{pathwayMaxTime || '-'}</span>
-                <span title='Forløbets gennemsnitstid' className="text-xs text-gray-400 flex items-center mt-0.5 absolute bottom-1">gns. {pathwayMedTime || '-'}</span>
+                <span title='Forløbets gennemsnitstid' className="text-xs text-gray-400 flex items-center mt-0.5 absolute bottom-1">Gns. {pathwayMedTime || '-'}</span>
               </div>
             </td>
             <td className="px-2 py-3 text-sm text-center border-r border-gray-200">-</td>

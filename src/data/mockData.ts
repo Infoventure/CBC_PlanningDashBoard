@@ -18,6 +18,7 @@ export interface Citizen {
   pathwayData: {
     [pathwayId: string]: {
       [week: string]: {
+        status: 'gray' | 'green' | 'yellow' | 'red';
         total: { visiteret: number; disponeret: number },
         procedures: Record<string, Procedure>
       }
@@ -67,118 +68,168 @@ export interface KompasData {
   visitation: Visitation[];
 }
 
+const now = new Date();
+function getISOWeek(date: Date) {
+    const tmp = new Date(date.getTime());
+    tmp.setHours(0, 0, 0, 0);
+    // Thursday in current week decides the year.
+    tmp.setDate(tmp.getDate() + 3 - ((tmp.getDay() + 6) % 7));
+    // January 4 is always in week 1.
+    const week1 = new Date(tmp.getFullYear(), 0, 4);
+    // Adjust to Thursday in week 1 and count number of weeks from date to week1.
+    return (
+    1 +
+    Math.round(
+        ((tmp.getTime() - week1.getTime()) / 86400000 - 3 + ((week1.getDay() + 6) % 7)) / 7
+    )
+    );
+}
+export const currentWeek = getISOWeek(now);
+export const currentYear = now.getFullYear();
+
 // Endpoint fetch and transform
 export async function fetchKompasData(): Promise<MockData> {
-  const res = await fetch("http://10.30.8.72:5000/kompas-data");
-  const data : KompasData = await res.json();
+    const res = await fetch("http://10.30.8.72:5000/kompas-data");
+    const data : KompasData = await res.json();
 
-  // throw new Error("Disabled temporary for testing");
+    // throw new Error("Disabled temporary for testing");
 
-  let processedCitizens : Record<string, Citizen> = {};
+    let processedCitizens : Record<string, Citizen> = {};
 
-  // Create a record mapping visitation.id to visitation object
-  const visitationById: Record<string, Visitation> = {};
-  for (const visit of data.visitation) {
-    visitationById[visit.id] = visit;
-  }
-
-  for (const appt of data.appointments) {
-
-    // If citizen not processed yet, create new
-    if (!processedCitizens[appt.curaPatientId]) {
-      processedCitizens[appt.curaPatientId] = {
-        id: appt.curaPatientId,
-        cpr: "000000-0000" as any,  // Replace with real CPR if available
-        name: appt.curaPatientId as any,      // Replace with real name if available
-        teamId: 1,                   // Replace with real teamId if available
-        pathwayData: {}
-      };
-    }
-    let citizenData = processedCitizens[appt.curaPatientId];
-
-    // If pathway not processed yet create new
-    if(!citizenData.pathwayData[appt.curaSimplePathwayId]) {
-      citizenData.pathwayData[appt.curaSimplePathwayId] = {};
+    // Create a record mapping visitation.id to visitation object
+    const visitationById: Record<string, Visitation> = {};
+    for (const visit of data.visitation) {
+        visitationById[visit.id] = visit;
     }
 
-    // If this week in the pathway has not been processed yet create new
-    if (!citizenData.pathwayData[appt.curaSimplePathwayId][appt.week]) {
-      citizenData.pathwayData[appt.curaSimplePathwayId][appt.week] = {
-        total: { visiteret: 0, disponeret: 0 },
-        procedures: {}
-      };
-    }
-    let weekData = citizenData.pathwayData[appt.curaSimplePathwayId][appt.week];
-
-    // If this procedure has not been processed yet create new
-    if (!weekData.procedures[appt.curaGrantedProcedureId]) {
-      weekData.procedures[appt.curaGrantedProcedureId] = {
-        name: appt.curaProcedureTitle,
-        id: appt.curaGrantedProcedureId,
-        visiteret: 0,
-        disponeret: appt.duration
-      }
-      weekData.total.disponeret += appt.duration;
-      // weekData.total.visiteret += 0;
-    }
-    else { // Else just add disponeret time
-      weekData.procedures[appt.curaGrantedProcedureId].disponeret += appt.duration;
-      weekData.total.disponeret += appt.duration;
-    }
-  }
-
-  // Now loop our visitation data, and add visiteret times to each relevant procedure
-  for (const visit of data.visitation) {
-    // Ensure all objects exist as in the forloop above
-    if (!processedCitizens[visit.patientId]) {
-      processedCitizens[visit.patientId] = {
-        id: visit.patientId,
-        cpr: "000000-0000" as any,
-        name: visit.patientId as any,
-        teamId: 1,
-        pathwayData: {}
-      };
-    }
-    let citizenData = processedCitizens[visit.patientId];
-    // If the pathway does not exist yet, create it as empty
-    if (!citizenData.pathwayData[visit.simplePathwayId]) {
-      citizenData.pathwayData[visit.simplePathwayId] = {};
-    }
-
-    let weeks = citizenData.pathwayData[visit.simplePathwayId];
-    // Ensure all weeks in visit.relevantWeeks exist
-    if (Array.isArray(visit.relevantWeeks)) {
-      for (const relevantWeek of visit.relevantWeeks) {
-        if (!weeks[relevantWeek]) { // If the relevant week does not exist in their data yet, create it
-          weeks[relevantWeek] = {
-            total: { visiteret: 0, disponeret: 0 },
-            procedures: {}
-          };
-        }
-      }
-    }
-
-    // Now we can insert each the procedure into each week
-    for (const week in weeks) {
-      if (!visit.relevantWeeks || !visit.relevantWeeks.includes(week)) {
-        continue; // Skip weeks that are not relevant for this visitation
-      }
-
-      const thisWeekData = weeks[week];
-      // Ensure the procedure exists for this visitation id
-      if (!thisWeekData.procedures[visit.id]) {
-        thisWeekData.procedures[visit.id] = {
-          name: visit.title,
-          id: visit.id,
-          visiteret: 0,
-          disponeret: 0
+    for (const appt of data.appointments) {
+        // If citizen not processed yet, create new
+        if (!processedCitizens[appt.curaPatientId]) {
+        processedCitizens[appt.curaPatientId] = {
+            id: appt.curaPatientId,
+            cpr: "000000-0000" as any,  // Replace with real CPR if available
+            name: appt.curaPatientId as any,      // Replace with real name if available
+            teamId: 1,                   // Replace with real teamId if available
+            pathwayData: {}
         };
-      }
-      // Add visiteret time if this is the correct procedure
-      thisWeekData.procedures[visit.id].visiteret += visit.day + visit.eve;
-      thisWeekData.total.visiteret += visit.day + visit.eve;
+        }
+        let citizenData = processedCitizens[appt.curaPatientId];
+
+        // If pathway not processed yet create new
+        if(!citizenData.pathwayData[appt.curaSimplePathwayId]) {
+            citizenData.pathwayData[appt.curaSimplePathwayId] = {};
+        }
+
+        // If this week in the pathway has not been processed yet create new
+        if (!citizenData.pathwayData[appt.curaSimplePathwayId][appt.week]) {
+            citizenData.pathwayData[appt.curaSimplePathwayId][appt.week] = {
+                status: 'gray',
+                total: { visiteret: 0, disponeret: 0 },
+                procedures: {}
+            };
+        }
+        let weekData = citizenData.pathwayData[appt.curaSimplePathwayId][appt.week];
+
+        // If this procedure has not been processed yet create new
+        if (!weekData.procedures[appt.curaGrantedProcedureId]) {
+            weekData.procedures[appt.curaGrantedProcedureId] = {
+                name: appt.curaProcedureTitle,
+                id: appt.curaGrantedProcedureId,
+                visiteret: 0,
+                disponeret: appt.duration
+            }
+            weekData.total.disponeret += appt.duration;
+            // weekData.total.visiteret += 0;
+        }
+        else { // Else just add disponeret time
+            weekData.procedures[appt.curaGrantedProcedureId].disponeret += appt.duration;
+            weekData.total.disponeret += appt.duration;
+        }
     }
-  }
+
+    // Now loop our visitation data, and add visiteret times to each relevant procedure
+    for (const visit of data.visitation) {
+        // Ensure all objects exist as in the forloop above
+        if (!processedCitizens[visit.patientId]) {
+        processedCitizens[visit.patientId] = {
+            id: visit.patientId,
+            cpr: "000000-0000" as any,
+            name: visit.patientId as any,
+            teamId: 1,
+            pathwayData: {}
+        };
+        }
+        let citizenData = processedCitizens[visit.patientId];
+        // If the pathway does not exist yet, create it as empty
+        if (!citizenData.pathwayData[visit.simplePathwayId]) {
+        citizenData.pathwayData[visit.simplePathwayId] = {};
+        }
+
+        let weeks = citizenData.pathwayData[visit.simplePathwayId];
+        // Ensure all weeks in visit.relevantWeeks exist
+        if (Array.isArray(visit.relevantWeeks)) {
+        for (const relevantWeek of visit.relevantWeeks) {
+            if (!weeks[relevantWeek]) { // If the relevant week does not exist in their data yet, create it
+            weeks[relevantWeek] = {
+                status: 'gray',
+                total: { visiteret: 0, disponeret: 0 },
+                procedures: {}
+            };
+            }
+        }
+        }
+
+        // Now we can insert each the procedure into each week
+        for (const week in weeks) {
+        if (!visit.relevantWeeks || !visit.relevantWeeks.includes(week)) {
+            continue; // Skip weeks that are not relevant for this visitation
+        }
+
+        const thisWeekData = weeks[week];
+        // Ensure the procedure exists for this visitation id
+        if (!thisWeekData.procedures[visit.id]) {
+            thisWeekData.procedures[visit.id] = {
+            name: visit.title,
+            id: visit.id,
+            visiteret: 0,
+            disponeret: 0
+            };
+        }
+        // Add visiteret time if this is the correct procedure
+        thisWeekData.procedures[visit.id].visiteret += visit.day + visit.eve;
+        thisWeekData.total.visiteret += visit.day + visit.eve;
+        }
+    }
+
+    // Here
+
+    for (const citizenId in processedCitizens) {
+        const citizen = processedCitizens[citizenId];
+        for (const pathwayId in citizen.pathwayData) {
+            const pathwayWeeks = citizen.pathwayData[pathwayId];
+            // Find the pathway definition for min/max
+            const pathwayDef = (mockData.pathways || []).find(p => p.id === pathwayId);
+            if (!pathwayDef) continue;
+            const min = pathwayDef.minTime;
+            const max = pathwayDef.maxTime;
+            const range = (max ?? 10000) - min;
+            const twentyPercent = 0.2 * range;
+            for (const week in pathwayWeeks) {
+                const weekData = pathwayWeeks[week];
+                const disponeret = weekData.total?.disponeret ?? 0;
+                if (disponeret < min || disponeret > (max ?? 10000)) {
+                    weekData.status = 'red';
+                } else if (
+                    disponeret <= min + twentyPercent ||
+                    disponeret >= (max ?? 10000) - twentyPercent
+                ) {
+                    weekData.status = 'yellow';
+                } else {
+                    weekData.status = 'green';
+                }
+            }
+        }
+    }
 
 
     // Example POST request to fetch CPR for citizens
@@ -209,17 +260,17 @@ export async function fetchKompasData(): Promise<MockData> {
         console.error('Failed to fetch CPR for citizens:', err);
     }
 
-  console.log(
-    {
-      pathways: mockData.pathways, // Using mock pathways for now
-      citizens: processedCitizens ? Object.values(processedCitizens) : [],
-    }
-  )
+    console.log(
+        {
+        pathways: mockData.pathways, // Using mock pathways for now
+        citizens: processedCitizens ? Object.values(processedCitizens) : [],
+        }
+    )
 
-  return {
-    pathways: mockData.pathways, // Using mock pathways for now
-    citizens: processedCitizens ? Object.values(processedCitizens) : [],
-  };
+    return {
+        pathways: mockData.pathways, // Using mock pathways for now
+        citizens: processedCitizens ? Object.values(processedCitizens) : [],
+    };
 }
 
 
