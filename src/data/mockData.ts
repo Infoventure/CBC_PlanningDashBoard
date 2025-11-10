@@ -310,15 +310,16 @@ export const mockData: MockData = {
       maxTime: null,
     }
   ],
-  citizens: [
+  citizens:[
     {
         "id": "f222bac2-e823-43b4-9c86-f215ab30fb66",
-        "cpr": "000000-0000",
-        "name": "Mads Testersen",
+        "cpr": "161616-1616",
+        "name": "Olga Testgren",
         "teamId": 1,
         "pathwayData": {
             "Forløb 2": {
                 "44-2025": {
+                    "status": "yellow",
                     "total": {
                         "visiteret": 210,
                         "disponeret": 75
@@ -339,6 +340,7 @@ export const mockData: MockData = {
                     }
                 },
                 "45-2025": {
+                    "status": "yellow",
                     "total": {
                         "visiteret": 210,
                         "disponeret": 220
@@ -359,28 +361,63 @@ export const mockData: MockData = {
                     }
                 },
                 "46-2025": {
+                    "status": "yellow",
                     "total": {
-                        "visiteret": 0,
-                        "disponeret": 105
+                        "visiteret": 210,
+                        "disponeret": 220
                     },
                     "procedures": {
                         "0e4f91df-2f3e-4984-9cf1-6130107fca89": {
                             "name": "Personlig hjælp og pleje (FSIII) (ÆL)",
                             "id": "0e4f91df-2f3e-4984-9cf1-6130107fca89",
-                            "visiteret": 0,
-                            "disponeret": 65
+                            "visiteret": 150,
+                            "disponeret": 150
                         },
                         "93aa3719-f82c-4191-8d65-28fa73f32b43": {
                             "name": "Praktisk hjaelp i hjemmet (FSIII) (ÆL)",
                             "id": "93aa3719-f82c-4191-8d65-28fa73f32b43",
-                            "visiteret": 0,
-                            "disponeret": 40
+                            "visiteret": 60,
+                            "disponeret": 70
                         }
                     }
                 }
             },
             "Forløb 4": {
                 "45-2025": {
+                    "status": "red",
+                    "total": {
+                        "visiteret": 455,
+                        "disponeret": 0
+                    },
+                    "procedures": {
+                        "d154bbe4-21ae-4bb7-8f2e-21c91e3a3ba4": {
+                            "name": "Personlig hjælp og pleje (FSIII) (ÆL)",
+                            "id": "d154bbe4-21ae-4bb7-8f2e-21c91e3a3ba4",
+                            "visiteret": 200,
+                            "disponeret": 0
+                        },
+                        "276b28e5-a50a-4bc9-bdc8-01360b812fc3": {
+                            "name": "Praktisk hjaelp i hjemmet (FSIII) (ÆL)",
+                            "id": "276b28e5-a50a-4bc9-bdc8-01360b812fc3",
+                            "visiteret": 200,
+                            "disponeret": 0
+                        },
+                        "7439fd94-2ab9-427a-9c4e-24c6d65e62e5": {
+                            "name": "Genoptræning (FSIII) (ÆL)",
+                            "id": "7439fd94-2ab9-427a-9c4e-24c6d65e62e5",
+                            "visiteret": 0,
+                            "disponeret": 0
+                        },
+                        "09954e2e-364c-465e-bbf7-5f4b50eab8d9": {
+                            "name": "Indkøb (FSIII)",
+                            "id": "09954e2e-364c-465e-bbf7-5f4b50eab8d9",
+                            "visiteret": 55,
+                            "disponeret": 0
+                        }
+                    }
+                },
+                "46-2025": {
+                    "status": "red",
                     "total": {
                         "visiteret": 455,
                         "disponeret": 0
@@ -417,12 +454,13 @@ export const mockData: MockData = {
     },
     {
         "id": "3525ab02-e036-4d3c-a385-e211252c50ff",
-        "cpr": "000000-0000",
-        "name": "Annemette Testison",
+        "cpr": "191919-1919",
+        "name": "Hanne Test Testerson",
         "teamId": 1,
         "pathwayData": {
             "Forløb 4": {
                 "44-2025": {
+                    "status": "red",
                     "total": {
                         "visiteret": 700,
                         "disponeret": 238
@@ -455,6 +493,7 @@ export const mockData: MockData = {
                     }
                 },
                 "45-2025": {
+                    "status": "yellow",
                     "total": {
                         "visiteret": 700,
                         "disponeret": 686
@@ -487,26 +526,40 @@ export const mockData: MockData = {
                     }
                 },
                 "46-2025": {
+                    "status": "red",
                     "total": {
-                        "visiteret": 0,
-                        "disponeret": 322
+                        "visiteret": 700,
+                        "disponeret": 588
                     },
                     "procedures": {
                         "0d8d3f82-23ec-4d34-83bf-e300034877a2": {
                             "name": "Personlig hjælp og pleje (FSIII) (ÆL)",
                             "id": "0d8d3f82-23ec-4d34-83bf-e300034877a2",
-                            "visiteret": 0,
-                            "disponeret": 210
+                            "visiteret": 500,
+                            "disponeret": 420
                         },
                         "eaba8fb8-ef94-42a0-8912-39e4c0513581": {
                             "name": "Praktisk hjaelp i hjemmet (FSIII) (ÆL)",
                             "id": "eaba8fb8-ef94-42a0-8912-39e4c0513581",
+                            "visiteret": 200,
+                            "disponeret": 168
+                        },
+                        "66402ada-c1a1-4e65-8f97-04e6bb45dbfa": {
+                            "name": "Genoptræning (FSIII) (ÆL)",
+                            "id": "66402ada-c1a1-4e65-8f97-04e6bb45dbfa",
                             "visiteret": 0,
-                            "disponeret": 112
+                            "disponeret": 0
+                        },
+                        "1fb79df9-b5a5-43ae-b060-3882f9fa4d61": {
+                            "name": "Dialog med borger om tilrettelæggelse af forløb (FSIII) (ÆL)",
+                            "id": "1fb79df9-b5a5-43ae-b060-3882f9fa4d61",
+                            "visiteret": 0,
+                            "disponeret": 0
                         }
                     }
                 },
                 "47-2025": {
+                    "status": "red",
                     "total": {
                         "visiteret": 0,
                         "disponeret": 84
@@ -527,6 +580,7 @@ export const mockData: MockData = {
                     }
                 },
                 "48-2025": {
+                    "status": "red",
                     "total": {
                         "visiteret": 0,
                         "disponeret": 114
@@ -551,12 +605,28 @@ export const mockData: MockData = {
     },
     {
         "id": "d16a323d-1abb-4a8f-a71d-1cfb69ac4d84",
-        "cpr": "000000-0000",
+        "cpr": "151515-1515",
         "name": "Claus Testborg",
         "teamId": 1,
         "pathwayData": {
             "Forløb 1": {
+                "43-2025": {
+                    "status": "gray",
+                    "total": {
+                        "visiteret": 70,
+                        "disponeret": 0
+                    },
+                    "procedures": {
+                        "5ce4caab-d7ed-4be3-8ac7-16690b6b946f": {
+                            "name": "Praktisk hjaelp i hjemmet (FSIII) (ÆL)",
+                            "id": "5ce4caab-d7ed-4be3-8ac7-16690b6b946f",
+                            "visiteret": 70,
+                            "disponeret": 0
+                        }
+                    }
+                },
                 "44-2025": {
+                    "status": "green",
                     "total": {
                         "visiteret": 70,
                         "disponeret": 20
@@ -571,9 +641,10 @@ export const mockData: MockData = {
                     }
                 },
                 "45-2025": {
+                    "status": "yellow",
                     "total": {
                         "visiteret": 70,
-                        "disponeret": 70
+                        "disponeret": 59
                     },
                     "procedures": {
                         "5ce4caab-d7ed-4be3-8ac7-16690b6b946f": {
@@ -585,16 +656,87 @@ export const mockData: MockData = {
                     }
                 },
                 "46-2025": {
+                    "status": "red",
                     "total": {
-                        "visiteret": 0,
+                        "visiteret": 70,
+                        "disponeret": 90
+                    },
+                    "procedures": {
+                        "5ce4caab-d7ed-4be3-8ac7-16690b6b946f": {
+                            "name": "Praktisk hjaelp i hjemmet (FSIII) (ÆL)",
+                            "id": "5ce4caab-d7ed-4be3-8ac7-16690b6b946f",
+                            "visiteret": 70,
+                            "disponeret": 90
+                        }
+                    }
+                }
+            }
+        }
+    },
+    {
+        "id": "d16a323d-1abb-4a8f-a71d-1cfb69ac4d88",
+        "cpr": "141716-1516",
+        "name": "Mette Test-Jul",
+        "teamId": 1,
+        "pathwayData": {
+            "Forløb 1": {
+                "43-2025": {
+                    "status": "green",
+                    "total": {
+                        "visiteret": 50,
+                        "disponeret": 20
+                    },
+                    "procedures": {
+                        "5ce4caab-d7ed-4be3-8ac7-16690b6b946f": {
+                            "name": "Praktisk hjaelp i hjemmet (FSIII) (ÆL)",
+                            "id": "5ce4caab-d7ed-4be3-8ac7-16690b6b946f",
+                            "visiteret": 50,
+                            "disponeret": 20
+                        }
+                    }
+                },
+                "44-2025": {
+                    "status": "green",
+                    "total": {
+                        "visiteret": 50,
                         "disponeret": 40
                     },
                     "procedures": {
                         "5ce4caab-d7ed-4be3-8ac7-16690b6b946f": {
                             "name": "Praktisk hjaelp i hjemmet (FSIII) (ÆL)",
                             "id": "5ce4caab-d7ed-4be3-8ac7-16690b6b946f",
-                            "visiteret": 0,
+                            "visiteret": 50,
                             "disponeret": 40
+                        }
+                    }
+                },
+                "45-2025": {
+                    "status": "yellow",
+                    "total": {
+                        "visiteret": 50,
+                        "disponeret": 59
+                    },
+                    "procedures": {
+                        "5ce4caab-d7ed-4be3-8ac7-16690b6b946f": {
+                            "name": "Praktisk hjaelp i hjemmet (FSIII) (ÆL)",
+                            "id": "5ce4caab-d7ed-4be3-8ac7-16690b6b946f",
+                            "visiteret": 50,
+                            "disponeret": 70
+                        }
+                    }
+                },
+                "46-2025": {
+                    "status": "yellow",
+                    "total": {
+                        "visiteret": 50,
+                        "disponeret": 54
+                    },
+                    "procedures": {
+                        "5ce4caab-d7ed-4be3-8ac7-16690b6b946f": {
+                            "name": "Praktisk hjaelp i hjemmet (FSIII) (ÆL)",
+                            "id": "5ce4caab-d7ed-4be3-8ac7-16690b6b946f",
+                            "visiteret": 50,
+                            "disponeret": 54
                         }
                     }
                 }
@@ -603,12 +745,13 @@ export const mockData: MockData = {
     },
     {
         "id": "7d404089-b963-4d7d-aa3e-64aee693fc52",
-        "cpr": "000000-0000",
-        "name": "Mikkel Jul-Test",
+        "cpr": "171717-1717",
+        "name": "Frederik Gammeltest",
         "teamId": 1,
         "pathwayData": {
             "Forløb 5": {
                 "48-2025": {
+                    "status": "red",
                     "total": {
                         "visiteret": 0,
                         "disponeret": 180
@@ -623,6 +766,7 @@ export const mockData: MockData = {
                     }
                 },
                 "44-2025": {
+                    "status": "red",
                     "total": {
                         "visiteret": 1755,
                         "disponeret": 0
@@ -673,6 +817,58 @@ export const mockData: MockData = {
                     }
                 },
                 "45-2025": {
+                    "status": "red",
+                    "total": {
+                        "visiteret": 1755,
+                        "disponeret": 0
+                    },
+                    "procedures": {
+                        "cb254f93-ccf6-46a8-b82e-f6ff59330f96": {
+                            "name": "Dialog med borger om tilrettelæggelse af forløb (FSIII) (ÆL)",
+                            "id": "cb254f93-ccf6-46a8-b82e-f6ff59330f96",
+                            "visiteret": 0,
+                            "disponeret": 0
+                        },
+                        "0f1d594a-d438-43bc-8394-c24aa09f53ec": {
+                            "name": "Praktisk hjaelp i hjemmet (FSIII) (ÆL)",
+                            "id": "0f1d594a-d438-43bc-8394-c24aa09f53ec",
+                            "visiteret": 210,
+                            "disponeret": 0
+                        },
+                        "73c989cf-ec57-498a-94b0-9b0147f8eb3e": {
+                            "name": "Indkøb (FSIII)",
+                            "id": "73c989cf-ec57-498a-94b0-9b0147f8eb3e",
+                            "visiteret": 15,
+                            "disponeret": 0
+                        },
+                        "5a68971f-c370-451e-b2fc-894088e7a5af": {
+                            "name": "Klippekort  (FSIII) (ÆL)",
+                            "id": "5a68971f-c370-451e-b2fc-894088e7a5af",
+                            "visiteret": 0,
+                            "disponeret": 0
+                        },
+                        "1f2177ca-3b13-4565-b4c9-05e577d01fa9": {
+                            "name": "Personlig hjælp og pleje (FSIII) (ÆL)",
+                            "id": "1f2177ca-3b13-4565-b4c9-05e577d01fa9",
+                            "visiteret": 1530,
+                            "disponeret": 0
+                        },
+                        "1fe54be7-ca03-4165-af0d-4e192f6689c7": {
+                            "name": "Genoptræning (FSIII) (ÆL)",
+                            "id": "1fe54be7-ca03-4165-af0d-4e192f6689c7",
+                            "visiteret": 0,
+                            "disponeret": 0
+                        },
+                        "92e8cf2b-7602-45e1-8820-29cb5c9f36fc": {
+                            "name": "Madservice (FSIII) (ÆL)",
+                            "id": "92e8cf2b-7602-45e1-8820-29cb5c9f36fc",
+                            "visiteret": 0,
+                            "disponeret": 0
+                        }
+                    }
+                },
+                "46-2025": {
+                    "status": "red",
                     "total": {
                         "visiteret": 1755,
                         "disponeret": 0
@@ -727,12 +923,13 @@ export const mockData: MockData = {
     },
     {
         "id": "4cda6096-47c2-4d3f-b9b5-774c3d52f7bb",
-        "cpr": "000000-0000",
-        "name": "Mohammed Testi",
+        "cpr": "251248-9996",
+        "name": "Nancy Ann TestBerggren",
         "teamId": 1,
         "pathwayData": {
             "Forløb 3": {
                 "26-2025": {
+                    "status": "red",
                     "total": {
                         "visiteret": 194,
                         "disponeret": 0
@@ -777,6 +974,7 @@ export const mockData: MockData = {
                     }
                 },
                 "27-2025": {
+                    "status": "red",
                     "total": {
                         "visiteret": 190,
                         "disponeret": 0
@@ -803,6 +1001,7 @@ export const mockData: MockData = {
                     }
                 },
                 "28-2025": {
+                    "status": "red",
                     "total": {
                         "visiteret": 190,
                         "disponeret": 0
@@ -829,6 +1028,7 @@ export const mockData: MockData = {
                     }
                 },
                 "29-2025": {
+                    "status": "red",
                     "total": {
                         "visiteret": 190,
                         "disponeret": 0
@@ -855,6 +1055,7 @@ export const mockData: MockData = {
                     }
                 },
                 "30-2025": {
+                    "status": "red",
                     "total": {
                         "visiteret": 190,
                         "disponeret": 0
@@ -881,6 +1082,7 @@ export const mockData: MockData = {
                     }
                 },
                 "31-2025": {
+                    "status": "red",
                     "total": {
                         "visiteret": 190,
                         "disponeret": 0
@@ -907,6 +1109,7 @@ export const mockData: MockData = {
                     }
                 },
                 "32-2025": {
+                    "status": "red",
                     "total": {
                         "visiteret": 190,
                         "disponeret": 0
@@ -933,6 +1136,7 @@ export const mockData: MockData = {
                     }
                 },
                 "33-2025": {
+                    "status": "red",
                     "total": {
                         "visiteret": 190,
                         "disponeret": 0
@@ -959,6 +1163,7 @@ export const mockData: MockData = {
                     }
                 },
                 "34-2025": {
+                    "status": "red",
                     "total": {
                         "visiteret": 190,
                         "disponeret": 0
@@ -985,6 +1190,7 @@ export const mockData: MockData = {
                     }
                 },
                 "35-2025": {
+                    "status": "red",
                     "total": {
                         "visiteret": 190,
                         "disponeret": 0
@@ -1011,6 +1217,7 @@ export const mockData: MockData = {
                     }
                 },
                 "36-2025": {
+                    "status": "red",
                     "total": {
                         "visiteret": 190,
                         "disponeret": 0
@@ -1037,6 +1244,7 @@ export const mockData: MockData = {
                     }
                 },
                 "37-2025": {
+                    "status": "red",
                     "total": {
                         "visiteret": 190,
                         "disponeret": 0
@@ -1063,6 +1271,7 @@ export const mockData: MockData = {
                     }
                 },
                 "38-2025": {
+                    "status": "red",
                     "total": {
                         "visiteret": 190,
                         "disponeret": 0
@@ -1089,6 +1298,7 @@ export const mockData: MockData = {
                     }
                 },
                 "39-2025": {
+                    "status": "red",
                     "total": {
                         "visiteret": 190,
                         "disponeret": 0
@@ -1115,6 +1325,7 @@ export const mockData: MockData = {
                     }
                 },
                 "40-2025": {
+                    "status": "red",
                     "total": {
                         "visiteret": 190,
                         "disponeret": 0
@@ -1141,6 +1352,7 @@ export const mockData: MockData = {
                     }
                 },
                 "41-2025": {
+                    "status": "red",
                     "total": {
                         "visiteret": 190,
                         "disponeret": 0
@@ -1167,6 +1379,7 @@ export const mockData: MockData = {
                     }
                 },
                 "42-2025": {
+                    "status": "red",
                     "total": {
                         "visiteret": 190,
                         "disponeret": 0
@@ -1193,6 +1406,7 @@ export const mockData: MockData = {
                     }
                 },
                 "43-2025": {
+                    "status": "red",
                     "total": {
                         "visiteret": 190,
                         "disponeret": 0
@@ -1219,6 +1433,7 @@ export const mockData: MockData = {
                     }
                 },
                 "44-2025": {
+                    "status": "red",
                     "total": {
                         "visiteret": 190,
                         "disponeret": 0
@@ -1245,6 +1460,34 @@ export const mockData: MockData = {
                     }
                 },
                 "45-2025": {
+                    "status": "red",
+                    "total": {
+                        "visiteret": 190,
+                        "disponeret": 0
+                    },
+                    "procedures": {
+                        "d5b81b71-8fdf-4b98-9ccb-9c09c7f3733a": {
+                            "name": "Dialog med borger om tilrettelæggelse af forløb (FSIII) (ÆL)",
+                            "id": "d5b81b71-8fdf-4b98-9ccb-9c09c7f3733a",
+                            "visiteret": 0,
+                            "disponeret": 0
+                        },
+                        "bc1eb6fd-162c-498c-9e4f-9093b0599106": {
+                            "name": "Personlig hjælp og pleje (FSIII) (ÆL)",
+                            "id": "bc1eb6fd-162c-498c-9e4f-9093b0599106",
+                            "visiteret": 175,
+                            "disponeret": 0
+                        },
+                        "33fa6875-6108-4ef3-9804-fc0fd1e19aba": {
+                            "name": "Praktisk hjaelp i hjemmet (FSIII) (ÆL)",
+                            "id": "33fa6875-6108-4ef3-9804-fc0fd1e19aba",
+                            "visiteret": 15,
+                            "disponeret": 0
+                        }
+                    }
+                },
+                "46-2025": {
+                    "status": "red",
                     "total": {
                         "visiteret": 190,
                         "disponeret": 0
