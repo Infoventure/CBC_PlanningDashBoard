@@ -57,7 +57,7 @@ export const TeamSummaryCard: React.FC<TeamSummaryCardProps> = ({
             Total forløbstid (timer)
           </h3>
           <p className="text-2xl font-semibold text-[#1d3557]">
-            {totals?.totalPathwayMedians.toLocaleString()}
+            {Math.floor(totals?.totalPathwayMedians / 60).toLocaleString()}
           </p>
         </div>
         <div className="bg-gray-50 p-4 rounded-lg">
@@ -65,7 +65,7 @@ export const TeamSummaryCard: React.FC<TeamSummaryCardProps> = ({
             Visiteret (timer)
           </h3>
           <p className="text-2xl font-semibold text-[#1d3557]">
-            {totals?.visiteret.toLocaleString()}
+            {Math.floor(totals?.visiteret / 60).toLocaleString()}
           </p>
         </div>
         <div className="bg-gray-50 p-4 rounded-lg">
@@ -73,13 +73,13 @@ export const TeamSummaryCard: React.FC<TeamSummaryCardProps> = ({
             Disponeret (timer)
           </h3>
           <p className="text-2xl font-semibold text-[#1d3557]">
-            {totals?.disponeret.toLocaleString()}
+            {Math.floor(totals?.disponeret / 60).toLocaleString()}
           </p>
         </div>
         <div className="bg-gray-50 p-4 rounded-lg" title='Hvor mange flere timer er disponeret end den samlede forløbstid'>
           <h3 className="text-sm font-medium text-gray-500 mb-1">Afvigelse</h3>
           <p className={`text-2xl font-semibold ${getBalanceColor(totals?.balance)}`}>
-            {totals?.balance.toLocaleString()}
+            {Math.floor(totals?.balance / 60).toLocaleString()}
           </p>
         </div>
         <div className="bg-gray-50 p-4 rounded-lg">
