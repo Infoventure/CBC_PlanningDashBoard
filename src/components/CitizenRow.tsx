@@ -198,7 +198,7 @@ export const CitizenRow: React.FC<CitizenRowProps> = ({
               <div className="flex flex-col">
                 <span className="font-medium text-sm" title='Borger navn'>{citizen.name}</span>
                 <span className="text-xs text-gray-400 flex items-center" title='CPR nummer'>
-                  {citizen.cpr}
+                  {citizen.cpr ? `${citizen.cpr.slice(0, -4)}-${citizen.cpr.slice(-4)}` : ''}
                   <button
                     type="button"
                     className="ml-1 p-0.5 hover:bg-gray-200 rounded"

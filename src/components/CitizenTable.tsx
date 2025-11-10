@@ -47,7 +47,7 @@ export const CitizenTable: React.FC<CitizenTableProps> = ({
     .filter(citizen => {
       if (!searchTerm.trim()) return true;
       const nameResult = fuzzysort.single(searchTerm, citizen.name);
-      const cprResult = fuzzysort.single(searchTerm, citizen.cpr);
+      const cprResult = fuzzysort.single(searchTerm.trim().replace('-', ''), citizen.cpr);
       return nameResult !== null || cprResult !== null;
     })
     .filter(citizen => {
@@ -189,17 +189,17 @@ export const CitizenTable: React.FC<CitizenTableProps> = ({
                   Navn
                 </th>
                 {selectedPathway && (
-                  <Fragment>
+                  <>
                     <th scope="col" colSpan={6} className="px-2 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider border-r border-gray-300">
                       {selectedPathway.name} - <span className='ml-2 text-xs lowercase'>(minutter)</span>
                     </th>
-                  </Fragment>
+                  </>
                 )}
               </tr>
               <tr>
                 <th className="border-r border-gray-300"></th>
                 {selectedPathway && (
-                  <Fragment>
+                  <>
                     <th className="px-2 py-2 text-xs text-center border-r border-gray-200" title="Forløbets maksimale tid i minutter">
                       Forløb
                     </th>
@@ -215,7 +215,7 @@ export const CitizenTable: React.FC<CitizenTableProps> = ({
                     <th className="px-2 py-2 text-xs text-center border-r border-gray-300" title="Afstand til næste forløb i minutter">
                       Forløbsmargen
                     </th>
-                  </Fragment>
+                  </>
                 )}
               </tr>
             </thead>

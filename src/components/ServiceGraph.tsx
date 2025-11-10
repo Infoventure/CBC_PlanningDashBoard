@@ -82,8 +82,9 @@ export const ServiceGraph: React.FC<ServiceGraphProps> = ({
         <CartesianGrid strokeDasharray="3 3" />
         <XAxis dataKey="week" />
         <YAxis />
-        <Tooltip />
-        <Legend />
+        <Tooltip
+          contentStyle={{ transform: 'translateY(-150%)' }}
+        />
         {Object.keys(pathwayWeeklyData).map(pathwayId => (
           <React.Fragment key={pathwayId}>
             <Line
