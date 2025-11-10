@@ -89,7 +89,7 @@ export const currentYear = now.getFullYear();
 
 // Endpoint fetch and transform
 export async function fetchKompasData(): Promise<MockData> {
-    const res = await fetch("http://10.30.8.72:5000/kompas-data");
+    const res = await fetch("http://10.30.8.72:5001/kompas-data");
     const data : KompasData = await res.json();
 
     // throw new Error("Disabled temporary for testing");
@@ -234,7 +234,7 @@ export async function fetchKompasData(): Promise<MockData> {
 
     // Example POST request to fetch CPR for citizens
     try {
-        const postRes = await fetch("http://10.30.8.72:5000/cpr-for-citizens", {
+        const postRes = await fetch("http://10.30.8.72:5001/cpr-for-citizens", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
