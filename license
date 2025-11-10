@@ -1,0 +1,28 @@
+1. Licens
+CaseByCase ("Licensgiver") giver hermed Vallensbæk Kommune ("Licenstager") en ikke-eksklusiv, ikke-overdragelig og begrænset licens til at anvende softwaren Planlægningskompas ("Softwaren") udelukkende på serveren med IP-adresserne:
+
+http://10.30.8.72:5000
+
+https://10.30.8.72:5000
+("Autoriseret Server").
+
+2. Begrænsninger
+Licenstager må ikke:
+a. Kopiere, distribuere eller på anden måde gøre softwaren tilgængelig for tredjepart.
+b. Ændre, tilpasse, oversætte, reverse-engineere, dekompilere eller skabe afledte værker af softwaren.
+c. Sælge, udleje, sublicensere eller overføre softwaren til tredjepart.
+
+3. Autoriseret brug
+Licenstager må kun anvende softwaren til interne forretningsformål og udelukkende fra den Autoriserede Server. Brug af softwaren fra andre servere, IP-adresser eller lokationer er strengt forbudt uden skriftlig tilladelse fra Licensgiver.
+
+4. Ejerskab
+Softwaren og alle tilhørende immaterielle rettigheder forbliver fuldt ud ejendom af Licensgiver. Licenstager opnår ingen rettigheder, ejerskab eller interesse i softwaren ud over hvad der udtrykkeligt fremgår af denne aftale.
+
+5. Ophør
+Licensen gælder indtil den opsiges. Licensgiver kan øjeblikkeligt opsige licensen, hvis Licenstager overtræder nogen bestemmelse i denne aftale. Ved ophør skal Licenstager straks ophøre med al brug af softwaren og slette alle kopier fra sine systemer.
+
+6. Ansvarsfraskrivelse
+Softwaren leveres "som den er" uden nogen form for garanti, hverken udtrykkelig eller underforstået, herunder men ikke begrænset til garantier om salgbarhed, egnethed til et bestemt formål eller ikke-krænkelse af tredjeparts rettigheder.
+
+7. Lovvalg
+Denne aftale er underlagt og skal fortolkes i overensstemmelse med dansk ret, uden hensyntagen til lovkonflikter.
