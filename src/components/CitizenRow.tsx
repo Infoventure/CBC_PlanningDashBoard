@@ -9,7 +9,8 @@ interface CitizenRowProps {
   onClick: () => void;
   isSelected: boolean;
   pathwayId: string;
-  pathwayTime?: number | null;
+  pathwayMaxTime?: number | null;
+  pathwayMedTime: number | null;
   allPathways?: Pathway[];
 }
 export const CitizenRow: React.FC<CitizenRowProps> = ({
@@ -19,7 +20,8 @@ export const CitizenRow: React.FC<CitizenRowProps> = ({
   onClick,
   isSelected,
   pathwayId,
-  pathwayTime,
+  pathwayMaxTime,
+  pathwayMedTime,
   allPathways,
 }) => {
   const handleCopyCpr = (cpr: string) => {
@@ -203,7 +205,12 @@ export const CitizenRow: React.FC<CitizenRowProps> = ({
         </td>
         {pathway ? (
           <>
-            <td className="px-2 py-3 text-sm text-center border-r border-gray-200">{pathwayTime || '-'}</td>
+            <td className="relative px-2 py-3 text-sm text-center border-r border-gray-200">
+              <div className="flex flex-col items-center">
+                <span>{pathwayMaxTime || '-'}</span>
+                <span title='Forløbets gennemsnitstid' className="text-xs text-gray-400 flex items-center mt-0.5 absolute bottom-1">gns. {pathwayMedTime || '-'}</span>
+              </div>
+            </td>
             <td className="px-2 py-3 text-sm text-center border-r border-gray-200">{pathway.visiteret || '-'}</td>
             <td className="px-2 py-3 text-sm text-center border-r border-gray-200">{pathway.disponeret || '-'}</td>
             <td className={`px-2 py-3 text-sm text-center border-r border-gray-200 ${balance > 0 ? 'text-red-500' : 'text-yellow-600'}`}> 
@@ -215,7 +222,12 @@ export const CitizenRow: React.FC<CitizenRowProps> = ({
           </>
         ) : (
           <>
-            <td className="px-2 py-3 text-sm text-center border-r border-gray-200">{pathwayTime || '-'}</td>
+            <td className="relative px-2 py-3 text-sm text-center border-r border-gray-200">
+              <div className="flex flex-col items-center">
+                <span>{pathwayMaxTime || '-'}</span>
+                <span title='Forløbets gennemsnitstid' className="text-xs text-gray-400 flex items-center mt-0.5 absolute bottom-1">gns. {pathwayMedTime || '-'}</span>
+              </div>
+            </td>
             <td className="px-2 py-3 text-sm text-center border-r border-gray-200">-</td>
             <td className="px-2 py-3 text-sm text-center border-r border-gray-200">-</td>
             <td className="px-2 py-3 text-sm text-center border-r border-gray-300">-</td>

@@ -72,6 +72,8 @@ export async function fetchKompasData(): Promise<MockData> {
   const res = await fetch("http://10.30.8.72:5000/kompas-data");
   const data : KompasData = await res.json();
 
+  // throw new Error("Disabled temporary for testing");
+
   let processedCitizens : Record<string, Citizen> = {};
 
   // Create a record mapping visitation.id to visitation object

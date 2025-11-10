@@ -156,7 +156,7 @@ export const CitizenTable: React.FC<CitizenTableProps> = ({
                 <th className="border-r border-gray-300"></th>
                 {selectedPathway && (
                   <Fragment>
-                    <th className="px-2 py-2 text-xs text-center border-r border-gray-200" title="Forløbets median tid i minutter">
+                    <th className="px-2 py-2 text-xs text-center border-r border-gray-200" title="Forløbets maksimale tid i minutter">
                       Forløb
                     </th>
                     <th className="px-2 py-2 text-xs text-center border-r border-gray-200" title="Visiteret tid i minutter">
@@ -185,7 +185,8 @@ export const CitizenTable: React.FC<CitizenTableProps> = ({
                   onClick={() => handleCitizenClick(citizen.id)}
                   isSelected={selectedCitizen === citizen.id}
                   pathwayId={selectedPathwayId}
-                  pathwayTime={selectedPathway?.maxTime}
+                  pathwayMaxTime={selectedPathway?.maxTime}
+                  pathwayMedTime={selectedPathway?.mediantime}
                   allPathways={data.pathways}
                 />
               ))}
