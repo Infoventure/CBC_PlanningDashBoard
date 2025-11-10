@@ -45,46 +45,131 @@ export const CitizenRow: React.FC<CitizenRowProps> = ({
 
   const pathwayMargin = (() => {
     if (!pathway || !allPathways) return '-';
-    const pathwayDef = allPathways.find(p => p.id === pathwayId);
-    if (!pathwayDef) return '-';
-    const minTime = pathwayDef.minTime;
-    const maxTime = pathwayDef.maxTime;
 
-    const toMin = pathway.disponeret - minTime;
-    const toMax = maxTime ? maxTime - pathway.disponeret : undefined;
-    
-    // Helper to get color classes based on value
-    const getColor = (val: number | undefined) => {
-      if (val !== undefined && val <= 0) return { bg: 'bg-red-100', text: 'text-red-700' };
-      if (val !== undefined && val <= 30) return { bg: 'bg-yellow-100', text: 'text-yellow-700' };
-      return { bg: 'bg-green-100', text: 'text-green-700' };
-    };
-    const minColor = getColor(toMin);
-    const maxColor = getColor(toMax);
+    const sorted = [...allPathways].sort((a, b) => a.minTime - b.minTime);
+    const totalCount = sorted.length;
 
-    let minColorTitle = '';
-    let maxColorTitle = '';
+    // Helper to normalize within a specific pathway
+    const getRelativePosition = (p: any, val: number) =>
+      ((val - p.minTime) / (p.maxTime - p.minTime)) * 100;
 
-    if (toMin < 0) {
-      minColorTitle = 'Borgeren har fået disponeret mindre tid end forløbets minimum. Enten mangler de planlagte ydelser, ellers skal de flyttes til lavere et forløb';
-    }
-    if (toMax !== undefined && toMax < 0) {
-      maxColorTitle = 'Borgeren har fået disponeret mere tid end forløbets maksimum. Dette kan medføre økonomiske tab for kommunen. Enten har de fået disponeret for meget, ellers skal de flyttes til et højere forløb';
+    // Find which pathway the disponeret belongs to
+    const activePathwayIndex = sorted.findIndex(
+      p => pathway.disponeret >= p.minTime && pathway.disponeret <= p.maxTime
+    );
+
+    // Compute position within that segment
+    const activePathway = sorted[activePathwayIndex];
+    const relativePos =
+      activePathwayIndex === -1
+        ? 0
+        : getRelativePosition(activePathway, pathway.disponeret);
+
+    // Compute final left position as % across all segments
+    const leftPos =
+      activePathwayIndex === -1
+        ? 0
+        : activePathwayIndex * (100 / totalCount) + (relativePos / totalCount);
+
+    // Find selected pathway index by pathwayId
+    const selectedPathwayIndex = sorted.findIndex(p => p.id === pathwayId);
+    const selectedPathway =
+      selectedPathwayIndex !== -1 ? sorted[selectedPathwayIndex] : null;
+
+    // Determine marker color
+    let markerColor = 'bg-red-500/70'; // default outside
+    if (selectedPathway) {
+      const min = selectedPathway.minTime;
+      const max = selectedPathway.maxTime;
+      const range = max - min;
+      const twentyPercent = 0.2 * range;
+
+      if (pathway.disponeret >= min && pathway.disponeret <= max) {
+        // Inside bounds
+        if (
+          pathway.disponeret <= min + twentyPercent ||
+          pathway.disponeret >= max - twentyPercent
+        ) {
+          markerColor = 'bg-yellow-500/70'; // warning zone
+        } else {
+          markerColor = 'bg-green-500/70'; // safe zone
+        }
+      }
     }
 
     return (
-      <div className='flex justify-center items-center'>
-        <span className={`ml-2 px-2 inline-flex items-center text-sm leading-5 font-semibold rounded-full ${minColor.bg} ${minColor.text}`} title={minColorTitle || undefined}> 
-          <ArrowLeftIcon className={`h-4 w-4 mr-1 ${minColor.text}`} />
-          {toMin}
-        </span>
-        <span className={`ml-2 px-2 inline-flex items-center text-sm leading-5 font-semibold rounded-full ${maxColor.bg} ${maxColor.text}`} title={maxColorTitle || undefined}>
-          {toMax}
-          <ArrowRightIcon className={`h-4 w-4 ml-1 ${maxColor.text}`} />
-        </span>
+      <div className="w-full flex flex-col items-center mt-2 relative px-1">
+        {/* Time labels above the line */}
+        <div className="absolute top-0 left-0 w-full flex justify-between text-xs text-gray-600">
+          {sorted.map((p, i) => (
+            i !== totalCount - 1 && (
+              <div
+                key={p.id}
+                className="absolute transform -translate-x-1/2 text-center"
+                style={{ left: `${((i + 1) / totalCount) * 100}%` }}
+                title={"Forløb " + (i + 1) + " - max tid: " + p.maxTime.toString()}
+              >
+                <div>{p.maxTime}</div>
+              </div>
+            )
+          ))}
+        </div>
+
+        {/* The visual line */}
+        <div className="relative w-full h-2 bg-gray-200 mt-6 rounded-full">
+          {/* Highlight selected pathway */}
+          {selectedPathwayIndex !== -1 && (
+            <div
+              className="absolute top-0 h-2 bg-green-300 rounded-full"
+              style={{
+                left: `${(selectedPathwayIndex / totalCount) * 100}%`,
+                width: `${100 / totalCount}%`,
+              }}
+              title={`Expected range: ${
+                sorted[selectedPathwayIndex].name || `Pathway ${selectedPathwayIndex + 1}`
+              }`}
+            />
+          )}
+
+          {/* Pathway segment edges */}
+          {sorted.map((p, i) => (
+            i !== totalCount - 1 && (
+              <div
+                key={p.id}
+                className="absolute top-0 h-4 border-r-2 border-gray-500"
+                style={{ left: `${((i + 1) / totalCount) * 100}%` }}
+                title={"Forløb " + (i + 1) + " - max tid: " + p.maxTime.toString()}
+              />
+            )
+          ))}
+
+          {/* Disponeret marker */}
+          <div
+            className={`absolute -top-1 w-4 h-4 rounded-full border-2 border-white shadow ${markerColor}`}
+            style={{ left: `calc(${leftPos}% - 8px)` }}
+            title={`Disponeret: ${pathway.disponeret}`}
+          />
+        </div>
+
+        {/* Optional labels */}
+        <div className="flex justify-between w-full text-xs text-gray-600 mt-1">
+          {sorted.map((p, i) => (
+            <span
+              key={p.id}
+              className='-mx-[1px]'
+              style={{
+                textAlign: 'center',
+                width: `${100 / totalCount}%`,
+              }}
+            >
+              {'Forl ' + (p.name?.split(' ')[1] || `${i + 1}`)}
+            </span>
+          ))}
+        </div>
       </div>
     );
   })();
+
 
   return (
     <>

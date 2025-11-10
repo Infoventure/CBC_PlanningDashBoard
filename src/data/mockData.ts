@@ -29,7 +29,7 @@ export interface Pathway {
   name: string;
   mediantime: number; // The median time for the pathway in minutes. This is the target that all procedures on the path should average to. This is the minutes that the munincipality reieves money based on. All procedures over the median is a loss of money.
   minTime: number; // The minimum time for the pathway in minutes.
-  maxTime: number | null; // The maximum time for the pathway in minutes.
+  maxTime: number; // The maximum time for the pathway in minutes.
 }
 export interface MockData {
   pathways: Pathway[];
@@ -254,7 +254,7 @@ export const mockData: MockData = {
       name: 'Forløb 5',
       mediantime: 1745,
       minTime: 1200,
-      maxTime: null
+      maxTime: 2400,
     }
   ],
   citizens: [

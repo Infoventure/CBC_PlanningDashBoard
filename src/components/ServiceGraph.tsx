@@ -4,9 +4,13 @@ import { DataContext } from '../App';
 interface ServiceGraphProps {
   citizenId: string | null;
   showAlert?: boolean;
+  currentWeek: number;
+  currentYear: number;
 }
 export const ServiceGraph: React.FC<ServiceGraphProps> = ({
   citizenId,
+  currentWeek,
+  currentYear
 }) => {
   const data = useContext(DataContext);
 
@@ -36,11 +40,22 @@ export const ServiceGraph: React.FC<ServiceGraphProps> = ({
     });
   }
 
-  // Gather all unique weeks for X axis
+  // Gather all unique weeks for X axis, filter out weeks beyond currentWeek/currentYear
+  // Support both 'WW-YYYY' and 'YYYY-WW' formats
+  function parseWeekYear(str: string) {
+    const [a, b] = str.split('-');
+    if (a.length === 4) return { year: +a, week: +b };
+    return { week: +a, year: +b };
+  }
   const allWeeks = Array.from(new Set(
     Object.values(pathwayWeeklyData).flat().map(d => d.week)
-  )).sort();
-
+  ))
+    .map(parseWeekYear)
+    .filter(({ week, year }) =>
+      year < currentYear || (year === currentYear && week <= currentWeek)
+    )
+    .sort((a, b) => a.year - b.year || a.week - b.week)
+    .map(({ week, year }) => `${week}-${year}`);
   // Build chart data: [{ week, [visiteret-<pathwayId>], [disponeret-<pathwayId>] }]
   const chartData = allWeeks.map(week => {
     const entry: Record<string, any> = { week };
@@ -51,6 +66,8 @@ export const ServiceGraph: React.FC<ServiceGraphProps> = ({
     });
     return entry;
   });
+
+  console.log('Chart Data:', chartData);
 
   // Get pathway names for legend
   const pathwayNames: Record<string, string> = {};

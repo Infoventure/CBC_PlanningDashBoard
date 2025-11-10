@@ -8,11 +8,15 @@ interface CitizenTableProps {
   onSelectCitizen: (id: string | null) => void;
   selectedCitizen: string | null;
   teamId: number;
+  currentWeek: number;
+  currentYear: number;
 }
 export const CitizenTable: React.FC<CitizenTableProps> = ({
   onSelectCitizen,
   selectedCitizen,
   teamId,
+  currentWeek,
+  currentYear
 }) => {
 
   const data = useContext(DataContext); // Removed unused DataContext reference
@@ -44,12 +48,6 @@ export const CitizenTable: React.FC<CitizenTableProps> = ({
     });
   const selectedPathway = data?.pathways.find(p => p.id === selectedPathwayId);
 
-
-  const now = new Date();
-  const currentWeek = Math.ceil(
-    ((now.getTime() - new Date(now.getFullYear(), 0, 1).getTime()) / 86400000 + 1) / 7
-  );
-  const currentYear = now.getFullYear();
 
   // last 3 weeks + current
   const weeks = Array.from({ length: 4 }, (_, i) => `${currentWeek - 3 + i}-${currentYear}`);
