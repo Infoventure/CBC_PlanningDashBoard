@@ -9,7 +9,7 @@ interface CitizenRowProps {
   onClick: () => void;
   isSelected: boolean;
   pathwayId: string;
-  pathwayTime?: number;
+  pathwayTime?: number | null;
   allPathways?: Pathway[];
 }
 export const CitizenRow: React.FC<CitizenRowProps> = ({
@@ -43,6 +43,7 @@ export const CitizenRow: React.FC<CitizenRowProps> = ({
   // Compute balance dynamically
   const balance = pathway?.disponeret - pathway?.visiteret;
 
+  const lastPathwayDefaultMax = 10000 // Default max time for the last pathway if undefined
   const pathwayMargin = (() => {
     if (!pathway || !allPathways) return '-';
 
@@ -50,12 +51,12 @@ export const CitizenRow: React.FC<CitizenRowProps> = ({
     const totalCount = sorted.length;
 
     // Helper to normalize within a specific pathway
-    const getRelativePosition = (p: any, val: number) =>
-      ((val - p.minTime) / (p.maxTime - p.minTime)) * 100;
+    const getRelativePosition = (p: Pathway, val: number) =>
+      ((val - p.minTime) / ((p.maxTime || lastPathwayDefaultMax) - p.minTime)) * 100;
 
     // Find which pathway the disponeret belongs to
     const activePathwayIndex = sorted.findIndex(
-      p => pathway.disponeret >= p.minTime && pathway.disponeret <= p.maxTime
+      p => pathway.disponeret >= p.minTime && pathway.disponeret <= (p.maxTime || lastPathwayDefaultMax)
     );
 
     // Compute position within that segment
@@ -80,7 +81,7 @@ export const CitizenRow: React.FC<CitizenRowProps> = ({
     let markerColor = 'bg-red-500/70'; // default outside
     if (selectedPathway) {
       const min = selectedPathway.minTime;
-      const max = selectedPathway.maxTime;
+      const max = selectedPathway.maxTime || lastPathwayDefaultMax;
       const range = max - min;
       const twentyPercent = 0.2 * range;
 
@@ -107,7 +108,7 @@ export const CitizenRow: React.FC<CitizenRowProps> = ({
                 key={p.id}
                 className="absolute transform -translate-x-1/2 text-center"
                 style={{ left: `${((i + 1) / totalCount) * 100}%` }}
-                title={"Forløb " + (i + 1) + " - max tid: " + p.maxTime.toString()}
+                title={"Forløb " + (i + 1) + " - max tid: " + p.maxTime?.toString()}
               >
                 <div>{p.maxTime}</div>
               </div>
@@ -138,7 +139,7 @@ export const CitizenRow: React.FC<CitizenRowProps> = ({
                 key={p.id}
                 className="absolute top-0 h-4 border-r-2 border-gray-500"
                 style={{ left: `${((i + 1) / totalCount) * 100}%` }}
-                title={"Forløb " + (i + 1) + " - max tid: " + p.maxTime.toString()}
+                title={"Forløb " + (i + 1) + " - max tid: " + p.maxTime?.toString()}
               />
             )
           ))}

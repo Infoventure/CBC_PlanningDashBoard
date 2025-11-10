@@ -185,7 +185,7 @@ export const CitizenTable: React.FC<CitizenTableProps> = ({
                   onClick={() => handleCitizenClick(citizen.id)}
                   isSelected={selectedCitizen === citizen.id}
                   pathwayId={selectedPathwayId}
-                  pathwayTime={selectedPathway?.mediantime}
+                  pathwayTime={selectedPathway?.maxTime}
                   allPathways={data.pathways}
                 />
               ))}
