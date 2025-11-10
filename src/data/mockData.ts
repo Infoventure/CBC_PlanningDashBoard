@@ -255,7 +255,6 @@ export async function fetchKompasData(): Promise<MockData> {
                 }
             }
         }
-        console.log(cprResult);
     } catch (err) {
         console.error('Failed to fetch CPR for citizens:', err);
     }

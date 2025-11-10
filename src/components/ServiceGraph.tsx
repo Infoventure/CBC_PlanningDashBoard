@@ -67,8 +67,6 @@ export const ServiceGraph: React.FC<ServiceGraphProps> = ({
     return entry;
   });
 
-  console.log('Chart Data:', chartData);
-
   // Get pathway names for legend
   const pathwayNames: Record<string, string> = {};
   data?.pathways.forEach(p => { pathwayNames[p.id] = p.name; });

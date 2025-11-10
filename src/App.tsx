@@ -24,7 +24,6 @@ export function App() {
   }, []);
 
   useEffect(() => {
-    console.log(actualData)
   }, [actualData]);
 
   return (

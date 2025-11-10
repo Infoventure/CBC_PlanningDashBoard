@@ -55,10 +55,7 @@ export const CitizenTable: React.FC<CitizenTableProps> = ({
       // Check if any of the weeks for this citizen in the selected pathway matches a selected color
       const pathwayWeeks = citizen.pathwayData[selectedPathwayId];
       return weeks.some(weekKey => {
-        console.log(pathwayWeeks);
-        console.log(weekKey);
         const weekData = pathwayWeeks ? pathwayWeeks[weekKey] : undefined;
-        console.log(weekData);
         if (weekData && typeof weekData === 'object' && 'status' in weekData && typeof weekData.status === 'string') {
           // Normalize status to match filter (capitalize first letter)
           const normalizedStatus = weekData.status.charAt(0).toUpperCase() + weekData.status.slice(1).toLowerCase();
