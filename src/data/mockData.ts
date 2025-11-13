@@ -650,7 +650,7 @@ export const mockData: MockData = {
                             "name": "Praktisk hjaelp i hjemmet (FSIII) (ÆL)",
                             "id": "5ce4caab-d7ed-4be3-8ac7-16690b6b946f",
                             "visiteret": 70,
-                            "disponeret": 70
+                            "disponeret": 59
                         }
                     }
                 },

@@ -1,47 +1,57 @@
-import React, { Fragment } from 'react';
-import { Citizen, Pathway } from '../data/mockData';
-import { ChevronDownIcon, ChevronRightIcon, UserIcon, ArrowLeftIcon, ArrowRightIcon } from 'lucide-react';
+import React from 'react';
+import { Citizen, Pathway, Procedure } from '../data/mockData';
+import { ChevronDownIcon, ChevronRightIcon, UserIcon } from 'lucide-react';
 import { CopyIcon } from 'lucide-react';
 interface CitizenRowProps {
   citizen: Citizen;
-  week: string;
+  chosenWeeks: string[];
   expanded: boolean;
   onClick: () => void;
   isSelected: boolean;
-  pathwayId: string;
-  pathwayMaxTime?: number | null;
-  pathwayMedTime: number | null;
+  chosenPathwayId: string;
+  chosenPathwayMaxTime?: number | null;
+  chosenPathwayMedTime?: number | null;
   allPathways?: Pathway[];
 }
 export const CitizenRow: React.FC<CitizenRowProps> = ({
   citizen,
-  week,
+  chosenWeeks,
   expanded,
   onClick,
   isSelected,
-  pathwayId,
-  pathwayMaxTime,
-  pathwayMedTime,
+  chosenPathwayId,
+  chosenPathwayMaxTime,
+  chosenPathwayMedTime,
   allPathways,
 }) => {
   const handleCopyCpr = (cpr: string) => {
     navigator.clipboard.writeText(cpr);
   };
-  const getBalanceColor = (balance: number) => {
-    if (balance > 0) return 'bg-red-100';
-    return 'bg-green-100';
-  };
-  const getPercentageColor = (percentage: number) => {
-    if (percentage > 75) return 'bg-red-100 text-red-700';
-    if (percentage > 50) return 'bg-yellow-100 text-yellow-700';
-    if (percentage < 20) return 'bg-green-100 text-green-700';
-    return 'bg-yellow-50 text-yellow-600';
-  };
+
+  const processedChosenPathwayMaxTime = chosenPathwayMaxTime ? chosenPathwayMaxTime * chosenWeeks.length : null;
+  const processedChosenPathwayMedTime = chosenPathwayMedTime ? chosenPathwayMedTime * chosenWeeks.length : null;
 
   const pathways = citizen.pathwayData;
-  const procedures = citizen.pathwayData[pathwayId][week]?.procedures;
+  // Aggregate procedures across all chosenWeeks, grouped by name (one-liner)
+  const procedures = Object.values(
+    chosenWeeks
+      .flatMap((week: string) => Object.values(citizen.pathwayData[chosenPathwayId]?.[week]?.procedures || {}))
+      .reduce(
+        (groupedProcedures: Record<string, Procedure>, procedure: Procedure) => {
+          groupedProcedures[procedure.name] = groupedProcedures[procedure.name]
+            ? {
+                ...groupedProcedures[procedure.name],
+                visiteret: groupedProcedures[procedure.name].visiteret + (procedure.visiteret || 0),
+                disponeret: groupedProcedures[procedure.name].disponeret + (procedure.disponeret || 0),
+              }
+            : { ...procedure, visiteret: procedure.visiteret || 0, disponeret: procedure.disponeret || 0 };
+          return groupedProcedures;
+        },
+        {} as Record<string, Procedure>
+      )
+  );
   // Gather all weeks' statuses for the given pathwayId, including the week key, sorted by week-year
-  const statusies = Object.entries(citizen.pathwayData[pathwayId] || {})
+  const statusies = Object.entries(citizen.pathwayData[chosenPathwayId] || {})
     .sort(([a], [b]) => {
       // a and b are week keys in the format 'weekNumber-Year'
       const [aWeek, aYear] = a.split('-').map(Number);
@@ -53,7 +63,16 @@ export const CitizenRow: React.FC<CitizenRowProps> = ({
       week,
       status: weekData?.status
     }));
-  const pathway = pathways[pathwayId][week]?.total;
+  // Sum visiteret and disponeret for all 'total's of all chosenWeeks
+  const pathway = chosenWeeks
+    .map((week: string) => pathways[chosenPathwayId]?.[week]?.total)
+    .reduce(
+      (sum: { visiteret: number; disponeret: number }, total: any) => ({
+        visiteret: sum.visiteret + (total.visiteret || 0),
+        disponeret: sum.disponeret + (total.disponeret || 0),
+      }),
+      { visiteret: 0, disponeret: 0 }
+    );
 
   // Compute balance dynamically
   const balance = pathway?.disponeret - pathway?.visiteret;
@@ -88,7 +107,7 @@ export const CitizenRow: React.FC<CitizenRowProps> = ({
         : activePathwayIndex * (100 / totalCount) + (relativePos / totalCount);
 
     // Find selected pathway index by pathwayId
-    const selectedPathwayIndex = sorted.findIndex(p => p.id === pathwayId);
+    const selectedPathwayIndex = sorted.findIndex(p => p.id === chosenPathwayId);
     const selectedPathway =
       selectedPathwayIndex !== -1 ? sorted[selectedPathwayIndex] : null;
 
@@ -113,6 +132,7 @@ export const CitizenRow: React.FC<CitizenRowProps> = ({
       }
     }
 
+    // Create "Pathway margin" visualization
     return (
       <div className="w-full flex flex-col items-center relative px-1 my-1">
         {/* Time labels above the line */}
@@ -238,8 +258,8 @@ export const CitizenRow: React.FC<CitizenRowProps> = ({
           <>
             <td className="relative px-2 py-3 text-sm text-center border-r border-gray-200">
               <div className="flex flex-col items-center">
-                <span>{pathwayMaxTime || '-'}</span>
-                <span title='Forløbets gennemsnitstid' className="text-xs text-gray-400 flex items-center mt-0.5 absolute bottom-1">Gns. {pathwayMedTime || '-'}</span>
+                <span>{processedChosenPathwayMaxTime || '-'}</span>
+                <span title='Forløbets gennemsnitstid' className="text-xs text-gray-400 flex items-center mt-0.5 absolute bottom-1">Gns. {processedChosenPathwayMedTime || '-'}</span>
               </div>
             </td>
             <td className="px-2 py-3 text-sm text-center border-r border-gray-200">{pathway.visiteret || '-'}</td>
@@ -255,8 +275,8 @@ export const CitizenRow: React.FC<CitizenRowProps> = ({
           <>
             <td className="relative px-2 py-3 text-sm text-center border-r border-gray-200">
               <div className="flex flex-col items-center">
-                <span>{pathwayMaxTime || '-'}</span>
-                <span title='Forløbets gennemsnitstid' className="text-xs text-gray-400 flex items-center mt-0.5 absolute bottom-1">Gns. {pathwayMedTime || '-'}</span>
+                <span>{processedChosenPathwayMaxTime || '-'}</span>
+                <span title='Forløbets gennemsnitstid' className="text-xs text-gray-400 flex items-center mt-0.5 absolute bottom-1">Gns. {processedChosenPathwayMedTime || '-'}</span>
               </div>
             </td>
             <td className="px-2 py-3 text-sm text-center border-r border-gray-200">-</td>

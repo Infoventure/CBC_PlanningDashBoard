@@ -1,4 +1,4 @@
-import React, { useState, Fragment, useContext } from 'react';
+import React, { useState, useContext, useEffect, useRef } from 'react';
 import fuzzysort from 'fuzzysort';
 import { CitizenRow } from './CitizenRow';
 import { RefreshCwIcon, SearchXIcon } from 'lucide-react';
@@ -20,6 +20,20 @@ export const CitizenTable: React.FC<CitizenTableProps> = ({
 }) => {
 
   const data = useContext(DataContext); // Removed unused DataContext reference
+
+  const containerRef = useRef<HTMLDivElement>(null);
+  // Close menu when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event: { target: any; }) => {
+      if (containerRef.current && !containerRef.current.contains(event.target)) {
+        setMenuOpen(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
 
   const [expandedCitizen, setExpandedCitizen] = useState<string | null>(null);
   const [selectedPathwayId, setSelectedPathwayId] = useState<string>(data?.pathways[0]?.id || "Forløb 1");
@@ -66,7 +80,25 @@ export const CitizenTable: React.FC<CitizenTableProps> = ({
     });
   const selectedPathway = data?.pathways.find(p => p.id === selectedPathwayId);
 
-  const [selectedWeek, setSelectedWeek] = useState(weeks[3]); // default to current week
+  const [selectedWeeks, setSelectedWeeks] = useState([weeks[3]]); // default to current week
+  const [menuOpen, setMenuOpen] = useState(false);
+
+    const toggleWeek = (week : string) => {
+    if (selectedWeeks.includes(week)) {
+      if (selectedWeeks.length === 1) {
+        // Prevent deselecting the last week
+        return;
+      }
+      setSelectedWeeks(selectedWeeks.filter((w) => w !== week));
+    } else {
+      setSelectedWeeks([...selectedWeeks, week]);
+    }
+  };
+
+  const selectOnlyWeek = (week : string) => {
+    setSelectedWeeks([week]);
+    setMenuOpen(false);
+  };
 
   if (!data) {
     return <div>Loading data...</div>;
@@ -107,18 +139,59 @@ export const CitizenTable: React.FC<CitizenTableProps> = ({
                 })}
               </div>
             </div>
-            <label className="text-sm font-medium text-[#1d3557] mr-2">Uge:</label>
-            <select
-              className="border border-gray-300 rounded px-2 py-1 text-sm mr-2"
-              value={selectedWeek}
-              onChange={(e) => setSelectedWeek(e.target.value)}
-            >
-              {weeks.map((w) => (
-                <option key={w} value={w}>
-                  {w}
-                </option>
-              ))}
-            </select>
+            <label className="text-sm font-medium text-[#1d3557]">Uge:</label>
+            <div className="relative inline-block" ref={containerRef}>
+              {/* Main button showing selected weeks */}
+              <button
+                type="button"
+                onClick={() => setMenuOpen(!menuOpen)}
+                className="px-2 py-1 bg-[#1d3557] text-white rounded flex items-center justify-between text-sm w-32 text-center"
+              >
+                <span className='w-full max-h-[1.2rem]'>
+                  {selectedWeeks.length === 1
+                    ? selectedWeeks[0]
+                    : "" + selectedWeeks
+                        .map(w => w.split('-')[0])
+                        .sort((a, b) => Number(a) - Number(b))
+                        .join(", ")}
+                </span>
+                <span className="ml-2">▾</span>
+              </button>
+
+              {/* Dropdown menu */}
+              {menuOpen && (
+                <div className="absolute mt-1 w-32 bg-white border rounded-lg shadow-lg z-10">
+                  {weeks.map((w) => (
+                    <div
+                      key={w}
+                      className="flex items-center justify-between hover:bg-gray-100 cursor-pointer"
+                    >
+                      {/* Click text for single select */}
+                      <span
+                        onClick={() => selectOnlyWeek(w)}
+                        className="flex-1 text-sm px-2 py-2 pl-4 h-full select-none"
+                      >
+                        {w}
+                      </span>
+
+                      {/* Small circle for multi-select */}
+                      <div className='py-2 px-2 select-none' onClick={() => toggleWeek(w)}>
+                        <span
+                          title='Tilføjer ugen til en flere-ugers udvælgelse'
+                          className={`w-4 h-4 border rounded-full flex-shrink-0 cursor-pointer flex items-center justify-center
+                            ${selectedWeeks.includes(w) ? "bg-[#1d3557] border-[#1d3557]" : "bg-white border-gray-300"}
+                          `}
+                        >
+                          {selectedWeeks.includes(w) && (
+                            <span className="text-white text-xs">✓</span>
+                          )}
+                        </span>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
             <label className="text-sm font-medium text-[#1d3557]">Forløb:</label>
             <select
               className="border border-gray-300 rounded px-2 py-1 text-sm"
@@ -224,13 +297,13 @@ export const CitizenTable: React.FC<CitizenTableProps> = ({
                 <CitizenRow
                   key={citizen.id}
                   citizen={citizen}
-                  week={selectedWeek}
+                  chosenWeeks={selectedWeeks}
                   expanded={expandedCitizen === citizen.id}
                   onClick={() => handleCitizenClick(citizen.id)}
                   isSelected={selectedCitizen === citizen.id}
-                  pathwayId={selectedPathwayId}
-                  pathwayMaxTime={selectedPathway?.maxTime}
-                  pathwayMedTime={selectedPathway?.mediantime ?? null}
+                  chosenPathwayId={selectedPathwayId}
+                  chosenPathwayMaxTime={selectedPathway?.maxTime}
+                  chosenPathwayMedTime={selectedPathway?.mediantime ?? null}
                   allPathways={data.pathways}
                 />
               ))}
