@@ -189,6 +189,16 @@ export const CitizenTable: React.FC<CitizenTableProps> = ({
                       </div>
                     </div>
                   ))}
+                  <div>
+                    <button
+                        type="button"
+                        className="p-1 mt-1 rounded-md hover:bg-[#1d3557]/80 bg-[#1d3557] text-white transition-colors pointer w-full text-center"
+                        title="Nulstil uger"
+                        onClick={() => setSelectedWeeks([weeks[3]])}
+                      >
+                        <SearchXIcon className="h-4 w-4 text-center m-auto" />
+                    </button>
+                  </div>
                 </div>
               )}
             </div>
