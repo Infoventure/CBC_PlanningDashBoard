@@ -105,7 +105,7 @@ export const CitizenTable: React.FC<CitizenTableProps> = ({
   }
 
   return (
-      <div className="bg-white rounded-lg shadow-lg overflow-hidden">
+      <div className="bg-white rounded-lg shadow-lg">
         <div className="p-4 border-b border-gray-200 flex justify-between items-center">
           <h2 className="text-lg font-semibold text-[#1d3557]">Borgeroversigt</h2>
           <div className="flex items-center gap-2">
@@ -265,60 +265,62 @@ export const CitizenTable: React.FC<CitizenTableProps> = ({
               
             </div>
           ) : (
+            <div className='max-h-[80vh] overflow-y-scroll'>
             <table className="min-w-full divide-y divide-gray-200 table-fixed">
-            <thead className="bg-gray-50">
-              <tr>
-                <th scope="col" className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider border-r border-gray-300 w-1/5">
-                  Navn
-                </th>
-                {selectedPathway && (
-                  <>
-                    <th scope="col" colSpan={6} className="px-2 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider border-r border-gray-300">
-                      {selectedPathway.name} - <span className='ml-2 text-xs lowercase'>(minutter)</span>
-                    </th>
-                  </>
-                )}
-              </tr>
-              <tr>
-                <th className="border-r border-gray-300"></th>
-                {selectedPathway && (
-                  <>
-                    <th className="px-2 py-2 text-xs text-center border-r border-gray-200" title="Forløbets maksimale tid i minutter">
-                      Forløb
-                    </th>
-                    <th className="px-2 py-2 text-xs text-center border-r border-gray-200" title="Visiteret tid i minutter">
-                      Visiteret
-                    </th>
-                    <th className="px-2 py-2 text-xs text-center border-r border-gray-200" title="Disponeret tid i minutter">
-                      Disponeret
-                    </th>
-                    <th className="px-2 py-2 text-xs text-center border-r border-gray-200" title="Balance (Hvor mange flere timer er disponeret end visiteret)">
-                      Balance
-                    </th>
-                    <th className="px-2 py-2 text-xs text-center border-r border-gray-300" title="Afstand til næste forløb i minutter">
-                      Forløbsmargen
-                    </th>
-                  </>
-                )}
-              </tr>
-            </thead>
-            <tbody className="bg-white divide-y divide-gray-200">
-              {filteredCitizens.map(citizen => (
-                <CitizenRow
-                  key={citizen.id}
-                  citizen={citizen}
-                  chosenWeeks={selectedWeeks}
-                  expanded={expandedCitizen === citizen.id}
-                  onClick={() => handleCitizenClick(citizen.id)}
-                  isSelected={selectedCitizen === citizen.id}
-                  chosenPathwayId={selectedPathwayId}
-                  chosenPathwayMaxTime={selectedPathway?.maxTime}
-                  chosenPathwayMedTime={selectedPathway?.mediantime ?? null}
-                  allPathways={data.pathways}
-                />
-              ))}
-            </tbody>
-          </table>
+              <thead className="bg-gray-50 sticky top-0 z-10">
+                <tr>
+                  <th scope="col" className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider border-r border-gray-300 w-1/5">
+                    Navn
+                  </th>
+                  {selectedPathway && (
+                    <>
+                      <th scope="col" colSpan={6} className="px-2 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider border-r border-gray-300">
+                        {selectedPathway.name} - <span className='ml-2 text-xs lowercase'>(minutter)</span>
+                      </th>
+                    </>
+                  )}
+                </tr>
+                <tr>
+                  <th className="border-r border-gray-300"></th>
+                  {selectedPathway && (
+                    <>
+                      <th className="px-2 py-2 text-xs text-center border-r border-gray-200" title="Forløbets maksimale tid i minutter">
+                        Forløb
+                      </th>
+                      <th className="px-2 py-2 text-xs text-center border-r border-gray-200" title="Visiteret tid i minutter">
+                        Visiteret
+                      </th>
+                      <th className="px-2 py-2 text-xs text-center border-r border-gray-200" title="Disponeret tid i minutter">
+                        Disponeret
+                      </th>
+                      <th className="px-2 py-2 text-xs text-center border-r border-gray-200" title="Balance (Hvor mange flere timer er disponeret end visiteret)">
+                        Balance
+                      </th>
+                      <th className="px-2 py-2 text-xs text-center border-r border-gray-300" title="Afstand til næste forløb i minutter">
+                        Forløbsmargen
+                      </th>
+                    </>
+                  )}
+                </tr>
+              </thead>
+              <tbody className="bg-white divide-y divide-gray-200">
+                {filteredCitizens.map(citizen => (
+                  <CitizenRow
+                    key={citizen.id}
+                    citizen={citizen}
+                    chosenWeeks={selectedWeeks}
+                    expanded={expandedCitizen === citizen.id}
+                    onClick={() => handleCitizenClick(citizen.id)}
+                    isSelected={selectedCitizen === citizen.id}
+                    chosenPathwayId={selectedPathwayId}
+                    chosenPathwayMaxTime={selectedPathway?.maxTime}
+                    chosenPathwayMedTime={selectedPathway?.mediantime ?? null}
+                    allPathways={data.pathways}
+                  />
+                ))}
+              </tbody>
+            </table>
+          </div>
           )}
         </div>
           <style>{`
