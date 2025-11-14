@@ -68,8 +68,8 @@ export const CitizenRow: React.FC<CitizenRowProps> = ({
     .map((week: string) => pathways[chosenPathwayId]?.[week]?.total)
     .reduce(
       (sum: { visiteret: number; disponeret: number }, total: any) => ({
-        visiteret: sum.visiteret + (total.visiteret || 0),
-        disponeret: sum.disponeret + (total.disponeret || 0),
+        visiteret: sum?.visiteret + (total?.visiteret || 0),
+        disponeret: sum?.disponeret + (total?.disponeret || 0),
       }),
       { visiteret: 0, disponeret: 0 }
     );

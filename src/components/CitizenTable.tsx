@@ -160,7 +160,7 @@ export const CitizenTable: React.FC<CitizenTableProps> = ({
 
               {/* Dropdown menu */}
               {menuOpen && (
-                <div className="absolute mt-1 w-32 bg-white border rounded-lg shadow-lg z-10">
+                <div className="absolute mt-1 w-32 bg-white border rounded-lg shadow-lg z-20">
                   {weeks.map((w) => (
                     <div
                       key={w}
