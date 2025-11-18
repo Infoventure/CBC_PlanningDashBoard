@@ -28,12 +28,12 @@ export const CitizenRow: React.FC<CitizenRowProps> = ({
     navigator.clipboard.writeText(cpr);
   };
 
-  const processedChosenPathwayMaxTime = chosenPathwayMaxTime ? chosenPathwayMaxTime * chosenWeeks.length : null;
-  const processedChosenPathwayMedTime = chosenPathwayMedTime ? chosenPathwayMedTime * chosenWeeks.length : null;
+  const processedChosenPathwayMaxTime = chosenPathwayMaxTime
+  const processedChosenPathwayMedTime = chosenPathwayMedTime
 
   const pathways = citizen.pathwayData;
   // Aggregate procedures across all chosenWeeks, grouped by name (one-liner)
-  const procedures = Object.values(
+  let procedures = Object.values(
     chosenWeeks
       .flatMap((week: string) => Object.values(citizen.pathwayData[chosenPathwayId]?.[week]?.procedures || {}))
       .reduce(
@@ -50,6 +50,15 @@ export const CitizenRow: React.FC<CitizenRowProps> = ({
         {} as Record<string, Procedure>
       )
   );
+  // Adjust procedure values to be averages over chosenWeeks based on those aggregates above.
+  procedures = Object.values(procedures).map(proc => ({
+    id: proc.id,
+    name: proc.name,
+    visiteret: parseFloat((proc.visiteret / chosenWeeks.length).toFixed(1)),
+    disponeret: parseFloat((proc.disponeret / chosenWeeks.length).toFixed(1)),
+  }));
+
+
   // Gather all weeks' statuses for the given pathwayId, including the week key, sorted by week-year
   const statusies = Object.entries(citizen.pathwayData[chosenPathwayId] || {})
     .sort(([a], [b]) => {
@@ -64,7 +73,7 @@ export const CitizenRow: React.FC<CitizenRowProps> = ({
       status: weekData?.status
     }));
   // Sum visiteret and disponeret for all 'total's of all chosenWeeks
-  const pathway = chosenWeeks
+  let pathway = chosenWeeks
     .map((week: string) => pathways[chosenPathwayId]?.[week]?.total)
     .reduce(
       (sum: { visiteret: number; disponeret: number }, total: any) => ({
@@ -73,9 +82,12 @@ export const CitizenRow: React.FC<CitizenRowProps> = ({
       }),
       { visiteret: 0, disponeret: 0 }
     );
+  // CALC the average based on those sums
+  pathway.disponeret = parseFloat((pathway.disponeret / chosenWeeks.length).toFixed(1));
+  pathway.visiteret = parseFloat((pathway.visiteret / chosenWeeks.length).toFixed(1));
 
   // Compute balance dynamically
-  const balance = pathway?.disponeret - pathway?.visiteret;
+  const balance = parseFloat((pathway?.disponeret - pathway?.visiteret).toFixed(1));
 
   const lastPathwayDefaultMax = 10000 // Default max time for the last pathway if undefined
   const pathwayMargin = (() => {
@@ -209,8 +221,8 @@ export const CitizenRow: React.FC<CitizenRowProps> = ({
 
   return (
     <>
-      <tr className={`hover:bg-gray-50 cursor-pointer ${isSelected ? 'bg-blue-50' : ''}`} onClick={onClick}>
-        <td className="px-4 py-1 whitespace-nowrap border-r border-gray-300">
+      <tr className={`hover:bg-gray-50 cursor-pointer ${isSelected ? 'bg-gray-50' : ''}`} onClick={onClick}>
+        <td className={`px-4 py-1 whitespace-nowrap border-r border-gray-200 border-l-8 hover:border-l-blue-200 ${isSelected ? '!border-l-blue-500' : 'px-5'}`}>
           <div className="flex items-center">
             {expanded ? <ChevronDownIcon className="h-4 w-4 text-[#1d3557] mr-2" /> : <ChevronRightIcon className="h-4 w-4 text-[#1d3557] mr-2" />}
             <div className="flex items-center">
@@ -288,17 +300,17 @@ export const CitizenRow: React.FC<CitizenRowProps> = ({
       </tr>
       {expanded && procedures && Object.values(procedures).map((procedure, serviceIndex) => (
         <tr key={`service-${serviceIndex}`} className="bg-gray-50">
-          <td className="px-4 py-2 text-sm font-medium border-r border-gray-300">
-            <div className="pl-6 border-l-2 border-[#1d3557]">{procedure.name}</div>
+          <td className="px-4 py-2 text-sm font-medium border-r border-gray-300 border-l-8 !border-l-blue-500">
+            <div className="pl-2">{procedure.name}</div>
           </td>
           <td className="px-2 py-2 text-sm text-center border-r border-gray-200">-</td>
           <td className="px-2 py-2 text-sm text-center border-r border-gray-200">{procedure.visiteret}</td>
           <td className="px-2 py-2 text-sm text-center border-r border-gray-200">{procedure.disponeret}</td>
-          <td className={`px-2 py-2 text-sm text-center border-r border-gray-300 ${(procedure.disponeret- procedure.visiteret) > 0 ? 'text-red-500' : 'text-yellow-600'}`}>
+          <td className={`px-2 py-2 text-sm text-center border-r border-gray-300 ${(procedure.disponeret - procedure.visiteret) > 0 ? 'text-red-500' : 'text-yellow-600'}`}>
             {(procedure.disponeret - procedure.visiteret) > 0
-              ? `+${procedure.disponeret - procedure.visiteret}`
+              ? `+${parseFloat((procedure.disponeret - procedure.visiteret).toFixed(1))}`
               : (procedure.disponeret - procedure.visiteret) < 0
-                ? `${procedure.disponeret - procedure.visiteret}`
+                ? `${parseFloat((procedure.disponeret - procedure.visiteret).toFixed(1))}`
                 : (procedure.disponeret - procedure.visiteret) === 0
                   ? '0'
                   : '-'}

@@ -1,7 +1,7 @@
 import React, { useState, useContext, useEffect, useRef } from 'react';
 import fuzzysort from 'fuzzysort';
 import { CitizenRow } from './CitizenRow';
-import { RefreshCwIcon, SearchXIcon } from 'lucide-react';
+import { MessageCircleQuestion, RefreshCwIcon, SearchXIcon } from 'lucide-react';
 import { DataContext } from '../App'; // adjust path as needed
 
 interface CitizenTableProps {
@@ -268,7 +268,7 @@ export const CitizenTable: React.FC<CitizenTableProps> = ({
             <div className='max-h-[80vh] overflow-y-scroll'>
             <table className="min-w-full divide-y divide-gray-200 table-fixed">
               <thead className="bg-gray-50 sticky top-0 z-10">
-                <tr>
+                <tr className='border-l-8'>
                   <th scope="col" className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider border-r border-gray-300 w-1/5">
                     Navn
                   </th>
@@ -280,8 +280,15 @@ export const CitizenTable: React.FC<CitizenTableProps> = ({
                     </>
                   )}
                 </tr>
-                <tr>
-                  <th className="border-r border-gray-300"></th>
+                <tr className='border-l-8'>
+                  <th className="border-r border-gray-300 font-normal text-sm text-red-700">
+                    { selectedWeeks.length > 1 && (
+                      <div title='Visiteret, Disponeret og deres afledte værdier vil blive vist som gennemsnit' className='cursor-pointer flex items-center justify-end mx-4' >
+                        Flere uger valgt
+                        <MessageCircleQuestion className="inline-block ml-1 w-4 h-4" />
+                      </div>
+                    )}
+                  </th>
                   {selectedPathway && (
                     <>
                       <th className="px-2 py-2 text-xs text-center border-r border-gray-200" title="Forløbets maksimale tid i minutter">
