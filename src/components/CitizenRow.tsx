@@ -248,7 +248,7 @@ export const CitizenRow: React.FC<CitizenRowProps> = ({
               {statusies.slice(-4).map((week, index) => (
                 <span
                   key={index}
-                  className={`ml-1 px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${week.status === 'green' ? 'bg-green-200 text-green-400' : week.status === 'yellow' ? 'bg-yellow-300 text-yellow-500' : week.status === 'red' ? 'bg-red-200 text-red-400' : 'bg-gray-200 text-gray-400'}`}
+                  className={`ml-1 px-[6px] inline-flex text-xs leading-5 font-medium rounded-full ${week.status === 'green' ? 'bg-green-200 text-green-600' : week.status === 'yellow' ? 'bg-yellow-200 text-yellow-600' : week.status === 'red' ? 'bg-red-200 text-red-600' : 'bg-gray-200 text-gray-400'}`}
                   title={
                     week.status === 'green'
                       ? `Korrekt forløb i uge ${week.week}`
@@ -259,7 +259,7 @@ export const CitizenRow: React.FC<CitizenRowProps> = ({
                           : `Ingen data for uge ${week.week}`
                   }
                 >
-                  -
+                  {week.week.split('-')[0]}
                 </span>
               ))}
               </div>
