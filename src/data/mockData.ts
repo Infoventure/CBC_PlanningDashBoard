@@ -11,7 +11,7 @@ export interface WeeklyData {
 }
 export interface Citizen {
   id: string;
-  cpr: `${number}${number}${number}${number}${number}${number}-${number}${number}${number}${number}`;
+  cpr: `${number}${number}${number}${number}${number}${number}${number}${number}${number}${number}`;
   name: string;
   alert?: boolean;
   teamId: number;
@@ -312,8 +312,8 @@ export const mockData: MockData = {
   citizens: [
     {
         "id": "f222bac2-e823-43b4-9c86-f215ab30fb66",
-        "cpr": "161616-1616",
-        "name": "Migrering OlgaTest",
+        "cpr": "1616161616",
+        "name": "Olga Testsen",
         "teamId": 1,
         "pathwayData": {
             "Forløb 2": {
@@ -404,21 +404,21 @@ export const mockData: MockData = {
                 "48-2025": {
                     "status": "yellow",
                     "total": {
-                        "visiteret": 0,
-                        "disponeret": 65
+                        "visiteret": 210,
+                        "disponeret": 220
                     },
                     "procedures": {
                         "0e4f91df-2f3e-4984-9cf1-6130107fca89": {
                             "name": "Personlig hjælp og pleje (FSIII) (ÆL)",
                             "id": "0e4f91df-2f3e-4984-9cf1-6130107fca89",
-                            "visiteret": 0,
-                            "disponeret": 45
+                            "visiteret": 150,
+                            "disponeret": 150
                         },
                         "93aa3719-f82c-4191-8d65-28fa73f32b43": {
                             "name": "Praktisk hjaelp i hjemmet (FSIII) (ÆL)",
                             "id": "93aa3719-f82c-4191-8d65-28fa73f32b43",
-                            "visiteret": 0,
-                            "disponeret": 20
+                            "visiteret": 60,
+                            "disponeret": 70
                         }
                     }
                 }
@@ -516,14 +516,41 @@ export const mockData: MockData = {
                             "disponeret": 0
                         }
                     }
+                },
+                "48-2025": {
+                    "status": "red",
+                    "total": {
+                        "visiteret": 255,
+                        "disponeret": 0
+                    },
+                    "procedures": {
+                        "d154bbe4-21ae-4bb7-8f2e-21c91e3a3ba4": {
+                            "name": "Personlig hjælp og pleje (FSIII) (ÆL)",
+                            "id": "d154bbe4-21ae-4bb7-8f2e-21c91e3a3ba4",
+                            "visiteret": 200,
+                            "disponeret": 0
+                        },
+                        "7439fd94-2ab9-427a-9c4e-24c6d65e62e5": {
+                            "name": "Genoptræning (FSIII) (ÆL)",
+                            "id": "7439fd94-2ab9-427a-9c4e-24c6d65e62e5",
+                            "visiteret": 0,
+                            "disponeret": 0
+                        },
+                        "09954e2e-364c-465e-bbf7-5f4b50eab8d9": {
+                            "name": "Indkøb (FSIII)",
+                            "id": "09954e2e-364c-465e-bbf7-5f4b50eab8d9",
+                            "visiteret": 55,
+                            "disponeret": 0
+                        }
+                    }
                 }
             }
         }
     },
     {
         "id": "d16a323d-1abb-4a8f-a71d-1cfb69ac4d84",
-        "cpr": "151515-1515",
-        "name": "Migrering GertTest",
+        "cpr": "1515151515",
+        "name": "Gert Test-Jul",
         "teamId": 1,
         "pathwayData": {
             "Forløb 1": {
@@ -600,17 +627,17 @@ export const mockData: MockData = {
                     }
                 },
                 "48-2025": {
-                    "status": "green",
+                    "status": "red",
                     "total": {
-                        "visiteret": 0,
-                        "disponeret": 30
+                        "visiteret": 110,
+                        "disponeret": 105
                     },
                     "procedures": {
                         "8fe19007-cf7a-416a-b304-1129e7dd1a51": {
                             "name": "Praktisk hjaelp i hjemmet (FSIII) (ÆL)",
                             "id": "8fe19007-cf7a-416a-b304-1129e7dd1a51",
-                            "visiteret": 0,
-                            "disponeret": 30
+                            "visiteret": 110,
+                            "disponeret": 105
                         }
                     }
                 }
@@ -619,8 +646,8 @@ export const mockData: MockData = {
     },
     {
         "id": "3525ab02-e036-4d3c-a385-e211252c50ff",
-        "cpr": "191919-1919",
-        "name": "Migrering HanneTest",
+        "cpr": "1919191919",
+        "name": "Hannetest Hansen",
         "teamId": 1,
         "pathwayData": {
             "Forløb 3": {
@@ -628,20 +655,20 @@ export const mockData: MockData = {
                     "status": "red",
                     "total": {
                         "visiteret": 330,
-                        "disponeret": 230
+                        "disponeret": 92
                     },
                     "procedures": {
                         "bb66838c-6ee0-40ae-a4dc-e027ec6611af": {
                             "name": "Personlig hjælp og pleje (FSIII) (ÆL)",
                             "id": "bb66838c-6ee0-40ae-a4dc-e027ec6611af",
                             "visiteret": 220,
-                            "disponeret": 155
+                            "disponeret": 62
                         },
                         "a1b1121d-ec70-46fc-a400-1cc57a16231a": {
                             "name": "Praktisk hjælp i hjemmet (FSIII) (ÆL)",
                             "id": "a1b1121d-ec70-46fc-a400-1cc57a16231a",
                             "visiteret": 110,
-                            "disponeret": 75
+                            "disponeret": 30
                         },
                         "40f452b1-d089-4e71-89d5-31bca8db6a25": {
                             "name": "Genoptræning (FSIII) (ÆL)",
@@ -654,21 +681,435 @@ export const mockData: MockData = {
                 "48-2025": {
                     "status": "red",
                     "total": {
-                        "visiteret": 0,
-                        "disponeret": 92
+                        "visiteret": 330,
+                        "disponeret": 0
                     },
                     "procedures": {
+                        "40f452b1-d089-4e71-89d5-31bca8db6a25": {
+                            "name": "Genoptræning (FSIII) (ÆL)",
+                            "id": "40f452b1-d089-4e71-89d5-31bca8db6a25",
+                            "visiteret": 0,
+                            "disponeret": 0
+                        },
                         "bb66838c-6ee0-40ae-a4dc-e027ec6611af": {
                             "name": "Personlig hjælp og pleje (FSIII) (ÆL)",
                             "id": "bb66838c-6ee0-40ae-a4dc-e027ec6611af",
-                            "visiteret": 0,
-                            "disponeret": 62
+                            "visiteret": 220,
+                            "disponeret": 0
                         },
                         "a1b1121d-ec70-46fc-a400-1cc57a16231a": {
                             "name": "Praktisk hjælp i hjemmet (FSIII) (ÆL)",
                             "id": "a1b1121d-ec70-46fc-a400-1cc57a16231a",
+                            "visiteret": 110,
+                            "disponeret": 0
+                        }
+                    }
+                }
+            }
+        }
+    },
+    {
+        "id": "0574ee87-7f03-4bc1-bcc0-24caddc6b2dd",
+        "cpr": "2412780100",
+        "name": "Keld Testingsen",
+        "teamId": 1,
+        "pathwayData": {
+            "Forløb 2": {
+                "47-2025": {
+                    "status": "yellow",
+                    "total": {
+                        "visiteret": 235,
+                        "disponeret": 75
+                    },
+                    "procedures": {
+                        "cbe49129-3e37-4ef1-a3e3-ff2c223ff84b": {
+                            "name": "Personlig hjælp og pleje (FSIII) (ÆL)",
+                            "id": "cbe49129-3e37-4ef1-a3e3-ff2c223ff84b",
+                            "visiteret": 210,
+                            "disponeret": 75
+                        },
+                        "d07fb2de-87e6-45d0-826d-c438abb70560": {
+                            "name": "Genoptræning (FSIII) (ÆL)",
+                            "id": "d07fb2de-87e6-45d0-826d-c438abb70560",
+                            "visiteret": 0,
+                            "disponeret": 0
+                        },
+                        "2414c056-1eb7-4b1e-9324-7e588402e262": {
+                            "name": "Praktisk hjælp i hjemmet (FSIII) (ÆL)",
+                            "id": "2414c056-1eb7-4b1e-9324-7e588402e262",
+                            "visiteret": 25,
+                            "disponeret": 0
+                        }
+                    }
+                },
+                "48-2025": {
+                    "status": "red",
+                    "total": {
+                        "visiteret": 235,
+                        "disponeret": 260
+                    },
+                    "procedures": {
+                        "cbe49129-3e37-4ef1-a3e3-ff2c223ff84b": {
+                            "name": "Personlig hjælp og pleje (FSIII) (ÆL)",
+                            "id": "cbe49129-3e37-4ef1-a3e3-ff2c223ff84b",
+                            "visiteret": 210,
+                            "disponeret": 210
+                        },
+                        "2414c056-1eb7-4b1e-9324-7e588402e262": {
+                            "name": "Praktisk hjælp i hjemmet (FSIII) (ÆL)",
+                            "id": "2414c056-1eb7-4b1e-9324-7e588402e262",
+                            "visiteret": 25,
+                            "disponeret": 50
+                        },
+                        "d07fb2de-87e6-45d0-826d-c438abb70560": {
+                            "name": "Genoptræning (FSIII) (ÆL)",
+                            "id": "d07fb2de-87e6-45d0-826d-c438abb70560",
+                            "visiteret": 0,
+                            "disponeret": 0
+                        }
+                    }
+                }
+            }
+        }
+    },
+    {
+        "id": "288b7b4d-9f8d-4032-a43e-43124754c634",
+        "cpr": "9999999999",
+        "name": "Jan-Test Erik",
+        "teamId": 1,
+        "pathwayData": {
+            "Forløb 5": {
+                "47-2025": {
+                    "status": "red",
+                    "total": {
+                        "visiteret": 1160,
+                        "disponeret": 280
+                    },
+                    "procedures": {
+                        "114ea45f-63f6-46e2-bc43-c9d3f8cf083d": {
+                            "name": "Personlig hjælp og pleje (FSIII) (ÆL)",
+                            "id": "114ea45f-63f6-46e2-bc43-c9d3f8cf083d",
+                            "visiteret": 1120,
+                            "disponeret": 280
+                        },
+                        "ff8459c9-7874-40e4-a95f-8433c2f7542e": {
+                            "name": "Praktisk hjælp i hjemmet (FSIII) (ÆL)",
+                            "id": "ff8459c9-7874-40e4-a95f-8433c2f7542e",
+                            "visiteret": 20,
+                            "disponeret": 0
+                        },
+                        "dd6f0b0a-32d8-4363-ad2f-86f6ff72b1b8": {
+                            "name": "Genoptræning (FSIII) (ÆL)",
+                            "id": "dd6f0b0a-32d8-4363-ad2f-86f6ff72b1b8",
+                            "visiteret": 0,
+                            "disponeret": 0
+                        },
+                        "03125f5d-1f30-4989-8d0a-ba0f68c594ef": {
+                            "name": "Klippekort  (FSIII) (ÆL)",
+                            "id": "03125f5d-1f30-4989-8d0a-ba0f68c594ef",
+                            "visiteret": 0,
+                            "disponeret": 0
+                        },
+                        "a5385d3b-4718-425d-88b0-91d4aad836d3": {
+                            "name": "Indkøb (FSIII)",
+                            "id": "a5385d3b-4718-425d-88b0-91d4aad836d3",
+                            "visiteret": 20,
+                            "disponeret": 0
+                        },
+                        "33d86fb4-4052-4a6c-a311-649721202588": {
+                            "name": "Madservice (FSIII) (ÆL)",
+                            "id": "33d86fb4-4052-4a6c-a311-649721202588",
+                            "visiteret": 0,
+                            "disponeret": 0
+                        }
+                    }
+                },
+                "48-2025": {
+                    "status": "red",
+                    "total": {
+                        "visiteret": 1160,
+                        "disponeret": 1090
+                    },
+                    "procedures": {
+                        "114ea45f-63f6-46e2-bc43-c9d3f8cf083d": {
+                            "name": "Personlig hjælp og pleje (FSIII) (ÆL)",
+                            "id": "114ea45f-63f6-46e2-bc43-c9d3f8cf083d",
+                            "visiteret": 1120,
+                            "disponeret": 1040
+                        },
+                        "a5385d3b-4718-425d-88b0-91d4aad836d3": {
+                            "name": "Indkøb (FSIII)",
+                            "id": "a5385d3b-4718-425d-88b0-91d4aad836d3",
+                            "visiteret": 20,
+                            "disponeret": 20
+                        },
+                        "03125f5d-1f30-4989-8d0a-ba0f68c594ef": {
+                            "name": "Klippekort  (FSIII) (ÆL)",
+                            "id": "03125f5d-1f30-4989-8d0a-ba0f68c594ef",
                             "visiteret": 0,
                             "disponeret": 30
+                        },
+                        "ff8459c9-7874-40e4-a95f-8433c2f7542e": {
+                            "name": "Praktisk hjælp i hjemmet (FSIII) (ÆL)",
+                            "id": "ff8459c9-7874-40e4-a95f-8433c2f7542e",
+                            "visiteret": 20,
+                            "disponeret": 0
+                        },
+                        "dd6f0b0a-32d8-4363-ad2f-86f6ff72b1b8": {
+                            "name": "Genoptræning (FSIII) (ÆL)",
+                            "id": "dd6f0b0a-32d8-4363-ad2f-86f6ff72b1b8",
+                            "visiteret": 0,
+                            "disponeret": 0
+                        },
+                        "33d86fb4-4052-4a6c-a311-649721202588": {
+                            "name": "Madservice (FSIII) (ÆL)",
+                            "id": "33d86fb4-4052-4a6c-a311-649721202588",
+                            "visiteret": 0,
+                            "disponeret": 0
+                        }
+                    }
+                }
+            }
+        }
+    },
+    {
+        "id": "d4a8b5be-dbee-42a2-9733-3d4cb83349ee",
+        "cpr": "1234567891",
+        "name": "Vumer Testmøller",
+        "teamId": 1,
+        "pathwayData": {
+            "Forløb 1": {
+                "47-2025": {
+                    "status": "green",
+                    "total": {
+                        "visiteret": 70,
+                        "disponeret": 20
+                    },
+                    "procedures": {
+                        "f9b6ce6f-f9cd-43b1-9b98-206a79f2d8c0": {
+                            "name": "Praktisk hjælp i hjemmet (FSIII) (ÆL)",
+                            "id": "f9b6ce6f-f9cd-43b1-9b98-206a79f2d8c0",
+                            "visiteret": 70,
+                            "disponeret": 20
+                        }
+                    }
+                },
+                "48-2025": {
+                    "status": "red",
+                    "total": {
+                        "visiteret": 70,
+                        "disponeret": 70
+                    },
+                    "procedures": {
+                        "f9b6ce6f-f9cd-43b1-9b98-206a79f2d8c0": {
+                            "name": "Praktisk hjælp i hjemmet (FSIII) (ÆL)",
+                            "id": "f9b6ce6f-f9cd-43b1-9b98-206a79f2d8c0",
+                            "visiteret": 70,
+                            "disponeret": 70
+                        }
+                    }
+                }
+            }
+        }
+    },
+    {
+        "id": "382bc73e-db96-435d-8cc5-002b1fc3994f",
+        "cpr": "9988555410",
+        "name": "Lis Hansen",
+        "teamId": 1,
+        "pathwayData": {
+            "Forløb 4": {
+                "47-2025": {
+                    "status": "red",
+                    "total": {
+                        "visiteret": 910,
+                        "disponeret": 200
+                    },
+                    "procedures": {
+                        "286c76b4-15f8-4eb1-be70-9c0e04454f47": {
+                            "name": "Personlig hjælp og pleje (FSIII) (ÆL)",
+                            "id": "286c76b4-15f8-4eb1-be70-9c0e04454f47",
+                            "visiteret": 840,
+                            "disponeret": 180
+                        },
+                        "1f704ce9-ffce-469e-ad5c-8e455ceb1eee": {
+                            "name": "Praktisk hjælp i hjemmet (FSIII) (ÆL)",
+                            "id": "1f704ce9-ffce-469e-ad5c-8e455ceb1eee",
+                            "visiteret": 70,
+                            "disponeret": 20
+                        },
+                        "0ac44213-532b-4eeb-8c0f-d95bab4ca447": {
+                            "name": "Madservice (FSIII) (ÆL)",
+                            "id": "0ac44213-532b-4eeb-8c0f-d95bab4ca447",
+                            "visiteret": 0,
+                            "disponeret": 0
+                        },
+                        "29c65a86-511e-481d-ad6e-301f7d7ed955": {
+                            "name": "Genoptræning (FSIII) (ÆL)",
+                            "id": "29c65a86-511e-481d-ad6e-301f7d7ed955",
+                            "visiteret": 0,
+                            "disponeret": 0
+                        }
+                    }
+                },
+                "48-2025": {
+                    "status": "green",
+                    "total": {
+                        "visiteret": 910,
+                        "disponeret": 910
+                    },
+                    "procedures": {
+                        "286c76b4-15f8-4eb1-be70-9c0e04454f47": {
+                            "name": "Personlig hjælp og pleje (FSIII) (ÆL)",
+                            "id": "286c76b4-15f8-4eb1-be70-9c0e04454f47",
+                            "visiteret": 840,
+                            "disponeret": 840
+                        },
+                        "1f704ce9-ffce-469e-ad5c-8e455ceb1eee": {
+                            "name": "Praktisk hjælp i hjemmet (FSIII) (ÆL)",
+                            "id": "1f704ce9-ffce-469e-ad5c-8e455ceb1eee",
+                            "visiteret": 70,
+                            "disponeret": 70
+                        },
+                        "0ac44213-532b-4eeb-8c0f-d95bab4ca447": {
+                            "name": "Madservice (FSIII) (ÆL)",
+                            "id": "0ac44213-532b-4eeb-8c0f-d95bab4ca447",
+                            "visiteret": 0,
+                            "disponeret": 0
+                        },
+                        "29c65a86-511e-481d-ad6e-301f7d7ed955": {
+                            "name": "Genoptræning (FSIII) (ÆL)",
+                            "id": "29c65a86-511e-481d-ad6e-301f7d7ed955",
+                            "visiteret": 0,
+                            "disponeret": 0
+                        }
+                    }
+                }
+            }
+        }
+    },
+    {
+        "id": "c75202a8-5b1a-4c86-9c3d-81eab87fb4a5",
+        "cpr": "9999999990",
+        "name": "Jannie jannertest",
+        "teamId": 1,
+        "pathwayData": {
+            "Forløb 3": {
+                "47-2025": {
+                    "status": "red",
+                    "total": {
+                        "visiteret": 85,
+                        "disponeret": 30
+                    },
+                    "procedures": {
+                        "b434b602-ec86-4fa3-85d0-c87a0f45cb0e": {
+                            "name": "Personlig hjælp og pleje (FSIII) (ÆL)",
+                            "id": "b434b602-ec86-4fa3-85d0-c87a0f45cb0e",
+                            "visiteret": 40,
+                            "disponeret": 30
+                        },
+                        "99b36728-8dc9-4239-8ac3-f20b46c65023": {
+                            "name": "Madservice (FSIII) (ÆL)",
+                            "id": "99b36728-8dc9-4239-8ac3-f20b46c65023",
+                            "visiteret": 0,
+                            "disponeret": 0
+                        },
+                        "25e03e36-9ed3-42c4-87d1-4d0bedeacb20": {
+                            "name": "Genoptræning (FSIII) (ÆL)",
+                            "id": "25e03e36-9ed3-42c4-87d1-4d0bedeacb20",
+                            "visiteret": 0,
+                            "disponeret": 0
+                        },
+                        "6fcdf7a5-7180-49d7-9740-dd02c46d7b19": {
+                            "name": "Praktisk hjælp i hjemmet (FSIII) (ÆL)",
+                            "id": "6fcdf7a5-7180-49d7-9740-dd02c46d7b19",
+                            "visiteret": 15,
+                            "disponeret": 0
+                        },
+                        "3822e763-858e-421b-b80d-a362a1b622a1": {
+                            "name": "Indkøb (FSIII)",
+                            "id": "3822e763-858e-421b-b80d-a362a1b622a1",
+                            "visiteret": 30,
+                            "disponeret": 0
+                        }
+                    }
+                },
+                "48-2025": {
+                    "status": "red",
+                    "total": {
+                        "visiteret": 85,
+                        "disponeret": 105
+                    },
+                    "procedures": {
+                        "b434b602-ec86-4fa3-85d0-c87a0f45cb0e": {
+                            "name": "Personlig hjælp og pleje (FSIII) (ÆL)",
+                            "id": "b434b602-ec86-4fa3-85d0-c87a0f45cb0e",
+                            "visiteret": 40,
+                            "disponeret": 105
+                        },
+                        "99b36728-8dc9-4239-8ac3-f20b46c65023": {
+                            "name": "Madservice (FSIII) (ÆL)",
+                            "id": "99b36728-8dc9-4239-8ac3-f20b46c65023",
+                            "visiteret": 0,
+                            "disponeret": 0
+                        },
+                        "25e03e36-9ed3-42c4-87d1-4d0bedeacb20": {
+                            "name": "Genoptræning (FSIII) (ÆL)",
+                            "id": "25e03e36-9ed3-42c4-87d1-4d0bedeacb20",
+                            "visiteret": 0,
+                            "disponeret": 0
+                        },
+                        "6fcdf7a5-7180-49d7-9740-dd02c46d7b19": {
+                            "name": "Praktisk hjælp i hjemmet (FSIII) (ÆL)",
+                            "id": "6fcdf7a5-7180-49d7-9740-dd02c46d7b19",
+                            "visiteret": 15,
+                            "disponeret": 0
+                        },
+                        "3822e763-858e-421b-b80d-a362a1b622a1": {
+                            "name": "Indkøb (FSIII)",
+                            "id": "3822e763-858e-421b-b80d-a362a1b622a1",
+                            "visiteret": 30,
+                            "disponeret": 0
+                        }
+                    }
+                }
+            }
+        }
+    },
+    {
+        "id": "ef4da811-17a8-4b54-b187-949468a70412",
+        "cpr": "9999999992",
+        "name": "Dijan Larsen",
+        "teamId": 1,
+        "pathwayData": {
+            "Forløb 1": {
+                "48-2025": {
+                    "status": "yellow",
+                    "total": {
+                        "visiteret": 25,
+                        "disponeret": 50
+                    },
+                    "procedures": {
+                        "7887bfb9-4af3-4a45-a42f-bf421d0e9d4c": {
+                            "name": "Praktisk hjælp i hjemmet (FSIII) (ÆL)",
+                            "id": "7887bfb9-4af3-4a45-a42f-bf421d0e9d4c",
+                            "visiteret": 25,
+                            "disponeret": 50
+                        }
+                    }
+                },
+                "47-2025": {
+                    "status": "yellow",
+                    "total": {
+                        "visiteret": 25,
+                        "disponeret": 0
+                    },
+                    "procedures": {
+                        "7887bfb9-4af3-4a45-a42f-bf421d0e9d4c": {
+                            "name": "Praktisk hjælp i hjemmet (FSIII) (ÆL)",
+                            "id": "7887bfb9-4af3-4a45-a42f-bf421d0e9d4c",
+                            "visiteret": 25,
+                            "disponeret": 0
                         }
                     }
                 }
@@ -677,29 +1118,29 @@ export const mockData: MockData = {
     },
     {
         "id": "7d404089-b963-4d7d-aa3e-64aee693fc52",
-        "cpr": "171717-1717",
-        "name": "Migrering FrederikTest",
+        "cpr": "1717171717",
+        "name": "Migrering Frederikstest",
         "teamId": 1,
         "pathwayData": {
             "Forløb 5": {
                 "48-2025": {
-                    "status": "red",
+                    "status": "yellow",
                     "total": {
-                        "visiteret": 0,
-                        "disponeret": 332
+                        "visiteret": 1755,
+                        "disponeret": 1367
                     },
                     "procedures": {
                         "0f1d594a-d438-43bc-8394-c24aa09f53ec": {
                             "name": "Praktisk hjaelp i hjemmet (FSIII) (ÆL)",
                             "id": "0f1d594a-d438-43bc-8394-c24aa09f53ec",
-                            "visiteret": 0,
-                            "disponeret": 30
+                            "visiteret": 210,
+                            "disponeret": 180
                         },
                         "1f2177ca-3b13-4565-b4c9-05e577d01fa9": {
                             "name": "Personlig hjælp og pleje (FSIII) (ÆL)",
                             "id": "1f2177ca-3b13-4565-b4c9-05e577d01fa9",
-                            "visiteret": 0,
-                            "disponeret": 285
+                            "visiteret": 1530,
+                            "disponeret": 1170
                         },
                         "cb254f93-ccf6-46a8-b82e-f6ff59330f96": {
                             "name": "Dialog med borger om tilrettelæggelse af forløb (FSIII) (ÆL)",
@@ -710,8 +1151,26 @@ export const mockData: MockData = {
                         "73c989cf-ec57-498a-94b0-9b0147f8eb3e": {
                             "name": "Indkøb (FSIII)",
                             "id": "73c989cf-ec57-498a-94b0-9b0147f8eb3e",
-                            "visiteret": 0,
+                            "visiteret": 15,
                             "disponeret": 15
+                        },
+                        "5a68971f-c370-451e-b2fc-894088e7a5af": {
+                            "name": "Klippekort  (FSIII) (ÆL)",
+                            "id": "5a68971f-c370-451e-b2fc-894088e7a5af",
+                            "visiteret": 0,
+                            "disponeret": 0
+                        },
+                        "1fe54be7-ca03-4165-af0d-4e192f6689c7": {
+                            "name": "Genoptræning (FSIII) (ÆL)",
+                            "id": "1fe54be7-ca03-4165-af0d-4e192f6689c7",
+                            "visiteret": 0,
+                            "disponeret": 0
+                        },
+                        "92e8cf2b-7602-45e1-8820-29cb5c9f36fc": {
+                            "name": "Madservice (FSIII) (ÆL)",
+                            "id": "92e8cf2b-7602-45e1-8820-29cb5c9f36fc",
+                            "visiteret": 0,
+                            "disponeret": 0
                         }
                     }
                 },
@@ -922,627 +1381,5 @@ export const mockData: MockData = {
             }
         }
     },
-    {
-        "id": "4cda6096-47c2-4d3f-b9b5-774c3d52f7bb",
-        "cpr": "251248-9996",
-        "name": "Nancy Ann TestBerggren",
-        "teamId": 1,
-        "pathwayData": {
-            "Forløb 3": {
-                "26-2025": {
-                    "status": "red",
-                    "total": {
-                        "visiteret": 194,
-                        "disponeret": 0
-                    },
-                    "procedures": {
-                        "d5b81b71-8fdf-4b98-9ccb-9c09c7f3733a": {
-                            "name": "Dialog med borger om tilrettelæggelse af forløb (FSIII) (ÆL)",
-                            "id": "d5b81b71-8fdf-4b98-9ccb-9c09c7f3733a",
-                            "visiteret": 0,
-                            "disponeret": 0
-                        },
-                        "54f4dd6f-2390-4871-927d-05b675d7302e": {
-                            "name": "Dialog med borger om tilrettelæggelse af forløb (FSIII) (ÆL)",
-                            "id": "54f4dd6f-2390-4871-927d-05b675d7302e",
-                            "visiteret": 0,
-                            "disponeret": 0
-                        },
-                        "f1a51c1c-61eb-43ce-b657-5c1e6d2ce192": {
-                            "name": "Praktisk hjaelp i hjemmet (FSIII) (ÆL)",
-                            "id": "f1a51c1c-61eb-43ce-b657-5c1e6d2ce192",
-                            "visiteret": 2,
-                            "disponeret": 0
-                        },
-                        "bc1eb6fd-162c-498c-9e4f-9093b0599106": {
-                            "name": "Personlig hjælp og pleje (FSIII) (ÆL)",
-                            "id": "bc1eb6fd-162c-498c-9e4f-9093b0599106",
-                            "visiteret": 175,
-                            "disponeret": 0
-                        },
-                        "a2d93ee5-f6e8-476d-aa96-d2de365d9a9d": {
-                            "name": "Personlig hjælp og pleje (FSIII) (ÆL)",
-                            "id": "a2d93ee5-f6e8-476d-aa96-d2de365d9a9d",
-                            "visiteret": 2,
-                            "disponeret": 0
-                        },
-                        "33fa6875-6108-4ef3-9804-fc0fd1e19aba": {
-                            "name": "Praktisk hjaelp i hjemmet (FSIII) (ÆL)",
-                            "id": "33fa6875-6108-4ef3-9804-fc0fd1e19aba",
-                            "visiteret": 15,
-                            "disponeret": 0
-                        }
-                    }
-                },
-                "27-2025": {
-                    "status": "red",
-                    "total": {
-                        "visiteret": 190,
-                        "disponeret": 0
-                    },
-                    "procedures": {
-                        "d5b81b71-8fdf-4b98-9ccb-9c09c7f3733a": {
-                            "name": "Dialog med borger om tilrettelæggelse af forløb (FSIII) (ÆL)",
-                            "id": "d5b81b71-8fdf-4b98-9ccb-9c09c7f3733a",
-                            "visiteret": 0,
-                            "disponeret": 0
-                        },
-                        "bc1eb6fd-162c-498c-9e4f-9093b0599106": {
-                            "name": "Personlig hjælp og pleje (FSIII) (ÆL)",
-                            "id": "bc1eb6fd-162c-498c-9e4f-9093b0599106",
-                            "visiteret": 175,
-                            "disponeret": 0
-                        },
-                        "33fa6875-6108-4ef3-9804-fc0fd1e19aba": {
-                            "name": "Praktisk hjaelp i hjemmet (FSIII) (ÆL)",
-                            "id": "33fa6875-6108-4ef3-9804-fc0fd1e19aba",
-                            "visiteret": 15,
-                            "disponeret": 0
-                        }
-                    }
-                },
-                "28-2025": {
-                    "status": "red",
-                    "total": {
-                        "visiteret": 190,
-                        "disponeret": 0
-                    },
-                    "procedures": {
-                        "d5b81b71-8fdf-4b98-9ccb-9c09c7f3733a": {
-                            "name": "Dialog med borger om tilrettelæggelse af forløb (FSIII) (ÆL)",
-                            "id": "d5b81b71-8fdf-4b98-9ccb-9c09c7f3733a",
-                            "visiteret": 0,
-                            "disponeret": 0
-                        },
-                        "bc1eb6fd-162c-498c-9e4f-9093b0599106": {
-                            "name": "Personlig hjælp og pleje (FSIII) (ÆL)",
-                            "id": "bc1eb6fd-162c-498c-9e4f-9093b0599106",
-                            "visiteret": 175,
-                            "disponeret": 0
-                        },
-                        "33fa6875-6108-4ef3-9804-fc0fd1e19aba": {
-                            "name": "Praktisk hjaelp i hjemmet (FSIII) (ÆL)",
-                            "id": "33fa6875-6108-4ef3-9804-fc0fd1e19aba",
-                            "visiteret": 15,
-                            "disponeret": 0
-                        }
-                    }
-                },
-                "29-2025": {
-                    "status": "red",
-                    "total": {
-                        "visiteret": 190,
-                        "disponeret": 0
-                    },
-                    "procedures": {
-                        "d5b81b71-8fdf-4b98-9ccb-9c09c7f3733a": {
-                            "name": "Dialog med borger om tilrettelæggelse af forløb (FSIII) (ÆL)",
-                            "id": "d5b81b71-8fdf-4b98-9ccb-9c09c7f3733a",
-                            "visiteret": 0,
-                            "disponeret": 0
-                        },
-                        "bc1eb6fd-162c-498c-9e4f-9093b0599106": {
-                            "name": "Personlig hjælp og pleje (FSIII) (ÆL)",
-                            "id": "bc1eb6fd-162c-498c-9e4f-9093b0599106",
-                            "visiteret": 175,
-                            "disponeret": 0
-                        },
-                        "33fa6875-6108-4ef3-9804-fc0fd1e19aba": {
-                            "name": "Praktisk hjaelp i hjemmet (FSIII) (ÆL)",
-                            "id": "33fa6875-6108-4ef3-9804-fc0fd1e19aba",
-                            "visiteret": 15,
-                            "disponeret": 0
-                        }
-                    }
-                },
-                "30-2025": {
-                    "status": "red",
-                    "total": {
-                        "visiteret": 190,
-                        "disponeret": 0
-                    },
-                    "procedures": {
-                        "d5b81b71-8fdf-4b98-9ccb-9c09c7f3733a": {
-                            "name": "Dialog med borger om tilrettelæggelse af forløb (FSIII) (ÆL)",
-                            "id": "d5b81b71-8fdf-4b98-9ccb-9c09c7f3733a",
-                            "visiteret": 0,
-                            "disponeret": 0
-                        },
-                        "bc1eb6fd-162c-498c-9e4f-9093b0599106": {
-                            "name": "Personlig hjælp og pleje (FSIII) (ÆL)",
-                            "id": "bc1eb6fd-162c-498c-9e4f-9093b0599106",
-                            "visiteret": 175,
-                            "disponeret": 0
-                        },
-                        "33fa6875-6108-4ef3-9804-fc0fd1e19aba": {
-                            "name": "Praktisk hjaelp i hjemmet (FSIII) (ÆL)",
-                            "id": "33fa6875-6108-4ef3-9804-fc0fd1e19aba",
-                            "visiteret": 15,
-                            "disponeret": 0
-                        }
-                    }
-                },
-                "31-2025": {
-                    "status": "red",
-                    "total": {
-                        "visiteret": 190,
-                        "disponeret": 0
-                    },
-                    "procedures": {
-                        "d5b81b71-8fdf-4b98-9ccb-9c09c7f3733a": {
-                            "name": "Dialog med borger om tilrettelæggelse af forløb (FSIII) (ÆL)",
-                            "id": "d5b81b71-8fdf-4b98-9ccb-9c09c7f3733a",
-                            "visiteret": 0,
-                            "disponeret": 0
-                        },
-                        "bc1eb6fd-162c-498c-9e4f-9093b0599106": {
-                            "name": "Personlig hjælp og pleje (FSIII) (ÆL)",
-                            "id": "bc1eb6fd-162c-498c-9e4f-9093b0599106",
-                            "visiteret": 175,
-                            "disponeret": 0
-                        },
-                        "33fa6875-6108-4ef3-9804-fc0fd1e19aba": {
-                            "name": "Praktisk hjaelp i hjemmet (FSIII) (ÆL)",
-                            "id": "33fa6875-6108-4ef3-9804-fc0fd1e19aba",
-                            "visiteret": 15,
-                            "disponeret": 0
-                        }
-                    }
-                },
-                "32-2025": {
-                    "status": "red",
-                    "total": {
-                        "visiteret": 190,
-                        "disponeret": 0
-                    },
-                    "procedures": {
-                        "d5b81b71-8fdf-4b98-9ccb-9c09c7f3733a": {
-                            "name": "Dialog med borger om tilrettelæggelse af forløb (FSIII) (ÆL)",
-                            "id": "d5b81b71-8fdf-4b98-9ccb-9c09c7f3733a",
-                            "visiteret": 0,
-                            "disponeret": 0
-                        },
-                        "bc1eb6fd-162c-498c-9e4f-9093b0599106": {
-                            "name": "Personlig hjælp og pleje (FSIII) (ÆL)",
-                            "id": "bc1eb6fd-162c-498c-9e4f-9093b0599106",
-                            "visiteret": 175,
-                            "disponeret": 0
-                        },
-                        "33fa6875-6108-4ef3-9804-fc0fd1e19aba": {
-                            "name": "Praktisk hjaelp i hjemmet (FSIII) (ÆL)",
-                            "id": "33fa6875-6108-4ef3-9804-fc0fd1e19aba",
-                            "visiteret": 15,
-                            "disponeret": 0
-                        }
-                    }
-                },
-                "33-2025": {
-                    "status": "red",
-                    "total": {
-                        "visiteret": 190,
-                        "disponeret": 0
-                    },
-                    "procedures": {
-                        "d5b81b71-8fdf-4b98-9ccb-9c09c7f3733a": {
-                            "name": "Dialog med borger om tilrettelæggelse af forløb (FSIII) (ÆL)",
-                            "id": "d5b81b71-8fdf-4b98-9ccb-9c09c7f3733a",
-                            "visiteret": 0,
-                            "disponeret": 0
-                        },
-                        "bc1eb6fd-162c-498c-9e4f-9093b0599106": {
-                            "name": "Personlig hjælp og pleje (FSIII) (ÆL)",
-                            "id": "bc1eb6fd-162c-498c-9e4f-9093b0599106",
-                            "visiteret": 175,
-                            "disponeret": 0
-                        },
-                        "33fa6875-6108-4ef3-9804-fc0fd1e19aba": {
-                            "name": "Praktisk hjaelp i hjemmet (FSIII) (ÆL)",
-                            "id": "33fa6875-6108-4ef3-9804-fc0fd1e19aba",
-                            "visiteret": 15,
-                            "disponeret": 0
-                        }
-                    }
-                },
-                "34-2025": {
-                    "status": "red",
-                    "total": {
-                        "visiteret": 190,
-                        "disponeret": 0
-                    },
-                    "procedures": {
-                        "d5b81b71-8fdf-4b98-9ccb-9c09c7f3733a": {
-                            "name": "Dialog med borger om tilrettelæggelse af forløb (FSIII) (ÆL)",
-                            "id": "d5b81b71-8fdf-4b98-9ccb-9c09c7f3733a",
-                            "visiteret": 0,
-                            "disponeret": 0
-                        },
-                        "bc1eb6fd-162c-498c-9e4f-9093b0599106": {
-                            "name": "Personlig hjælp og pleje (FSIII) (ÆL)",
-                            "id": "bc1eb6fd-162c-498c-9e4f-9093b0599106",
-                            "visiteret": 175,
-                            "disponeret": 0
-                        },
-                        "33fa6875-6108-4ef3-9804-fc0fd1e19aba": {
-                            "name": "Praktisk hjaelp i hjemmet (FSIII) (ÆL)",
-                            "id": "33fa6875-6108-4ef3-9804-fc0fd1e19aba",
-                            "visiteret": 15,
-                            "disponeret": 0
-                        }
-                    }
-                },
-                "35-2025": {
-                    "status": "red",
-                    "total": {
-                        "visiteret": 190,
-                        "disponeret": 0
-                    },
-                    "procedures": {
-                        "d5b81b71-8fdf-4b98-9ccb-9c09c7f3733a": {
-                            "name": "Dialog med borger om tilrettelæggelse af forløb (FSIII) (ÆL)",
-                            "id": "d5b81b71-8fdf-4b98-9ccb-9c09c7f3733a",
-                            "visiteret": 0,
-                            "disponeret": 0
-                        },
-                        "bc1eb6fd-162c-498c-9e4f-9093b0599106": {
-                            "name": "Personlig hjælp og pleje (FSIII) (ÆL)",
-                            "id": "bc1eb6fd-162c-498c-9e4f-9093b0599106",
-                            "visiteret": 175,
-                            "disponeret": 0
-                        },
-                        "33fa6875-6108-4ef3-9804-fc0fd1e19aba": {
-                            "name": "Praktisk hjaelp i hjemmet (FSIII) (ÆL)",
-                            "id": "33fa6875-6108-4ef3-9804-fc0fd1e19aba",
-                            "visiteret": 15,
-                            "disponeret": 0
-                        }
-                    }
-                },
-                "36-2025": {
-                    "status": "red",
-                    "total": {
-                        "visiteret": 190,
-                        "disponeret": 0
-                    },
-                    "procedures": {
-                        "d5b81b71-8fdf-4b98-9ccb-9c09c7f3733a": {
-                            "name": "Dialog med borger om tilrettelæggelse af forløb (FSIII) (ÆL)",
-                            "id": "d5b81b71-8fdf-4b98-9ccb-9c09c7f3733a",
-                            "visiteret": 0,
-                            "disponeret": 0
-                        },
-                        "bc1eb6fd-162c-498c-9e4f-9093b0599106": {
-                            "name": "Personlig hjælp og pleje (FSIII) (ÆL)",
-                            "id": "bc1eb6fd-162c-498c-9e4f-9093b0599106",
-                            "visiteret": 175,
-                            "disponeret": 0
-                        },
-                        "33fa6875-6108-4ef3-9804-fc0fd1e19aba": {
-                            "name": "Praktisk hjaelp i hjemmet (FSIII) (ÆL)",
-                            "id": "33fa6875-6108-4ef3-9804-fc0fd1e19aba",
-                            "visiteret": 15,
-                            "disponeret": 0
-                        }
-                    }
-                },
-                "37-2025": {
-                    "status": "red",
-                    "total": {
-                        "visiteret": 190,
-                        "disponeret": 0
-                    },
-                    "procedures": {
-                        "d5b81b71-8fdf-4b98-9ccb-9c09c7f3733a": {
-                            "name": "Dialog med borger om tilrettelæggelse af forløb (FSIII) (ÆL)",
-                            "id": "d5b81b71-8fdf-4b98-9ccb-9c09c7f3733a",
-                            "visiteret": 0,
-                            "disponeret": 0
-                        },
-                        "bc1eb6fd-162c-498c-9e4f-9093b0599106": {
-                            "name": "Personlig hjælp og pleje (FSIII) (ÆL)",
-                            "id": "bc1eb6fd-162c-498c-9e4f-9093b0599106",
-                            "visiteret": 175,
-                            "disponeret": 0
-                        },
-                        "33fa6875-6108-4ef3-9804-fc0fd1e19aba": {
-                            "name": "Praktisk hjaelp i hjemmet (FSIII) (ÆL)",
-                            "id": "33fa6875-6108-4ef3-9804-fc0fd1e19aba",
-                            "visiteret": 15,
-                            "disponeret": 0
-                        }
-                    }
-                },
-                "38-2025": {
-                    "status": "red",
-                    "total": {
-                        "visiteret": 190,
-                        "disponeret": 0
-                    },
-                    "procedures": {
-                        "d5b81b71-8fdf-4b98-9ccb-9c09c7f3733a": {
-                            "name": "Dialog med borger om tilrettelæggelse af forløb (FSIII) (ÆL)",
-                            "id": "d5b81b71-8fdf-4b98-9ccb-9c09c7f3733a",
-                            "visiteret": 0,
-                            "disponeret": 0
-                        },
-                        "bc1eb6fd-162c-498c-9e4f-9093b0599106": {
-                            "name": "Personlig hjælp og pleje (FSIII) (ÆL)",
-                            "id": "bc1eb6fd-162c-498c-9e4f-9093b0599106",
-                            "visiteret": 175,
-                            "disponeret": 0
-                        },
-                        "33fa6875-6108-4ef3-9804-fc0fd1e19aba": {
-                            "name": "Praktisk hjaelp i hjemmet (FSIII) (ÆL)",
-                            "id": "33fa6875-6108-4ef3-9804-fc0fd1e19aba",
-                            "visiteret": 15,
-                            "disponeret": 0
-                        }
-                    }
-                },
-                "39-2025": {
-                    "status": "red",
-                    "total": {
-                        "visiteret": 190,
-                        "disponeret": 0
-                    },
-                    "procedures": {
-                        "d5b81b71-8fdf-4b98-9ccb-9c09c7f3733a": {
-                            "name": "Dialog med borger om tilrettelæggelse af forløb (FSIII) (ÆL)",
-                            "id": "d5b81b71-8fdf-4b98-9ccb-9c09c7f3733a",
-                            "visiteret": 0,
-                            "disponeret": 0
-                        },
-                        "bc1eb6fd-162c-498c-9e4f-9093b0599106": {
-                            "name": "Personlig hjælp og pleje (FSIII) (ÆL)",
-                            "id": "bc1eb6fd-162c-498c-9e4f-9093b0599106",
-                            "visiteret": 175,
-                            "disponeret": 0
-                        },
-                        "33fa6875-6108-4ef3-9804-fc0fd1e19aba": {
-                            "name": "Praktisk hjaelp i hjemmet (FSIII) (ÆL)",
-                            "id": "33fa6875-6108-4ef3-9804-fc0fd1e19aba",
-                            "visiteret": 15,
-                            "disponeret": 0
-                        }
-                    }
-                },
-                "40-2025": {
-                    "status": "red",
-                    "total": {
-                        "visiteret": 190,
-                        "disponeret": 0
-                    },
-                    "procedures": {
-                        "d5b81b71-8fdf-4b98-9ccb-9c09c7f3733a": {
-                            "name": "Dialog med borger om tilrettelæggelse af forløb (FSIII) (ÆL)",
-                            "id": "d5b81b71-8fdf-4b98-9ccb-9c09c7f3733a",
-                            "visiteret": 0,
-                            "disponeret": 0
-                        },
-                        "bc1eb6fd-162c-498c-9e4f-9093b0599106": {
-                            "name": "Personlig hjælp og pleje (FSIII) (ÆL)",
-                            "id": "bc1eb6fd-162c-498c-9e4f-9093b0599106",
-                            "visiteret": 175,
-                            "disponeret": 0
-                        },
-                        "33fa6875-6108-4ef3-9804-fc0fd1e19aba": {
-                            "name": "Praktisk hjaelp i hjemmet (FSIII) (ÆL)",
-                            "id": "33fa6875-6108-4ef3-9804-fc0fd1e19aba",
-                            "visiteret": 15,
-                            "disponeret": 0
-                        }
-                    }
-                },
-                "41-2025": {
-                    "status": "red",
-                    "total": {
-                        "visiteret": 190,
-                        "disponeret": 0
-                    },
-                    "procedures": {
-                        "d5b81b71-8fdf-4b98-9ccb-9c09c7f3733a": {
-                            "name": "Dialog med borger om tilrettelæggelse af forløb (FSIII) (ÆL)",
-                            "id": "d5b81b71-8fdf-4b98-9ccb-9c09c7f3733a",
-                            "visiteret": 0,
-                            "disponeret": 0
-                        },
-                        "bc1eb6fd-162c-498c-9e4f-9093b0599106": {
-                            "name": "Personlig hjælp og pleje (FSIII) (ÆL)",
-                            "id": "bc1eb6fd-162c-498c-9e4f-9093b0599106",
-                            "visiteret": 175,
-                            "disponeret": 0
-                        },
-                        "33fa6875-6108-4ef3-9804-fc0fd1e19aba": {
-                            "name": "Praktisk hjaelp i hjemmet (FSIII) (ÆL)",
-                            "id": "33fa6875-6108-4ef3-9804-fc0fd1e19aba",
-                            "visiteret": 15,
-                            "disponeret": 0
-                        }
-                    }
-                },
-                "42-2025": {
-                    "status": "red",
-                    "total": {
-                        "visiteret": 190,
-                        "disponeret": 0
-                    },
-                    "procedures": {
-                        "d5b81b71-8fdf-4b98-9ccb-9c09c7f3733a": {
-                            "name": "Dialog med borger om tilrettelæggelse af forløb (FSIII) (ÆL)",
-                            "id": "d5b81b71-8fdf-4b98-9ccb-9c09c7f3733a",
-                            "visiteret": 0,
-                            "disponeret": 0
-                        },
-                        "bc1eb6fd-162c-498c-9e4f-9093b0599106": {
-                            "name": "Personlig hjælp og pleje (FSIII) (ÆL)",
-                            "id": "bc1eb6fd-162c-498c-9e4f-9093b0599106",
-                            "visiteret": 175,
-                            "disponeret": 0
-                        },
-                        "33fa6875-6108-4ef3-9804-fc0fd1e19aba": {
-                            "name": "Praktisk hjaelp i hjemmet (FSIII) (ÆL)",
-                            "id": "33fa6875-6108-4ef3-9804-fc0fd1e19aba",
-                            "visiteret": 15,
-                            "disponeret": 0
-                        }
-                    }
-                },
-                "43-2025": {
-                    "status": "red",
-                    "total": {
-                        "visiteret": 190,
-                        "disponeret": 0
-                    },
-                    "procedures": {
-                        "d5b81b71-8fdf-4b98-9ccb-9c09c7f3733a": {
-                            "name": "Dialog med borger om tilrettelæggelse af forløb (FSIII) (ÆL)",
-                            "id": "d5b81b71-8fdf-4b98-9ccb-9c09c7f3733a",
-                            "visiteret": 0,
-                            "disponeret": 0
-                        },
-                        "bc1eb6fd-162c-498c-9e4f-9093b0599106": {
-                            "name": "Personlig hjælp og pleje (FSIII) (ÆL)",
-                            "id": "bc1eb6fd-162c-498c-9e4f-9093b0599106",
-                            "visiteret": 175,
-                            "disponeret": 0
-                        },
-                        "33fa6875-6108-4ef3-9804-fc0fd1e19aba": {
-                            "name": "Praktisk hjaelp i hjemmet (FSIII) (ÆL)",
-                            "id": "33fa6875-6108-4ef3-9804-fc0fd1e19aba",
-                            "visiteret": 15,
-                            "disponeret": 0
-                        }
-                    }
-                },
-                "44-2025": {
-                    "status": "red",
-                    "total": {
-                        "visiteret": 190,
-                        "disponeret": 0
-                    },
-                    "procedures": {
-                        "d5b81b71-8fdf-4b98-9ccb-9c09c7f3733a": {
-                            "name": "Dialog med borger om tilrettelæggelse af forløb (FSIII) (ÆL)",
-                            "id": "d5b81b71-8fdf-4b98-9ccb-9c09c7f3733a",
-                            "visiteret": 0,
-                            "disponeret": 0
-                        },
-                        "bc1eb6fd-162c-498c-9e4f-9093b0599106": {
-                            "name": "Personlig hjælp og pleje (FSIII) (ÆL)",
-                            "id": "bc1eb6fd-162c-498c-9e4f-9093b0599106",
-                            "visiteret": 175,
-                            "disponeret": 0
-                        },
-                        "33fa6875-6108-4ef3-9804-fc0fd1e19aba": {
-                            "name": "Praktisk hjaelp i hjemmet (FSIII) (ÆL)",
-                            "id": "33fa6875-6108-4ef3-9804-fc0fd1e19aba",
-                            "visiteret": 15,
-                            "disponeret": 0
-                        }
-                    }
-                },
-                "45-2025": {
-                    "status": "red",
-                    "total": {
-                        "visiteret": 190,
-                        "disponeret": 0
-                    },
-                    "procedures": {
-                        "d5b81b71-8fdf-4b98-9ccb-9c09c7f3733a": {
-                            "name": "Dialog med borger om tilrettelæggelse af forløb (FSIII) (ÆL)",
-                            "id": "d5b81b71-8fdf-4b98-9ccb-9c09c7f3733a",
-                            "visiteret": 0,
-                            "disponeret": 0
-                        },
-                        "bc1eb6fd-162c-498c-9e4f-9093b0599106": {
-                            "name": "Personlig hjælp og pleje (FSIII) (ÆL)",
-                            "id": "bc1eb6fd-162c-498c-9e4f-9093b0599106",
-                            "visiteret": 175,
-                            "disponeret": 0
-                        },
-                        "33fa6875-6108-4ef3-9804-fc0fd1e19aba": {
-                            "name": "Praktisk hjaelp i hjemmet (FSIII) (ÆL)",
-                            "id": "33fa6875-6108-4ef3-9804-fc0fd1e19aba",
-                            "visiteret": 15,
-                            "disponeret": 0
-                        }
-                    }
-                },
-                "46-2025": {
-                    "status": "red",
-                    "total": {
-                        "visiteret": 190,
-                        "disponeret": 0
-                    },
-                    "procedures": {
-                        "d5b81b71-8fdf-4b98-9ccb-9c09c7f3733a": {
-                            "name": "Dialog med borger om tilrettelæggelse af forløb (FSIII) (ÆL)",
-                            "id": "d5b81b71-8fdf-4b98-9ccb-9c09c7f3733a",
-                            "visiteret": 0,
-                            "disponeret": 0
-                        },
-                        "bc1eb6fd-162c-498c-9e4f-9093b0599106": {
-                            "name": "Personlig hjælp og pleje (FSIII) (ÆL)",
-                            "id": "bc1eb6fd-162c-498c-9e4f-9093b0599106",
-                            "visiteret": 175,
-                            "disponeret": 0
-                        },
-                        "33fa6875-6108-4ef3-9804-fc0fd1e19aba": {
-                            "name": "Praktisk hjaelp i hjemmet (FSIII) (ÆL)",
-                            "id": "33fa6875-6108-4ef3-9804-fc0fd1e19aba",
-                            "visiteret": 15,
-                            "disponeret": 0
-                        }
-                    }
-                },
-                "47-2025": {
-                    "status": "red",
-                    "total": {
-                        "visiteret": 190,
-                        "disponeret": 0
-                    },
-                    "procedures": {
-                        "d5b81b71-8fdf-4b98-9ccb-9c09c7f3733a": {
-                            "name": "Dialog med borger om tilrettelæggelse af forløb (FSIII) (ÆL)",
-                            "id": "d5b81b71-8fdf-4b98-9ccb-9c09c7f3733a",
-                            "visiteret": 0,
-                            "disponeret": 0
-                        },
-                        "bc1eb6fd-162c-498c-9e4f-9093b0599106": {
-                            "name": "Personlig hjælp og pleje (FSIII) (ÆL)",
-                            "id": "bc1eb6fd-162c-498c-9e4f-9093b0599106",
-                            "visiteret": 175,
-                            "disponeret": 0
-                        },
-                        "33fa6875-6108-4ef3-9804-fc0fd1e19aba": {
-                            "name": "Praktisk hjaelp i hjemmet (FSIII) (ÆL)",
-                            "id": "33fa6875-6108-4ef3-9804-fc0fd1e19aba",
-                            "visiteret": 15,
-                            "disponeret": 0
-                        }
-                    }
-                }
-            }
-        }
-    }
 ]
 };
